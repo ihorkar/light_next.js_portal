@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: light-nextjs-portal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: light-nextjs-portal
+  template:
+    metadata:
+      labels:
+        app: light-nextjs-portal
+    spec:
+      containers:
+        - name: light-nextjs-portal
+          image: ghcr.io/briggs-walker/light_nextjs_portal:latest
+          env:
+          - name: KEYCLOAK_ID
+            valueFrom:
+              secretKeyRef:
+                name: portal-secrets
+                key: keycloak_id
+          - name: KEYCLOAK_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: portal-secrets
+                key: keycloak_secret
+          - name: KEYCLOAK_ISSUER
+            valueFrom:
+              secretKeyRef:
+                name: portal-secrets
+                key: keycloak_issuer
+          - name: NEXTAUTH_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: portal-secrets
+                key: nextauth_secret
+          - name: NEXTAUTH_URL
+            valueFrom:
+              secretKeyRef:
+                name: portal-secrets
+                key: nextauth_url
+          - name: DATABACKEND_URL
+            valueFrom:
+              configMapKeyRef:
+                name: databackend-config
+                key: DATABACKEND_URL
+          ports:
+            - containerPort: 3000
+      imagePullSecrets:
+        - name: ghcr-token
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: light-nextjs-portal-service
+spec:
+  ports:
+    - port: 80
+      targetPort: 3000
+  selector:
+    app: light-nextjs-portal
