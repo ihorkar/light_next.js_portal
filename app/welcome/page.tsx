@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react'
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 
-export default function page() {
+const Page = () => {
     const {data: session, status} = useSession();
     const router = useRouter()
 
@@ -22,3 +22,5 @@ export default function page() {
             ButtonText="Join now"
         />
     )}
+
+export default Page;
