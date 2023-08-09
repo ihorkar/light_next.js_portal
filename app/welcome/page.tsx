@@ -1,6 +1,18 @@
+'use client'
+
 import JumbotronPicture from "@/components/ui/jumbotron/JumbotronPicture";
+import { useSession } from 'next-auth/react'
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
 
 export default function page() {
+    const {data: session, status} = useSession();
+    const router = useRouter()
+
+    useEffect(() => {
+        if(session) router.push('/')
+    })
+
     return (
         <JumbotronPicture 
             picture="/whoneeds.jpg"

@@ -14,5 +14,5 @@ export default function Page({children}: {children: React.ReactNode}) {
         if (!session.data) router.push("/welcome")
     }, [])
 
-    return <>{session.data || pathName === "/welcome" && children}</>
+    return <>{(session.data || pathName === "/welcome") && children}</>
 }
