@@ -25,14 +25,9 @@ const DefaultHeader: React.FC<HeaderProps> = ({
                 {subHeadline}
             </p>
             <h1 className="mb-4 
-                text-4xl 
-                font-extrabold 
-                leading-none 
-                tracking-tight 
+                briggs-heading4xl
                 text-gray-900 
-                md:text-5xl 
-                lg:text-6xl 
-                dark:text-white">
+                ">
 
                 {Headline}
 
