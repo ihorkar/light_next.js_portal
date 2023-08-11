@@ -5,6 +5,7 @@ import DefaultButton from '@/components/ui/buttons/DefaultButton'
 import StatusCardPic from '@/components/ui/cards/StatusCardPic'
 import DefaultHeader from '@/components/ui/headers/DefaultHeader'
 import { useSession } from 'next-auth/react';
+import axios from 'axios'
 
 export default function Home() {
   const session = useSession();
