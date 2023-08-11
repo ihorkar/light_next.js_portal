@@ -1,13 +1,22 @@
 'use client'
+
+import { useEffect } from 'react'
 import DefaultButton from '@/components/ui/buttons/DefaultButton'
 import StatusCardPic from '@/components/ui/cards/StatusCardPic'
 import DefaultHeader from '@/components/ui/headers/DefaultHeader'
+import { useSession } from 'next-auth/react';
 
 export default function Home() {
+  const session = useSession();
 
-function createOrganisation() {
+  useEffect(() => {
+    //@ts-ignore
+    if(session.data?.accessToken) axios.defaults.headers.common['Authorization'] = `${session.data?.accessToken}`
+  }, [session])
 
-}
+  function createOrganisation() {
+
+  }
 
   return (
     <div className="bg-white h-screen">
