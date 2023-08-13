@@ -10,8 +10,8 @@ export default function Page({children}: {children: React.ReactNode}) {
     const pathName = usePathname();
 
     useEffect(() => {
-        if (!session.data) router.push("/welcome")
-    }, [])
+        if (session.status !== "loading" && !session.data) router.push("/welcome")
+    }, [session])
 
     return <>{(session.data || pathName === "/welcome") && children}</>
 }
