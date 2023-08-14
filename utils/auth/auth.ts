@@ -22,6 +22,8 @@ export const authConfig: NextAuthOptions = {
             // Send properties to the client, like an access_token from a provider.
             //@ts-ignore
             session.accessToken = token.accessToken
+            //@ts-ignore
+            session.user.identityId = token.sub
             return session
         }
     }
