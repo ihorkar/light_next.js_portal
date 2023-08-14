@@ -24,12 +24,10 @@ export default function Home() {
   const handleGetOrganisations = (identityId: string) => {
     API.getOrganisationsByUser(identityId)
       .then(response => {
-        if(response.data.length === 1){
-          router.push(`/${response.data[0].organisationId.slug}`)
-        }else if(response.data.length > 1) {
-          router.push(`/select-organisation`)
-        }else{
+        if(response.data.redirect === 'no-organisations'){
           setIsNullOrganisations(true)
+        }else{
+          router.push(`/${response.data.redirect}`)
         }
       })
   }
