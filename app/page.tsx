@@ -17,12 +17,11 @@ export default function Home() {
   useEffect(() => {
     //@ts-ignore
     if(session.data?.accessToken) axios.defaults.headers.common['Authorization'] = `${session.data?.accessToken}`;
-    //@ts-ignore
-    if(session.data?.user.identityId) handleGetOrganisations(session.data?.user.identityId)
+    handleGetOrganisations()
   }, [])
 
-  const handleGetOrganisations = (identityId: string) => {
-    API.getOrganisationsByUser(identityId)
+  const handleGetOrganisations = () => {
+    API.getOrganisationsByUser()
       .then(response => {
         if(response.data.redirect === 'no-organisations'){
           setIsNullOrganisations(true)
