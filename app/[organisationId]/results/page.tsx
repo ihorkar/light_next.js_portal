@@ -11,7 +11,7 @@ export default function Page({ params }: {
     <SimpleHeader 
       Headline= "Results"
     />
-    <FullWidthList />
+    <FullWidthList organisationId={params.organisationId} />
     </div>
   )
 }
