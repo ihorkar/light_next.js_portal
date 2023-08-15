@@ -56,8 +56,8 @@ import axios from "axios"
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
                   {resultData?.map((form) => (
-                    <tr key={form.resultId}>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{form.resultId}</td>
+                    <tr key={form._id}>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{form._id}</td>
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
                         {form.form}
                       </td>
@@ -65,7 +65,7 @@ import axios from "axios"
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{form.date}</td>
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
                         <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                          View<span className="sr-only">, {form.resultId}</span>
+                          View<span className="sr-only">, {form._id}</span>
                         </a>
                       </td>
                     </tr>
