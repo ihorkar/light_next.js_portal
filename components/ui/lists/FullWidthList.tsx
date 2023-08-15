@@ -61,7 +61,7 @@ import axios from "axios"
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
                         {form.form}
                       </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{`${form.firstName} ${form.lastName}`}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{form.agent}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{form.date}</td>
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
                         <a href="#" className="text-indigo-600 hover:text-indigo-900">
