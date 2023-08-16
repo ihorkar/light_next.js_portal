@@ -1,7 +1,7 @@
 'use client'
 
 import Container from "@/components/ui/Layout/Container"
-import UserSignUp from "@/components/user/UserSignup"
+import OrganisationSignUp from "@/components/organisation/OrganisationSignup"
 import DefaultHeader from "@/components/ui/headers/DefaultHeader"
 
 export default function Page({ params }: {
@@ -11,11 +11,10 @@ export default function Page({ params }: {
     <div className="bg-white">
       <Container>
         <DefaultHeader
-          Headline="Join Briggs"
-          Description="Sign up and start boosting your campaign today."
-          subHeadline="Welcome to Our Platform"
+          Headline="Let's make every encounter count!"
+          Description="Share a few details about your organization, and embark on an exciting journey with us."
         />
-        <UserSignUp />
+        <OrganisationSignUp />
       </Container>
     </div>
   )
