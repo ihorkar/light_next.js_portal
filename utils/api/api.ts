@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios, { Axios } from "axios"
 import { AxiosResponse } from "axios";
 import { signOut } from "next-auth/react";
 
@@ -11,36 +11,40 @@ const API = {
         return new Promise((resolve, reject) => {
             axios.get('/organisations')
                 .then(response => resolve(response))
-                .catch(function (error) {
-                    if (error.response.status === 401) {
-                      signOut();
-                    }
-                  }
-                )
+                .catch(error => {
+                    if(error.response.status === 401) signOut();
+                })
         })
     },
     getOrganisationsByUser: (): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
             axios.get('/userorganisations')
                 .then(response => resolve(response))
-                .catch(function (error) {
-                    if (error.response.status === 401) {
-                      signOut();
-                    }
-                  }
-                )
+                .catch(error => {
+                    if(error.response.status === 401) signOut();
+                })
         })
     },
     getResultsByOrganisation: (slug: string): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
             axios.get(`/results/${slug}`)
                 .then(response => resolve(response))
-                .catch(function (error) {
-                    if (error.response.status === 401) {
-                      signOut();
+                .catch(error => {
+                    if(error.response.status === 401) signOut();
+                })
+        })
+    },
+    getOrganisationInfo: (slug: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.get(`/organisations/${slug}`)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
                     }
-                  }
-                )
+                })
         })
     }
 }
