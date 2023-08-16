@@ -1,9 +1,15 @@
-
+import SimpleHeader from "@/components/ui/headers/SimpleHeader"
+import OrganisationUserList from "@/components/organisation/OrganisationUserList"
 
 export default function Page({ params }: {
     params: { organisationId: string}
   }) {
   return (
-    <div>Organisation Team</div>
+    <div>
+    <SimpleHeader 
+      Headline= "Results"
+    />
+    <OrganisationUserList organisationId={params.organisationId} />
+    </div>
   )
 }

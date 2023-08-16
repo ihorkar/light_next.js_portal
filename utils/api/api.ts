@@ -12,7 +12,11 @@ const API = {
             axios.get('/organisations')
                 .then(response => resolve(response))
                 .catch(error => {
-                    if(error.response.status === 401) signOut();
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
                 })
         })
     },
@@ -21,7 +25,11 @@ const API = {
             axios.get('/userorganisations')
                 .then(response => resolve(response))
                 .catch(error => {
-                    if(error.response.status === 401) signOut();
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
                 })
         })
     },
@@ -30,7 +38,24 @@ const API = {
             axios.get(`/results/${slug}`)
                 .then(response => resolve(response))
                 .catch(error => {
-                    if(error.response.status === 401) signOut();
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
+        })
+    },
+    getUsersByOrganisation: (slug: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.get(`/organisations/${slug}/users`)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
                 })
         })
     },
