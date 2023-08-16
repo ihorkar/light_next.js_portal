@@ -1,4 +1,4 @@
-import OrganisationList from "@/components/lists/OrganisationList"
+import OrganisationList from "@/components/organisation/OrganisationList"
 import DefaultHeader from "@/components/ui/headers/DefaultHeader"
 
 

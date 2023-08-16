@@ -1,6 +1,5 @@
-import HeadingBreadcrumb from "@/components/ui/headers/HeadingBreadcrumb"
+import OrganisationResultsList from "@/components/organisation/OrganisationResultsList"
 import SimpleHeader from "@/components/ui/headers/SimpleHeader"
-import FullWidthList from "@/components/ui/lists/FullWidthList"
 
 
 export default function Page({ params }: {
@@ -11,7 +10,7 @@ export default function Page({ params }: {
     <SimpleHeader 
       Headline= "Results"
     />
-    <FullWidthList organisationId={params.organisationId} />
+    <OrganisationResultsList organisationId={params.organisationId} />
     </div>
   )
 }

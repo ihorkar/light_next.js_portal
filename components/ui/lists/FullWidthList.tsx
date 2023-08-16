@@ -1,81 +1,55 @@
  'use client'
-import { useEffect, useState } from "react"
-import API from "@/utils/api/api"
-import { useSession } from "next-auth/react"
-import axios from "axios"
   
-  export default function FullWidthList({organisationId}: {organisationId: string}) {
-    const [resultData, setResultData] = useState<any[]>()
-    const session = useSession();
+interface Column {
+  header: string;
+  accessor: (item: any) => any;  // Using a function to get the value
+  isBold?: boolean;
+}
 
-    useEffect(() => {
-      //@ts-ignore
-      if(session.data?.accessToken) axios.defaults.headers.common['Authorization'] = `${session.data?.accessToken}`;
-      handleGetResultData()
-    }, [])
+interface FullWidthListProps {
+  columns: Column[];
+  data: any[];
+}
 
-    const handleGetResultData = async () => {
-      await API.getResultsByOrganisation(organisationId)
-        .then(response => {
-          if(response.data.length > 0) setResultData(response.data)
-        })
-    }
-
-    return (
-      <div className="px-4 sm:px-6 lg:px-8">
-        <div className="sm:flex sm:items-center">
-          <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-            {/*Leave for filters and stuff */}
-          </div>
-        </div>
-        <div className="mt-8 flow-root">
-          <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 align-middle">
-              <table className="min-w-full divide-y divide-gray-300">
-                <thead>
-                  <tr>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Result
-                    </th>
+export default function FullWidthList({ columns, data }: FullWidthListProps) {
+  return (
+    <div className="px-4 sm:px-6 lg:px-8">
+      <div className="mt-8 flow-root">
+        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="inline-block min-w-full py-2 align-middle">
+            <table className="min-w-full divide-y divide-gray-300">
+              <thead>
+                <tr>
+                  {columns.map((col, index) => (
                     <th
+                      key={index}
                       scope="col"
-                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8"
+                      className={`px-3 py-3.5 text-left text-sm ${col.isBold ? "font-bold" : "font-semibold"} text-gray-900`}
                     >
-                      Form
+                      {col.header}
                     </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Agent
-                    </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Date
-                    </th>
-                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8">
-                      <span className="sr-only">View</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 bg-white">
-                  {resultData?.map((form) => (
-                    <tr key={form._id}>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{form._id}</td>
-                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
-                        {form.form}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{form.agent.userName}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{form.date}</td>
-                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                          View<span className="sr-only">, {form._id}</span>
-                        </a>
-                      </td>
-                    </tr>
                   ))}
-                </tbody>
-              </table>
-            </div>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200 bg-white">
+                {data.map((item, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {columns.map((col, colIndex) => (
+                      <td
+                        key={colIndex}
+                        className={`whitespace-nowrap px-3 py-4 text-sm ${col.isBold ? "font-bold" : ""} text-gray-500`}
+                      >
+                        {col.accessor(item)}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-    )
-  }
-  
+    </div>
+  );
+}
+
