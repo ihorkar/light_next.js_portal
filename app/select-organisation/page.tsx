@@ -1,16 +1,21 @@
-import HeadingBreadcrumb from "@/components/ui/headers/HeadingBreadcrumb"
-import SimpleHeader from "@/components/ui/headers/SimpleHeader"
-import FullWidthList from "@/components/ui/lists/FullWidthList"
+import OrganisationList from "@/components/lists/OrganisationList"
+import DefaultHeader from "@/components/ui/headers/DefaultHeader"
 
 
 export default function Page({ params }: {
     params: { organisationId: string}
-  }) {
+  }) {  
+
   return (
-    <div>
-    <SimpleHeader 
-      Headline= "Organisation selection page"
-    />
+    <div className="bg-white h-screen">
+    
+      <DefaultHeader 
+        Headline= "Welcome back!"
+        Description="Please select an organisation"
+      />
+      <div className="flex justify-center items-center">
+          <OrganisationList />
+      </div>
     </div>
   )
 }
