@@ -1,5 +1,6 @@
 import ContainerFullWidth from "@/components/ui/Layout/ContainerFullWidth"
 import SideNavWithSub, { NavProps } from "@/components/ui/navbar/SideNavWithSub"
+import CheckOrganisationExists from '@/utils/data/CheckOrganisationExists'
 
 export default function Layout({
     children,
@@ -42,13 +43,15 @@ export default function Layout({
       <html lang="en">
         <body>
             <div className="flex flex-row">
-            <SideNavWithSub
-              menuitems={navigation.menuitems}
-            />
-            
-            <ContainerFullWidth>
-                {children}
-            </ContainerFullWidth>
+              <CheckOrganisationExists organisationId={params.organisationId}>
+                <SideNavWithSub
+                  menuitems={navigation.menuitems}
+                />
+                
+                <ContainerFullWidth>
+                    {children}
+                </ContainerFullWidth>
+              </CheckOrganisationExists>
             </div>
         </body>
       </html>
