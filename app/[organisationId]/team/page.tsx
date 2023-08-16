@@ -7,7 +7,7 @@ export default function Page({ params }: {
   return (
     <div>
     <SimpleHeader 
-      Headline= "Results"
+      Headline= "Team"
     />
     <OrganisationUserList organisationId={params.organisationId} />
     </div>
