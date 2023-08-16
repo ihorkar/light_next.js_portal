@@ -31,11 +31,11 @@ const OrganisationList = () => {
         ">
                 {organisationdata?.map((organisation: any) => {
                     return (
-                        <div key={organisation._id}>
+                        <div key={organisation.organisationId._id}>
                             <DefaultCard 
-                                Title={organisation.slug}
-                                Description={organisation.name}
-                                Link={`/${organisation.slug}`}
+                                Title={organisation.organisationId.slug}
+                                Description={organisation.organisationId.name}
+                                Link={`/${organisation.organisationId.slug}`}
                             />
                         </div>
                     )   
