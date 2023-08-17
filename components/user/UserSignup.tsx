@@ -1,6 +1,30 @@
+'use client'
+
+import { useState, MouseEvent, MouseEventHandler } from 'react'
 import DefaultInput from '../ui/elements/DefaultInput'
+import API from '@/utils/api/api'
+import { UserData } from '@/utils/data/types'
 
 export default function UserSignUp() {
+  const [userName, setUserName] = useState("")
+  const [userEmail, setUserEmail] = useState("")
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+
+  const handleOnSubmitUserData = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    const userData: UserData = {
+      userName: userName,
+      email: userEmail,
+      firstName: firstName,
+      lastName: lastName
+    }
+
+    API.createNewUser(userData)
+      .then(response => console.log(response, "new user has been created"))
+      .catch(error => console.log("Failed restering new User", error))
+  }
+
   return (
     <form className="w-full max-w-lg mx-auto bg-gray-100 p-8 rounded-lg shadow-md">
       <div className="space-y-12 sm:space-y-16 p-8">
@@ -16,6 +40,8 @@ export default function UserSignUp() {
                         id="username"
                         autoComplete="username"
                         placeholder="username"
+                        onChange={(e) => setUserName(e.target.value)}
+                        required
                     />
               </div>
             </div>
@@ -29,6 +55,8 @@ export default function UserSignUp() {
                         id="email"
                         autoComplete="email"
                         placeholder="email"
+                        onChange={(e) => setUserEmail(e.target.value)}
+                        required
                     />
               </div>
             </div>
@@ -42,6 +70,7 @@ export default function UserSignUp() {
                         id="firstName"
                         autoComplete="firstName"
                         placeholder="First Name"
+                        onChange={(e) => setFirstName(e.target.value)}
                     />
               </div>
             </div>
@@ -55,6 +84,7 @@ export default function UserSignUp() {
                         id="lastname"
                         autoComplete="lastname"
                         placeholder="Last Name"
+                        onChange={(e) => setLastName(e.target.value)}
                     />
               </div>
             </div>
@@ -68,6 +98,7 @@ export default function UserSignUp() {
         </button>
         <button
           type="submit"
+          onClick={handleOnSubmitUserData}
           className="inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Save

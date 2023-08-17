@@ -17,6 +17,7 @@ export default function OrganisationSignUp() {
                         id="slug"
                         autoComplete="Short Name"
                         placeholder="Short Name"
+                        onChange={() => {}}
                     />
               </div>
             </div>
@@ -30,6 +31,7 @@ export default function OrganisationSignUp() {
                         id="name"
                         autoComplete="name"
                         placeholder="Your awesome company Ltd."
+                        onChange={() => {}}
                     />
               </div>
             </div>
@@ -43,6 +45,7 @@ export default function OrganisationSignUp() {
                         id="street"
                         autoComplete="street"
                         placeholder="Mainstreet"
+                        onChange={() => {}}
                     />
               </div>
             </div>
@@ -56,6 +59,7 @@ export default function OrganisationSignUp() {
                         id="city"
                         autoComplete="city"
                         placeholder="Agentsville"
+                        onChange={() => {}}
                     />
               </div>
             </div>
