@@ -4,9 +4,7 @@ import Container from "@/components/ui/Layout/Container"
 import UserSignUp from "@/components/user/UserSignup"
 import DefaultHeader from "@/components/ui/headers/DefaultHeader"
 
-export default function Page({ params }: {
-    params: { organisationId: string}
-  }) {
+export default function Page() {
   return (
     <div className="bg-white">
       <Container>

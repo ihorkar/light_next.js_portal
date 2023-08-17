@@ -1,7 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import NextAuthProvider from '@/utils/auth/NextAuthProvidert'
+import NextAuthProvider from '@/utils/auth/NextAuthProvider'
 import CheckLoginIsRequired from '../utils/auth/CheckLoginIsRequired'
 
 const inter = Inter({ subsets: ['latin'] })

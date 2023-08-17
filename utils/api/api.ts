@@ -86,7 +86,15 @@ const API = {
                 .then(response => resolve(response))
                 .catch(error => reject(error))
         })
-    }
+    },
+
+    acceptOrganisationInvitation: (token: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.post(`/public/accept-invitation/${token}`)
+                .then(response => resolve(response))
+                .catch(error => reject(error))
+        })
+    },
 }
 
 export default API;

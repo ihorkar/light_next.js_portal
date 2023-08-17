@@ -8,10 +8,11 @@ export default function Page({children}: {children: React.ReactNode}) {
     const router = useRouter();
     const session = useSession();
     const pathName = usePathname();
+    const PathsWithoutAuth = ["/welcome", "/signup", "/accept-invitation"];
 
     useEffect(() => {
-        if (session.status !== "loading" && !session.data && pathName !== "/signup") router.push("/welcome")
+        if (session.status !== "loading" && !session.data && !PathsWithoutAuth.includes(pathName) ) router.push("/welcome")
     }, [session])
 
-    return <>{(session.data || pathName === "/welcome" || pathName === "/signup") && children}</>
+    return <>{(session.data || PathsWithoutAuth.includes(pathName) ) && children}</>
 }
