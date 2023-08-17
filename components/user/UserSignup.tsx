@@ -1,15 +1,28 @@
 'use client'
 
-import { useState, MouseEvent, MouseEventHandler } from 'react'
+import { useState, MouseEvent, useEffect } from 'react'
 import DefaultInput from '../ui/elements/DefaultInput'
 import API from '@/utils/api/api'
 import { UserData } from '@/utils/data/types'
+import { useRouter } from 'next/navigation'
+import { signOut } from 'next-auth/react'
 
 export default function UserSignUp() {
+  const router = useRouter();
   const [userName, setUserName] = useState("")
   const [userEmail, setUserEmail] = useState("")
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
+
+  useEffect(() => {
+    API.getUserData()
+      .then(response => {
+        if(response.status === 200) router.push('/')
+      })
+      .catch(error => {
+        console.log(error, "Error getting the user data")
+      })
+  }, [])
 
   const handleOnSubmitUserData = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -21,7 +34,12 @@ export default function UserSignUp() {
     }
 
     API.createNewUser(userData)
-      .then(response => console.log(response, "new user has been created"))
+      .then(response => {
+        if(response.status === 201){
+          router.push('/signup-completed');
+          console.log(response, "new user has been created")
+        }
+      })
       .catch(error => console.log("Failed restering new User", error))
   }
 

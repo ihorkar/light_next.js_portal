@@ -77,13 +77,14 @@ const API = {
         return new Promise((resolve, reject) => {
             axios.post('/public/register', userData)
                 .then(response => resolve(response))
-                .catch(error => {
-                    if(error.response.status === 401){
-                        signOut();
-                    }else{
-                        reject(error)
-                    }
-                })
+                .catch(error => reject(error))
+        })
+    },
+    getUserData: (): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.get('/user')
+                .then(response => resolve(response))
+                .catch(error => reject(error))
         })
     }
 }
