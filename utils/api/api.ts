@@ -36,7 +36,7 @@ const API = {
     },
     getResultsByOrganisation: (slug: string): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
-            axios.get(`/results/${slug}`)
+            axios.get(`/organisations/${slug}/results`)
                 .then(response => resolve(response))
                 .catch(error => {
                     if(error.response.status === 401){
