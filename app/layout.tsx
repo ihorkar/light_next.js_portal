@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import NextAuthProvider from '@/utils/auth/NextAuthProvider'
 import CheckLoginIsRequired from '../utils/auth/CheckLoginIsRequired'
+import JotaiProvider from '@/utils/jotai/JotaiProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,11 +24,13 @@ export default function RootLayout({
         <meta name="description" content="Light portal"></meta>
       </head>
       <body>
-        <NextAuthProvider>
-          <CheckLoginIsRequired>
-            {children}
-          </CheckLoginIsRequired>
-        </NextAuthProvider>
+        <JotaiProvider>
+          <NextAuthProvider>
+            <CheckLoginIsRequired>
+              {children}
+            </CheckLoginIsRequired>
+          </NextAuthProvider>
+        </JotaiProvider>
       </body>
     </html>
   )

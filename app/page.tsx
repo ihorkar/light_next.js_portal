@@ -8,16 +8,22 @@ import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import API from '@/utils/api/api';
 import { useRouter } from 'next/navigation';
+import { useUserData } from '@/utils/jotai';
 
 export default function Home() {
     const router = useRouter();
     const session = useSession();
+    const [, setUserData] = useUserData();
     const [isNullOrganisations, setIsNullOrganisations] = useState(false);
 
     useEffect(() => {
         //@ts-ignore
-        if (session.data?.accessToken) axios.defaults.headers.common['Authorization'] = `${session.data?.accessToken}`;
-        handleGetOrganisations();
+        if (session.data?.accessToken){
+            //@ts-ignore
+            axios.defaults.headers.common['Authorization'] = `${session.data?.accessToken}`;
+            handleGetUserData()
+            handleGetOrganisations();
+        } 
     }, []);
 
     const handleGetOrganisations = () => {
@@ -31,6 +37,19 @@ export default function Home() {
                     router.push(`/select-organisation`);
                 }
             });
+    }
+
+    const handleGetUserData = () => {
+        API.getUserData()
+        .then(response => {
+          setUserData({id: response.data[0]._id, 
+                        identityId: response.data[0].identityId, 
+                        email: response.data[0].email,
+                        userName: response.data[0].userName,
+                        firstName: response.data[0].firstName,
+                        lastName: response.data[0].lastName
+                      })
+        })
     }
 
     function createOrganisation() {

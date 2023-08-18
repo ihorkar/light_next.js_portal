@@ -9,13 +9,15 @@ import { PencilIcon, UserMinusIcon } from "@heroicons/react/24/outline";
 import Modal from "../ui/modal/Modal";
 import DefaultInput from "../ui/elements/DefaultInput";
 import DefaultSelect from "../ui/elements/DefaultSelect";
+import { useUserData } from "@/utils/jotai";
 
 interface ListProps {
   organisationId: string;
 }
 
 export default function OrganisationUserList({ organisationId }: ListProps) {
-  const [userData, setUserData] = useState<any[]>([]);
+  const [userData] = useUserData()
+  const [organisationUsersData, setOrganisationUsersData] = useState<any[]>([]);
   const [showRoleEditModal, setShowRoleEditModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [modalData, setModalData] = useState<any>()
@@ -34,7 +36,7 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
   const handleGetUserData = async () => {
     await API.getUsersByOrganisation(organisationId)
       .then(response => {
-        if (response.data.length > 0) setUserData(response.data);
+        if (response.data.length > 0) setOrganisationUsersData(response.data);
       })
       .catch(error => {
         if(error.response.status === 404) router.push('/restricted')
@@ -108,7 +110,7 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
 
   return (
     <>
-    <FullWidthList columns={columns} data={userData} actionButtons={actionButtons} />
+    <FullWidthList columns={columns} data={organisationUsersData} actionButtons={actionButtons} />
     <Modal 
       visible={showRoleEditModal} 
       title="Edit user role"

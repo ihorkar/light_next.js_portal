@@ -1,5 +1,6 @@
  'use client'
   
+import { useSession } from "next-auth/react";
 interface Column {
   header: string;
   accessor: (item: any) => any;  // Using a function to get the value
@@ -24,6 +25,8 @@ export default function FullWidthList({
   data,
   actionButtons = [] 
 }: FullWidthListProps) {
+  const session = useSession();
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="mt-8 flow-root">
@@ -52,12 +55,14 @@ export default function FullWidthList({
                     {columns.map((col, colIndex) => (
                       <td
                         key={colIndex}
-                        className={`whitespace-nowrap px-3 py-4 text-sm ${col.isBold ? "font-bold" : ""} text-gray-500`}
+                        //@ts-ignore
+                        className={`whitespace-nowrap px-3 py-4 ${session.data?.user?.identityId === item.userId.identityId ? "text-red-500" : ""} text-sm ${col.isBold ? "font-bold" : ""} text-gray-500`}
                       >
                         {col.accessor(item)}
                       </td>
                     ))}
-                    {actionButtons.length > 0 && (
+                    {/*@ts-ignore*/}
+                    {actionButtons.length > 0 && session.data?.user?.identityId !== item.userId.identityId && (
                       <td className="px-4 py-4">
                         {actionButtons.map((btn, btnIndex) => (
                           <button
