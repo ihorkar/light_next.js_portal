@@ -106,7 +106,7 @@ export default function UserSignUp() {
                     />
               </div>
             </div>
-        </div>
+          </div>
         </div>
       </div>
 
