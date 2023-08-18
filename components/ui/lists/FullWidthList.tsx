@@ -56,7 +56,7 @@ export default function FullWidthList({
                       <td
                         key={colIndex}
                         //@ts-ignore
-                        className={`whitespace-nowrap px-3 py-4 ${session.data?.user?.identityId === item.userId.identityId ? "text-red-500" : ""} text-sm ${col.isBold ? "font-bold" : ""} text-gray-500`}
+                        className={`whitespace-nowrap px-3 py-4 ${actionButtons.length > 0  ? (session.data?.user?.identityId === item.userId.identityId  ? "text-red-500" : "") : ""} text-sm ${col.isBold ? "font-bold" : ""} text-gray-500`}
                       >
                         {col.accessor(item)}
                       </td>
