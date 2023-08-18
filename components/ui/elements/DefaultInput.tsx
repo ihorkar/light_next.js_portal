@@ -12,11 +12,11 @@ interface InputProps {
   }
   
   export default function DefaultInput({ name, id, autoComplete, placeholder, onChange, required, type = 'default' }: InputProps) {
-    let classNames = "";
+    let classNames = "w-72 h-9 px-3 py-2 bg-white rounded border flex items-center gap-3";
     if(type === "default"){
-      classNames = "w-72 h-9 px-3 py-2 bg-white rounded border border-gray-400 flex items-center gap-3";
+      classNames += "border-gray-400";
     }else{
-      classNames = "w-72 h-9 px-3 py-2 bg-white rounded border border-gray-400 flex items-center gap-3"
+      classNames += "border-red-500"
     }
 
     return(

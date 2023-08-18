@@ -18,9 +18,9 @@ export default function DefaultSelect ({options, selectedOption, onChange, requi
                 required={required ? required : false}
                 onChange={onChange}
             >
-                {options.map(option => {
+                {options.map((option, index) => {
                     return (
-                        <option>{option}</option>
+                        <option key={`option-${index}`}>{option}</option>
                     )
                 })}    
             </select>

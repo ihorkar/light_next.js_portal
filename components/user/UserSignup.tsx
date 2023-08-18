@@ -5,7 +5,6 @@ import DefaultInput from '../ui/elements/DefaultInput'
 import API from '@/utils/api/api'
 import { UserData } from '@/utils/data/types'
 import { useRouter } from 'next/navigation'
-import { signOut } from 'next-auth/react'
 
 export default function UserSignUp() {
   const router = useRouter();
