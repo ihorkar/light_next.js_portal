@@ -1,4 +1,5 @@
 import { ChangeEventHandler } from 'react'
+import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
 
 interface InputProps {
     name: string;
@@ -7,13 +8,21 @@ interface InputProps {
     placeholder: string;
     onChange: ChangeEventHandler<HTMLInputElement>;
     required?: boolean;
+    type?: 'default' | 'warning'
   }
   
-  export default function DefaultInput({ name, id, autoComplete, placeholder, onChange, required }: InputProps) {
+  export default function DefaultInput({ name, id, autoComplete, placeholder, onChange, required, type = 'default' }: InputProps) {
+    let classNames = "";
+    if(type === "default"){
+      classNames = "w-72 h-9 px-3 py-2 bg-white rounded border border-gray-400 flex items-center gap-3";
+    }else{
+      classNames = "w-72 h-9 px-3 py-2 bg-white rounded border border-gray-400 flex items-center gap-3"
+    }
 
     return(
-        <div className="w-72 h-9 px-3 py-2 bg-white rounded border border-gray-400 flex items-center gap-3">
-        <input
+      <div>
+        <div className={classNames}>
+          <input
             type="text"
             name={name}
             id={id}
@@ -22,7 +31,14 @@ interface InputProps {
             placeholder={placeholder}
             onChange={onChange}
             required={required ? required : false}
-        />
+          />
+          {type === "warning" && <div className="pointer-events-none absolute inset-y-0 right-36 flex items-center pr-3 -top-8">
+            <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+          </div>}
         </div>
+         {type === "warning" && <p className="mt-2 text-sm text-red-600" id="email-error">
+           Not a valid email address.
+         </p>}
+      </div>
     )
   }
