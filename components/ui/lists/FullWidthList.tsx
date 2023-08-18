@@ -9,7 +9,7 @@ interface Column {
 interface ActionButton {
   label: string;
   icon: JSX.Element;
-  onClick: (item: any) => void;
+  onClick: (...params: any) => void;
 }
 
 interface FullWidthListProps {

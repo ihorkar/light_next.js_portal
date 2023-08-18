@@ -3,6 +3,7 @@ import { AxiosResponse } from "axios";
 import { signOut } from "next-auth/react";
 import { UserData } from "../data/types";
 import { InvitationData } from "../data/types";
+import { UserRole } from "../data/types";
 
 export const BASE_URL = process.env.DATABACKEND_URL;
 
@@ -107,7 +108,33 @@ const API = {
                     }
                 })
         })
-    }
+    },
+    updateOrganisationUsers: (slug: string, data: {userId: string, role: string, updatedRole: string}): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.post(`/organisations/${slug}/users/update`, data)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
+        })
+    },
+    deleteOrganisationUsers: (slug: string, data: {userId: string, role: UserRole}): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.post(`/organisations/${slug}/users/delete`, data)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
+        })
+    },
 }
 
 export default API;

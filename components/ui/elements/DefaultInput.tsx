@@ -9,9 +9,11 @@ interface InputProps {
     onChange: ChangeEventHandler<HTMLInputElement>;
     required?: boolean;
     type?: 'default' | 'warning'
+    disabled?: boolean;
+    value?: string;
   }
   
-  export default function DefaultInput({ name, id, autoComplete, placeholder, onChange, required, type = 'default' }: InputProps) {
+  export default function DefaultInput({ name, id, autoComplete, placeholder, onChange, required, type = 'default', disabled = false, value }: InputProps) {
     let classNames = "w-72 h-9 px-3 py-2 bg-white rounded border flex items-center gap-3";
     if(type === "default"){
       classNames += "border-gray-400";
@@ -31,6 +33,8 @@ interface InputProps {
             placeholder={placeholder}
             onChange={onChange}
             required={required ? required : false}
+            disabled={disabled}
+            value={value}
           />
           {type === "warning" && <div className="pointer-events-none absolute inset-y-0 right-36 flex items-center pr-3 -top-8">
             <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />

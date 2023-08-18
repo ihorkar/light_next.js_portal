@@ -9,3 +9,5 @@ export interface InvitationData {
     email: string;
     role: string;
 }
+
+export type UserRole = "admin" | "manager" | "agent";

@@ -17,6 +17,7 @@ export default function DefaultSelect ({options, selectedOption, onChange, requi
                 className="flex-grow border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm focus:outline-none"
                 required={required ? required : false}
                 onChange={onChange}
+                defaultValue={selectedOption}
             >
                 {options.map((option, index) => {
                     return (
