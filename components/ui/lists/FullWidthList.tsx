@@ -61,10 +61,10 @@ export default function FullWidthList({
                         {col.accessor(item)}
                       </td>
                     ))}
-                    {/*@ts-ignore*/}
-                    {actionButtons.length > 0 && session.data?.user?.identityId !== item.userId.identityId && (
+                    {actionButtons.length > 0 && (
                       <td className="px-4 py-4">
-                        {actionButtons.map((btn, btnIndex) => (
+                        {/*@ts-ignore*/}
+                        {session.data?.user?.identityId !== item.userId.identityId ? actionButtons.map((btn, btnIndex) => (
                           <button
                             key={btnIndex}
                             onClick={() => btn.onClick(item)}
@@ -73,7 +73,7 @@ export default function FullWidthList({
                           >
                             {btn.icon}
                           </button>
-                        ))}
+                        )) : <span className="text-sm text-red-500">You</span>}
                       </td>
                     )}
                   </tr>
