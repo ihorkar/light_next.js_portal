@@ -6,12 +6,24 @@ interface Column {
   isBold?: boolean;
 }
 
+interface ActionButton {
+  label: string;
+  icon: JSX.Element;
+  onClick: (item: any) => void;
+}
+
 interface FullWidthListProps {
   columns: Column[];
   data: any[];
+  actionButtons?: ActionButton[];
 }
 
-export default function FullWidthList({ columns, data }: FullWidthListProps) {
+
+export default function FullWidthList({
+  columns,
+  data,
+  actionButtons = [] 
+}: FullWidthListProps) {
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="mt-8 flow-root">
@@ -29,11 +41,14 @@ export default function FullWidthList({ columns, data }: FullWidthListProps) {
                       {col.header}
                     </th>
                   ))}
+                  {actionButtons.length > 0 && (
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Actions</th>
+                  )}
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
                 {data.map((item, rowIndex) => (
-                  <tr key={rowIndex}>
+                  <tr key={rowIndex} className="hover:bg-gray-100 transition-all duration-200">
                     {columns.map((col, colIndex) => (
                       <td
                         key={colIndex}
@@ -42,6 +57,20 @@ export default function FullWidthList({ columns, data }: FullWidthListProps) {
                         {col.accessor(item)}
                       </td>
                     ))}
+                    {actionButtons.length > 0 && (
+                      <td className="px-4 py-4">
+                        {actionButtons.map((btn, btnIndex) => (
+                          <button
+                            key={btnIndex}
+                            onClick={() => btn.onClick(item)}
+                            aria-label={btn.label}
+                            className="mr-2"
+                          >
+                            {btn.icon}
+                          </button>
+                        ))}
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
@@ -52,4 +81,5 @@ export default function FullWidthList({ columns, data }: FullWidthListProps) {
     </div>
   );
 }
+
 
