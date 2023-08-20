@@ -49,9 +49,35 @@ const API = {
                 })
         })
     },
+    getResultContractURL: (slug: string, resultId: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.get(`/organisations/${slug}/results/${resultId}/contract`)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
+        })
+    },
     getUsersByOrganisation: (slug: string): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
             axios.get(`/organisations/${slug}/users`)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
+        })
+    },
+    getFormsByOrganisation: (slug: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.get(`/organisations/${slug}/forms`)
                 .then(response => resolve(response))
                 .catch(error => {
                     if(error.response.status === 401){
