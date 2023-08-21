@@ -1,4 +1,4 @@
- 'use client'
+'use client'
   
 import { useSession } from "next-auth/react";
 interface Column {
@@ -17,13 +17,15 @@ interface FullWidthListProps {
   columns: Column[];
   data: any[];
   actionButtons?: ActionButton[];
+  loggedUserIndex?: number;
 }
 
 
 export default function FullWidthList({
   columns,
   data,
-  actionButtons = [] 
+  actionButtons = [],
+  loggedUserIndex
 }: FullWidthListProps) {
   const session = useSession();
 
@@ -62,9 +64,11 @@ export default function FullWidthList({
                       </td>
                     ))}
                     {actionButtons.length > 0 && (
+                      (loggedUserIndex !== null && loggedUserIndex === rowIndex) ? 
+                      <td className="px-4 py-4"><p className="text-sm text-red-500 m-auto">You</p></td> : 
                       <td className="px-4 py-4">
                         {/*@ts-ignore*/}
-                        {actionButtons.map((btn, btnIndex) => (
+                        {actionButtons.map((btn, btnIndex) =>  (
                           <button
                             key={btnIndex}
                             onClick={() => btn.onClick(item)}
