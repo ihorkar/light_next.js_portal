@@ -4,6 +4,7 @@ import API from "@/utils/api/api";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import FullWidthList from "../ui/lists/FullWidthList";
+import { DocumentIcon } from "@heroicons/react/24/outline";
 
 interface ListProps {
     organisationId: string;
@@ -25,6 +26,16 @@ export default function OrganisationResultsList({ organisationId }: ListProps) {
     });
   };
 
+  const handleViewContract = (resultId: string) => {
+    API.getResultContractURL(organisationId, resultId)
+      .then(response => {
+        if(response.status === 200) {
+          window.open(response.data, '_blank');
+        }
+      })
+      .catch(error => console.log("Error while updatng user data", error))
+  }
+
   const columns = [
     {
       header: "Result",
@@ -45,5 +56,13 @@ export default function OrganisationResultsList({ organisationId }: ListProps) {
     },
   ];
 
-  return <FullWidthList columns={columns} data={resultData} />;
+  const actionButtons = [
+    {
+      label: "View Contract",
+      icon: <DocumentIcon className="h-5 w-5 text-green-500" />,
+      onClick: (item: any) => handleViewContract(item._id),
+    }
+  ];
+
+  return <FullWidthList columns={columns} data={resultData} actionButtons={actionButtons} />;
 }

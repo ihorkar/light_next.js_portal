@@ -1,5 +1,4 @@
 import { CheckIcon } from '@heroicons/react/24/solid'
-import PanelMobile from '../Layout/PanelMobile';
 
 {
   /* To include component:
@@ -33,7 +32,6 @@ export const PanelStepper: React.FC<StepperProps> = ({
       ) => {
 
   return (
-    <PanelMobile>
       <div className="lg:border-b lg:border-t lg:border-gray-200">
         <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Progress">
           <ol
@@ -141,6 +139,5 @@ export const PanelStepper: React.FC<StepperProps> = ({
           </ol>
         </nav>
       </div>
-    </PanelMobile>
   )
 }
