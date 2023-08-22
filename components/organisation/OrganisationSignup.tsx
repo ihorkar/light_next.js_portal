@@ -12,6 +12,7 @@ export default function OrganisationSignUp() {
   const session = useSession()
   const [ slug, setSlug ] = useState("");
   const [ name, setName ] = useState("");
+  const formEl = useRef<HTMLFormElement>(null)
 
   useEffect(() => {
     //@ts-ignore
@@ -31,6 +32,7 @@ export default function OrganisationSignUp() {
 
   const handleOnSubmitOrganisation = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
+    formEl.current?.reportValidity();
     const organisationData = {slug: slug, name: name}
     API.createOrganisation(organisationData)
       .then(response => {
@@ -40,7 +42,7 @@ export default function OrganisationSignUp() {
   }
 
   return (
-    <form className="w-full max-w-lg mx-auto bg-gray-100 p-8 rounded-lg shadow-md">
+    <form ref={formEl} className="w-full max-w-lg mx-auto bg-gray-100 p-8 rounded-lg shadow-md">
       <div className="space-y-12 sm:space-y-16 p-8">
         <div>
           <div className="mt-10 space-y-8 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
@@ -72,34 +74,6 @@ export default function OrganisationSignUp() {
                         placeholder="Your awesome company Ltd."
                         onChange={handelChangeNameInput}
                         required
-                    />
-              </div>
-            </div>
-            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-              <label htmlFor="street" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
-                Street
-              </label>
-              <div className="mt-2 sm:col-span-2 sm:mt-0">
-                    <DefaultInput 
-                        name="street"
-                        id="street"
-                        autoComplete="street"
-                        placeholder="Mainstreet"
-                        onChange={() => {}}
-                    />
-              </div>
-            </div>
-            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-              <label htmlFor="City" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
-                City
-              </label>
-              <div className="mt-2 sm:col-span-2 sm:mt-0">
-                    <DefaultInput 
-                        name="city"
-                        id="city"
-                        autoComplete="city"
-                        placeholder="Agentsville"
-                        onChange={() => {}}
                     />
               </div>
             </div>
