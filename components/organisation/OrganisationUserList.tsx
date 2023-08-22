@@ -50,6 +50,7 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
   };
 
   const handleEditModalOpen = (user: any) => {
+    console.log(user, "user user user")
     setModalData(user);
     setShowRoleEditModal(true)
   };
@@ -60,7 +61,7 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
   }
 
   const handleEditUser = () => {
-    API.updateOrganisationUsers(organisationId, {userId: modalData.userId._id, role: modalData.role, updatedRole: updatedUserRole})
+    API.updateOrganisationUsers(organisationId, {userId: modalData.user.userId._id, role: modalData.user.role, updatedRole: updatedUserRole})
       .then(response => {
         if(response.status === 200) {
           setShowRoleEditModal(false)
@@ -71,7 +72,7 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
   }
 
   const handleDeleteUser = () => {
-    API.deleteOrganisationUsers(organisationId, {userId: modalData.userId._id, role: modalData.role})
+    API.deleteOrganisationUsers(organisationId, {userId: modalData.user.userId._id, role: modalData.user.role})
       .then(response => {
         if(response.status === 200) {
           setShowDeleteModal(false);
@@ -138,7 +139,7 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
                   placeholder="username"
                   onChange={() => {}}
                   disabled
-                  value={modalData?.userId?.userName}
+                  value={modalData?.user.userId?.userName}
               />
             </div>
           </div>
@@ -147,7 +148,7 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
               Role
             </label>
             <div className="mt-2 sm:col-span-2 sm:mt-0">
-              <DefaultSelect options={roleOptions} onChange={(e) => setUpdatedUserRole(e.target.value)} selectedOption={modalData?.role} />
+              <DefaultSelect options={roleOptions} onChange={(e) => setUpdatedUserRole(e.target.value)} selectedOption={modalData?.user.role} />
             </div>
           </div>
         </div>}
