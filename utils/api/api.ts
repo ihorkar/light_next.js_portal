@@ -161,6 +161,19 @@ const API = {
                 })
         })
     },
+    getFormDatablocks: (): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.get(`/internal/formdatablock`)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
+        })
+    },
 }
 
 export default API;
