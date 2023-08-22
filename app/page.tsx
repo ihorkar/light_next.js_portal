@@ -31,6 +31,7 @@ export default function Home() {
             .then(response => {
                 if (response.data.length == 0) {
                     setIsNullOrganisations(true);
+                    createOrganisation();
                 } else if (response.data.length == 1) {
                     router.push(`/${response.data[0].organisationId.slug}`);
                 } else if (response.data.length > 1) {

@@ -174,6 +174,19 @@ const API = {
                 })
         })
     },
+    createOrganisation: (data: {slug: string, name: string}): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.post(`/organisations`, data)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
+        })
+    }
 }
 
 export default API;

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, ChangeEventHandler, ChangeEvent } from "react"
+import { useState, useRef, ChangeEventHandler, ChangeEvent, useCallback } from "react"
 import SimpleHeader from "@/components/ui/headers/SimpleHeader"
 import OrganisationUserList from "@/components/organisation/OrganisationUserList"
 import DefaultButton from "@/components/ui/buttons/DefaultButton"
@@ -23,7 +23,7 @@ export default function Page({ params }: {
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const formEl = useRef<HTMLFormElement>(null);
 
-  const handleOnSendInvitation = () => {
+  const handleOnSendInvitation = useCallback(() => {
     formEl?.current?.reportValidity();
     const userData: InvitationData = {email: userEmail, role: userRole};
     API.sendInvitation(params.organisationId, userData)
@@ -37,24 +37,32 @@ export default function Page({ params }: {
         if(error.response.status === 409) setIsInvalidEmail(true);
         console.log("Error while sending the invitation", error)
       })
-  }
+  }, [userEmail, userRole]) 
 
-  const handelCloseModal = () => {
+  const handelCloseModal = useCallback(() => {
     setShowInvitationModal(false)
     setIsSentInvitation(false)
     setIsInvalidEmail(false)
-  } 
+  }, [])
 
-  const handleChangeEmailInput = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeEmailInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setIsInvalidEmail(false)
     setUserEmail(e.target.value)
-  }
+  }, [])
+
+  const handleChangeUserRoleInput = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
+    setUserRole(e.target.value)
+  }, [])
+
+  const handleInviteButtonClick = useCallback(() => {
+    setShowInvitationModal(true)
+  }, [])
 
   return (
     <div>
       <div className="inline-flex justify-between w-full">
         <SimpleHeader Headline= "Team" />
-        <DefaultButton label="Invite crew" onClick={() => setShowInvitationModal(true)} />
+        <DefaultButton label="Invite crew" onClick={handleInviteButtonClick} />
       </div>
     
     <OrganisationUserList organisationId={params.organisationId} />
@@ -90,7 +98,7 @@ export default function Page({ params }: {
               Role
             </label>
             <div className="mt-2 sm:col-span-2 sm:mt-0">
-              <DefaultSelect options={roleOptions} onChange={(e) => setUserRole(e.target.value)} selectedOption="admin" />
+              <DefaultSelect options={roleOptions} onChange={handleChangeUserRoleInput} selectedOption="admin" />
             </div>
           </div>
         </div>
