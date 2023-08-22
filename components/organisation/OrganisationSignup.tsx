@@ -1,6 +1,44 @@
+'use client'
+
+import { ChangeEvent, useCallback, useRef, useState, MouseEvent, useEffect } from 'react'
 import DefaultInput from '../ui/elements/DefaultInput'
+import API from '@/utils/api/api';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import axios from 'axios';
 
 export default function OrganisationSignUp() {
+  const router = useRouter()
+  const session = useSession()
+  const [ slug, setSlug ] = useState("");
+  const [ name, setName ] = useState("");
+
+  useEffect(() => {
+    //@ts-ignore
+    if (session.data?.accessToken){
+        //@ts-ignore
+        axios.defaults.headers.common['Authorization'] = `${session.data?.accessToken}`;
+    }
+}, []);
+
+  const handleChangeSlugInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setSlug(e.target.value)
+  }, [])
+
+  const handelChangeNameInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value)
+  }, [])
+
+  const handleOnSubmitOrganisation = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    const organisationData = {slug: slug, name: name}
+    API.createOrganisation(organisationData)
+      .then(response => {
+        if(response.status === 201) router.push(`${response.data.slug}/organisation`)
+      })
+      .catch(error => console.log("Error while creating organisation", error))
+  }
+
   return (
     <form className="w-full max-w-lg mx-auto bg-gray-100 p-8 rounded-lg shadow-md">
       <div className="space-y-12 sm:space-y-16 p-8">
@@ -17,7 +55,8 @@ export default function OrganisationSignUp() {
                         id="slug"
                         autoComplete="Short Name"
                         placeholder="Short Name"
-                        onChange={() => {}}
+                        onChange={handleChangeSlugInput}
+                        required
                     />
               </div>
             </div>
@@ -31,7 +70,8 @@ export default function OrganisationSignUp() {
                         id="name"
                         autoComplete="name"
                         placeholder="Your awesome company Ltd."
-                        onChange={() => {}}
+                        onChange={handelChangeNameInput}
+                        required
                     />
               </div>
             </div>
@@ -72,7 +112,8 @@ export default function OrganisationSignUp() {
           Cancel
         </button>
         <button
-          type="submit"
+          type='submit'
+          onClick={handleOnSubmitOrganisation}
           className="inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Save
