@@ -6,7 +6,7 @@ export default function Page({ params }: {
   }) {
   return (
     <div>
-      <OrganisationDataCard />
+      <OrganisationDataCard organisationId={params.organisationId} />
     </div>
   )
 }

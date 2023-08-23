@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter, usePathname } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import API from "../api/api";
 import { useSession } from "next-auth/react";

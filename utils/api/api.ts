@@ -4,6 +4,7 @@ import { signOut } from "next-auth/react";
 import { UserData } from "../data/types";
 import { InvitationData } from "../data/types";
 import { UserRole } from "../data/types";
+import { resolve } from "path";
 
 export const BASE_URL = process.env.DATABACKEND_URL;
 
@@ -164,6 +165,19 @@ const API = {
     createOrganisation: (data: {slug: string, name: string}): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
             axios.post(`/organisations`, data)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
+        })
+    },
+    updateOrganisation: (slug: string, data: any): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.post(`/organisations/${slug}/update`, data)
                 .then(response => resolve(response))
                 .catch(error => {
                     if(error.response.status === 401){
