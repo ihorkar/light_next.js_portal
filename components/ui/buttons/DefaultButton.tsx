@@ -14,7 +14,7 @@ const DefaultButton: React.FC<ButtonProps> = ({
     if (type === 'primary') {
         classNames += " text-white bg-actionprimarydefault hover:bg-actionprimaryhovered focus:ring-blue-300";
     } else if (type === 'secondary') {
-        classNames += " hover:text-gray-900 items-center text-center text-black border border-gray-500 hover:bg-gray-100 focus:ring-gray-400";
+        classNames += " hover:text-gray-900 bg-white items-center text-center text-black border border-gray-500 hover:bg-gray-100 focus:ring-gray-400";
     }
 
     return (

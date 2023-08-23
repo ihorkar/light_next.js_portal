@@ -27,7 +27,7 @@ const JumbotronPicture: React.FC<JumboProps> = ({
                     <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
                         <DefaultButton 
                             label={PrimaryButtonLabel} 
-                            onClick={() => router.push('/signup')}
+                            onClick={PrimaryButtononClick}
                             type="primary" 
                         />
                         {SecondaryButtonLabel && SecondaryButtononClick && (
