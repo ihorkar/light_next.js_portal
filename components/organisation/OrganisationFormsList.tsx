@@ -4,6 +4,7 @@ import API from "@/utils/api/api";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import FullWidthList from "../ui/lists/FullWidthList";
+import { useRouter } from "next/navigation";
 import { PencilIcon, UserMinusIcon } from "@heroicons/react/24/outline";
 
 interface ListProps {
@@ -13,6 +14,8 @@ interface ListProps {
 export default function OrganisationFormsList({ organisationId }: ListProps) {
   const [formData, setFormData] = useState<any[]>([]);
   const session = useSession();
+
+  const router = useRouter();
 
   useEffect(() => {
     //@ts-ignore
@@ -27,7 +30,7 @@ export default function OrganisationFormsList({ organisationId }: ListProps) {
   };
 
   const handleEditForm = (form: any) => {
-    // Logic for editing a user goes here
+      router.push(`/${organisationId}/campaign/${form._id}/setup`);
   };
 
   const handleDeleteForm = (form: any) => {

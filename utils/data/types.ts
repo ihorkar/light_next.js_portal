@@ -10,4 +10,11 @@ export interface InvitationData {
     role: string;
 }
 
+export interface Datablock {
+    _id: string;
+    name: string;
+    description: string;
+    datablock: any;
+  }
+
 export type UserRole = "admin" | "manager" | "agent";

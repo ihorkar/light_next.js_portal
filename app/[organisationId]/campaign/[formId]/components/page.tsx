@@ -1,4 +1,4 @@
-import HeadingBreadcrumb from "@/components/ui/headers/HeadingBreadcrumb"
+import DatablockList from "@/components/formbuilder/datablocklist"
 import { PanelStepper } from "@/components/ui/steps/PanelStepper"
 
 export default function Page({ params }: {
@@ -8,10 +8,6 @@ export default function Page({ params }: {
   }) {
   return (
     <div>
-        <HeadingBreadcrumb 
-            Headline="Form components"
-            Description="Let's select which information you need"
-        />
         <PanelStepper 
             steps={[
                 { id: '01', name: 'Setup', description: 'Basic settings', href: `/${params.organisationId}/campaign/${params.formId}/setup`, status: 'complete' },
@@ -20,7 +16,9 @@ export default function Page({ params }: {
                 { id: '04', name: 'Review', description: "Let's organise", href: '#', status: 'upcoming' },
             ]}
         />
-    <div>Form components</div>
+    <div className="mt-4">
+        <DatablockList />
+    </div>
     </div>
   )
 }

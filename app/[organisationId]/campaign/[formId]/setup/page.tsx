@@ -1,8 +1,15 @@
+'use client'
+
+import DefaultButton from "@/components/ui/buttons/DefaultButton"
 import { PanelStepper } from "@/components/ui/steps/PanelStepper"
+import { useRouter } from "next/navigation";
 
 export default function Page({ params }: {
-    params: { formId: string}
+    params: { organisationId: string, formId: string}
   }) {
+
+  const router = useRouter();
+    
   return (
     <div>
         <PanelStepper 
@@ -14,6 +21,10 @@ export default function Page({ params }: {
                 ]}
         />
     <div>Form setup</div>
+    <DefaultButton 
+      label="Next"
+      onClick={() => router.push(`/${params.organisationId}/campaign/${params.formId}/components`)}
+    />
     </div>
   )
 }
