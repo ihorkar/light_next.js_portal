@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import FullWidthList from "../ui/lists/FullWidthList";
 import { useRouter } from "next/navigation";
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { PowerIcon, ArchiveBoxIcon } from "@heroicons/react/24/outline";
 
 interface ListProps {
     organisationId: string;
@@ -29,6 +29,14 @@ export default function OrganisationFormsList({ organisationId }: ListProps) {
     });
   };
 
+  const handleToggleActive = (form: any) => {
+    // Logic to toggle form activity
+  };
+
+  const handleArchiveForm = (form: any) => {
+      // Logic to archive the form
+  };
+
   const columns = [
     {
       header: "Project",
@@ -47,9 +55,18 @@ export default function OrganisationFormsList({ organisationId }: ListProps) {
   ];
 
   const actionButtons = [
-
+    {
+      label: "Toggle Active",
+      icon: <PowerIcon className="h-5 w-5 text-blue-500" />,
+      onClick: handleToggleActive,
+    },
+    {
+      label: "Archive Form",
+      icon: <ArchiveBoxIcon className="h-5 w-5 text-red-500" />,
+      onClick: handleArchiveForm,
+    }
   ];
 
 
-  return <FullWidthList columns={columns} data={formData}  />;
+  return <FullWidthList columns={columns} data={formData} actionButtons={actionButtons}  />;
 }
