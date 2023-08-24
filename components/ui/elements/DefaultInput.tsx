@@ -3,6 +3,7 @@ import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
 
 interface InputProps {
     name: string;
+    title?: string;
     id: string;
     autoComplete: string;
     placeholder: string;
@@ -11,9 +12,11 @@ interface InputProps {
     type?: 'default' | 'warning'
     disabled?: boolean;
     value?: string;
+    pattern?: string;
+    inputType?: string;
   }
   
-  export default function DefaultInput({ name, id, autoComplete, placeholder, onChange, required, type = 'default', disabled = false, value }: InputProps) {
+  export default function DefaultInput({ name, title, id, autoComplete, placeholder, onChange, required, type = 'default', disabled = false, value, pattern, inputType = 'text' }: InputProps) {
     let classNames = "w-72 h-9 px-3 py-2 bg-white rounded border flex items-center gap-3";
     if(type === "default"){
       classNames += "border-gray-400";
@@ -25,7 +28,7 @@ interface InputProps {
       <div>
         <div className={classNames}>
           <input
-            type="text"
+            type={inputType}
             name={name}
             id={id}
             autoComplete={autoComplete}
@@ -35,6 +38,7 @@ interface InputProps {
             required={required ? required : false}
             disabled={disabled}
             value={value}
+            pattern={pattern}
           />
           {type === "warning" && <div className="pointer-events-none absolute inset-y-0 right-36 flex items-center pr-3 -top-8">
             <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />

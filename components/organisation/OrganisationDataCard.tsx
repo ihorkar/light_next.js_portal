@@ -1,6 +1,6 @@
 'use client'
 
-import { ChangeEvent, useCallback, useEffect } from "react";
+import { ChangeEvent, useCallback, useEffect, useRef } from "react";
 import DataCard from "../ui/data/DataCard";
 import { useState } from 'react';
 import API from "@/utils/api/api";
@@ -47,6 +47,7 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
     const [ address, setAddress ] = useState<Address | undefined>();
     const [ contactDetails, setContactDetails ] = useState<ContactDetails | undefined>();
     const [ payment, setPayment ] = useState<Payment | undefined>();
+    const phoneNumberInputEl = useRef<HTMLFormElement>(null)
 
     useEffect(() => {
         //@ts-ignore
@@ -71,9 +72,9 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
     }
 
     const handleEditOrganisationData = useCallback((modalName: string, data: any) => () => {
+        if(modalName === 'contactDetails' && !phoneNumberInputEl.current?.reportValidity()) return;
         API.updateOrganisation(organisationId, {[modalName]: data})
             .then(response => {
-                console.log(response, "response")
                 if(response.status === 200) {
                     let closeModal = closeModals(modalName)
                     closeModal();
@@ -88,7 +89,6 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
     }, [])
 
     const closeModals = useCallback((name: string) => () => {
-        console.log(name, "modal name")
         setIsModalsOpen((prev) => ({...prev, [name]: false}))
     }, [])
 
@@ -310,38 +310,42 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                 onCancelClick={closeModals('contactDetails')} 
                 onOkClick={handleEditOrganisationData('contactDetails', contactDetails)}
                 >      
-                    <div className="mt-2 pl-10 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
-                        <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-                            <label htmlFor="ContactEmail" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
-                            Email
-                            </label>
-                            <div className="mt-2 sm:col-span-2 sm:mt-0">
-                                <DefaultInput 
-                                    name="ContactEmail"
-                                    id="ContactEmail"
-                                    autoComplete="ContactEmail"
-                                    placeholder="ContactEmail"
-                                    onChange={modalDataChange("contactDetails", "ContactEmail")}
-                                    value={contactDetails?.ContactEmail}
-                                />
+                    <form ref={phoneNumberInputEl}>
+                        <div className="mt-2 pl-10 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
+                            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                                <label htmlFor="ContactEmail" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
+                                Email
+                                </label>
+                                <div className="mt-2 sm:col-span-2 sm:mt-0">
+                                    <DefaultInput 
+                                        name="ContactEmail"
+                                        id="ContactEmail"
+                                        autoComplete="ContactEmail"
+                                        placeholder="ContactEmail"
+                                        onChange={modalDataChange("contactDetails", "ContactEmail")}
+                                        value={contactDetails?.ContactEmail}
+                                    />
+                                </div>
+                            </div>
+                            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                                <label htmlFor="ContactPhone" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
+                                Phone number
+                                </label>
+                                <div className="mt-2 sm:col-span-2 sm:mt-0">
+                                    <DefaultInput 
+                                        title="phone number"
+                                        name="ContactPhone"
+                                        id="ContactPhone"
+                                        autoComplete="ContactPhone"
+                                        placeholder="ContactPhone"
+                                        onChange={modalDataChange("contactDetails", "ContactPhone")}
+                                        value={contactDetails?.ContactPhone}
+                                        pattern="[0-9]{10,15}"
+                                    />
+                                </div>
                             </div>
                         </div>
-                        <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-                            <label htmlFor="ContactPhone" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
-                            Phone number
-                            </label>
-                            <div className="mt-2 sm:col-span-2 sm:mt-0">
-                                <DefaultInput 
-                                    name="ContactPhone"
-                                    id="ContactPhone"
-                                    autoComplete="ContactPhone"
-                                    placeholder="ContactPhone"
-                                    onChange={modalDataChange("contactDetails", "ContactPhone")}
-                                    value={contactDetails?.ContactPhone}
-                                />
-                            </div>
-                        </div>
-                    </div>
+                    </form>
             </Modal>
         </>
     );
