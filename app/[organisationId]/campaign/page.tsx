@@ -8,6 +8,7 @@ import Modal from "@/components/ui/modal/Modal"
 import DefaultInput from "@/components/ui/elements/DefaultInput"
 import API from "@/utils/api/api"
 import { useRouter } from "next/navigation"
+import OrganisationDesignsList from "@/components/organisation/OrganisationDesignsList"
 
 
 export default function Page({ params }: {
@@ -58,7 +59,15 @@ export default function Page({ params }: {
         <SimpleHeader Headline= "Campaign" />
         <DefaultButton label="Create project" onClick={handleCreateProjectClick} />
       </div>
-    <OrganisationFormsList organisationId={params.organisationId} />
+
+    <div className="mt-4">
+      <SimpleHeader Headline= "Projects" />
+      <OrganisationFormsList organisationId={params.organisationId} />
+    </div>
+    <div className="mt-4">
+      <SimpleHeader Headline= "Designs" />
+      <OrganisationDesignsList organisationId={params.organisationId} />
+    </div>
     <Modal 
       visible={showShowCreateProjectModal} 
       title="Create a new project."

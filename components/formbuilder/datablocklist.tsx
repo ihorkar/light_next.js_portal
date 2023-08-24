@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Datablock } from '../../utils/data/types';
 import API from '@/utils/api/api';
-import { ChevronRightIcon } from '@heroicons/react/20/solid';
+import { EyeIcon } from '@heroicons/react/20/solid';
 
 
 const DatablockList: React.FC = () => {
@@ -61,7 +61,7 @@ const DatablockList: React.FC = () => {
           <div key={block._id} className="border rounded p-2 hover:bg-gray-100 cursor-pointer">
             <div className="flex items-center justify-between" onClick={() => handlePreview(block._id)}>
               <div className="flex items-center">
-                <ChevronRightIcon
+                <EyeIcon
                   className={`w-5 h-5 mr-2 ${selectedPreview === block._id ? 'text-green-500' : 'text-gray-400'}`}
                 />
                 <span>{block.name}</span>

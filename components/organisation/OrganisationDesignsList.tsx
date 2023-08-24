@@ -11,7 +11,7 @@ interface ListProps {
     organisationId: string;
   }
 
-export default function OrganisationFormsList({ organisationId }: ListProps) {
+export default function OrganisationDesignsList({ organisationId }: ListProps) {
   const [formData, setFormData] = useState<any[]>([]);
   const session = useSession();
 
@@ -24,14 +24,22 @@ export default function OrganisationFormsList({ organisationId }: ListProps) {
   }, []);
 
   const handleGetFormData = async () => {
-    await API.getFormsByOrganisation(organisationId, true).then(response => {
+    await API.getFormsByOrganisation(organisationId, false).then(response => {
       if (response.data.length > 0) setFormData(response.data);
     });
   };
 
+  const handleEditForm = (form: any) => {
+      router.push(`/${organisationId}/campaign/${form._id}/setup`);
+  };
+
+  const handleDeleteForm = (form: any) => {
+      // Logic for deleting a user goes here
+  };
+
   const columns = [
     {
-      header: "Project",
+      header: "Design",
       accessor: (item: any) => item._id,
     },
     {
@@ -40,16 +48,25 @@ export default function OrganisationFormsList({ organisationId }: ListProps) {
       isBold: true,
     },
     {
-      header: "Name",
+      header: "Project",
       accessor: (item: any) => item.project,
       isBold: true,
     }
   ];
 
   const actionButtons = [
-
+    {
+      label: "Edit Form",
+      icon: <PencilIcon className="h-5 w-5 text-blue-500" />,
+      onClick: handleEditForm,
+    },
+    {
+      label: "Delete Form",
+      icon: <TrashIcon className="h-5 w-5 text-red-500" />,
+      onClick: handleDeleteForm,
+    }
   ];
 
 
-  return <FullWidthList columns={columns} data={formData}  />;
+  return <FullWidthList columns={columns} data={formData} actionButtons={actionButtons}  />;
 }

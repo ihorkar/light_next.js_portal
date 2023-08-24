@@ -76,9 +76,14 @@ const API = {
                 })
         })
     },
-    getFormsByOrganisation: (slug: string): Promise<AxiosResponse> => {
+    getFormsByOrganisation: (slug: string, showDefinitive?: boolean): Promise<AxiosResponse> => {
+        let url = `/organisations/${slug}/forms`;
+
+        if (showDefinitive !== undefined) {
+            url += `?showDefinitive=${showDefinitive}`;
+        }
         return new Promise((resolve, reject) => {
-            axios.get(`/organisations/${slug}/forms`)
+            axios.get(url)
                 .then(response => resolve(response))
                 .catch(error => {
                     if(error.response.status === 401){
