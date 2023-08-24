@@ -76,7 +76,7 @@ export default function Home() {
                             <StatusCardPic 
                                 headline="Begin Your Journey"
                                 description="New to our platform? Set up your organisation and dive into the Light app in just a few minutes!"
-                                Icon="/contract-time.png"
+                                Icon="/launch.png"
                             />
                             <DefaultButton 
                                 label="Sign up"
