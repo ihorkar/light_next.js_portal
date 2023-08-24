@@ -5,13 +5,13 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import FullWidthList from "../ui/lists/FullWidthList";
 import { useRouter } from "next/navigation";
-import { PowerIcon, ArchiveBoxIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 interface ListProps {
     organisationId: string;
   }
 
-export default function OrganisationFormsList({ organisationId }: ListProps) {
+export default function OrganisationDesignsList({ organisationId }: ListProps) {
   const [formData, setFormData] = useState<any[]>([]);
   const session = useSession();
 
@@ -24,22 +24,22 @@ export default function OrganisationFormsList({ organisationId }: ListProps) {
   }, []);
 
   const handleGetFormData = async () => {
-    await API.getFormsByOrganisation(organisationId, true).then(response => {
+    await API.getFormsByOrganisation(organisationId, false).then(response => {
       if (response.data.length > 0) setFormData(response.data);
     });
   };
 
-  const handleToggleActive = (form: any) => {
-    // Logic to toggle form activity
+  const handleEditForm = (form: any) => {
+      router.push(`/${organisationId}/campaign/${form._id}/setup`);
   };
 
-  const handleArchiveForm = (form: any) => {
-      // Logic to archive the form
+  const handleDeleteForm = (form: any) => {
+      // Logic for deleting a user goes here
   };
 
   const columns = [
     {
-      header: "Project",
+      header: "Design",
       accessor: (item: any) => item._id,
     },
     {
@@ -48,7 +48,7 @@ export default function OrganisationFormsList({ organisationId }: ListProps) {
       isBold: true,
     },
     {
-      header: "Name",
+      header: "Project",
       accessor: (item: any) => item.project,
       isBold: true,
     }
@@ -56,14 +56,14 @@ export default function OrganisationFormsList({ organisationId }: ListProps) {
 
   const actionButtons = [
     {
-      label: "Toggle Active",
-      icon: <PowerIcon className="h-5 w-5 text-blue-500" />,
-      onClick: handleToggleActive,
+      label: "Edit Form",
+      icon: <PencilIcon className="h-5 w-5 text-blue-500" />,
+      onClick: handleEditForm,
     },
     {
-      label: "Archive Form",
-      icon: <ArchiveBoxIcon className="h-5 w-5 text-red-500" />,
-      onClick: handleArchiveForm,
+      label: "Delete Form",
+      icon: <TrashIcon className="h-5 w-5 text-red-500" />,
+      onClick: handleDeleteForm,
     }
   ];
 

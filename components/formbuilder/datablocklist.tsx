@@ -3,7 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { Datablock } from '../../utils/data/types';
 import API from '@/utils/api/api';
-import { ChevronRightIcon } from '@heroicons/react/20/solid';
+import { EyeIcon } from '@heroicons/react/20/solid';
+import { Model } from 'survey-core';
+import { Survey } from 'survey-react-ui';
+import 'survey-core/defaultV2.min.css';
 
 
 const DatablockList: React.FC = () => {
@@ -24,6 +27,22 @@ const DatablockList: React.FC = () => {
   const filteredDatablocks = datablocks.filter(block => 
     block.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const renderSurveyPreview = () => {
+    if (selectedDatablock && selectedDatablock.datablock) {
+      const surveyTemplate = {
+        "pages": [
+          {
+            "elements": [selectedDatablock.datablock]
+          }
+        ]
+      };
+
+      const survey = new Model(surveyTemplate); 
+      return <Survey model={survey} />;
+    }
+    return null;
+  };
 
   const toggleExpand = (blockId: string) => { // Updated the type here
     const updatedExpandedBlocks = new Set(expandedDatablocks);
@@ -61,7 +80,7 @@ const DatablockList: React.FC = () => {
           <div key={block._id} className="border rounded p-2 hover:bg-gray-100 cursor-pointer">
             <div className="flex items-center justify-between" onClick={() => handlePreview(block._id)}>
               <div className="flex items-center">
-                <ChevronRightIcon
+                <EyeIcon
                   className={`w-5 h-5 mr-2 ${selectedPreview === block._id ? 'text-green-500' : 'text-gray-400'}`}
                 />
                 <span>{block.name}</span>
@@ -86,9 +105,7 @@ const DatablockList: React.FC = () => {
         {selectedDatablock && (
             <div>
               <h2 className="text-xl font-bold mb-4">{selectedDatablock.name}</h2>
-              {/* Render SurveyJS preview using the selectedDatablock's JSON data */}
-              {/* This is a placeholder, integrate with SurveyJS properly */}
-              <pre className="overflow-x-scroll">{JSON.stringify(selectedDatablock.datablock, null, 2)}</pre>
+              {renderSurveyPreview()}
             </div>
           )}
       </div>
