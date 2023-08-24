@@ -200,7 +200,20 @@ const API = {
                     }
                 })
         })
-    }
+    },
+    createOrganisationForm: (slug: string, project: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.post(`/organisations/${slug}/forms`, { project: project })
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
+        })
+    },
 }
 
 export default API;

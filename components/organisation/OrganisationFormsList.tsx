@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import FullWidthList from "../ui/lists/FullWidthList";
 import { useRouter } from "next/navigation";
-import { PencilIcon, UserMinusIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 interface ListProps {
     organisationId: string;
@@ -62,7 +62,7 @@ export default function OrganisationFormsList({ organisationId }: ListProps) {
     },
     {
       label: "Delete Form",
-      icon: <UserMinusIcon className="h-5 w-5 text-red-500" />,
+      icon: <TrashIcon className="h-5 w-5 text-red-500" />,
       onClick: handleDeleteForm,
     }
   ];
