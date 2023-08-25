@@ -2,6 +2,7 @@
 
 import SimpleHeader from "@/components/ui/headers/SimpleHeader"
 import UserOrganisationList from "@/components/user/UserOrganisationList"
+import UserInvitationList from "@/components/user/UserInvitationList"
 
 export default function Page() {
 
@@ -9,10 +10,16 @@ export default function Page() {
         <>
             <div>
             <div className="inline-flex justify-between w-full">
-                <SimpleHeader Headline= "Team" />
+                <SimpleHeader Headline= "Organisations" />
             </div>
             
             <UserOrganisationList />
+
+            <div className="inline-flex justify-between w-full mt-10">
+                <SimpleHeader Headline= "Invitations" />
+            </div>
+            
+            <UserInvitationList />
             </div>
         </>
     )

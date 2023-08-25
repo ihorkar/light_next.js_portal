@@ -53,7 +53,7 @@ export default function UserOrganisationList() {
 
   const columns = [
     {
-      header: "organisationId",
+      header: "OrganisationId",
       accessor: (item: any) => item.organisationId._id,
     },
     {

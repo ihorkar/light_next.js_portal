@@ -26,12 +26,6 @@ export default function Layout({
           href: `/user-profile/organisation`,
           icon: 'BuildingOfficeIcon',
           current: false,
-        },
-        {
-          name: 'invitations',
-          href: `/user-profile/invitations`,
-          icon: 'UserPlusIcon',
-          current: false,
         }
       ]
     }

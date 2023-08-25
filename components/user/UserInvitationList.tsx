@@ -25,7 +25,12 @@ export default function UserInvitationList() {
     await API.getUserInvitations()
       .then(response => {
         if (response.data.length > 0){
-            setUserInvitations(response.data);
+            const invitations = response.data;
+            let pendingInvitations: any[] = [];
+            invitations.map((invitation: any) => {
+                if(!invitation.used) pendingInvitations.push(invitation)
+            })
+            setUserInvitations(pendingInvitations);
         }
       })
       .catch(error => {
@@ -83,7 +88,7 @@ export default function UserInvitationList() {
 
   return (
     <>
-    {userInvitations.length > 0 && <FullWidthList columns={columns} data={userInvitations} actionButtons={actionButtons} />}
+    {userInvitations.length > 0 ? <FullWidthList columns={columns} data={userInvitations} actionButtons={actionButtons} /> : <p className="mt-10 text-center text-lg text-gray-500">No Invitations</p>}
     <Modal
       visible={showAcceptModal} 
       title="Accept this invitation?"
