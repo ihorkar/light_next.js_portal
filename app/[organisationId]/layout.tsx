@@ -46,8 +46,8 @@ export default function Layout({
               <CheckOrganisationExists organisationId={params.organisationId}>
                 <SideNavWithSub
                   menuitems={navigation.menuitems}
+                  isUserProfilePage={false}
                 />
-                
                 <ContainerFullWidth>
                     {children}
                 </ContainerFullWidth>

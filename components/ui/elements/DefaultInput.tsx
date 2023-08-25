@@ -32,7 +32,7 @@ interface InputProps {
             name={name}
             id={id}
             autoComplete={autoComplete}
-            className="flex-grow border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm focus:outline-none"
+            className="flex-grow border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm focus:outline-none disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
             placeholder={placeholder}
             onChange={onChange}
             required={required ? required : false}

@@ -219,6 +219,54 @@ const API = {
                 })
         })
     },
+    updateUserInfo: (data: any): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.post(`/user`, data)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
+        })
+    },
+    deleteUserOrganisations: (organisationUserId: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.post(`/userorganisations/delete`, {organisationUserId: organisationUserId})
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
+        })
+    },
+    getUserInvitations: (): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.get(`/invitation`)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
+        })
+    },
+    acceptInvitation: (token: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.post(`public/accept-invitation/${token}`)
+                .then(response => resolve(response))
+                .catch(error => {
+                    reject(error)
+                })
+        })
+    }
 }
 
 export default API;

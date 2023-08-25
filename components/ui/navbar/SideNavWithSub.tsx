@@ -6,14 +6,16 @@ import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import {
   CalendarIcon,
   ChartPieIcon,
-  DocumentDuplicateIcon,
   FolderIcon,
   HomeIcon,
   UsersIcon,
   BuildingOfficeIcon,
   ClipboardDocumentListIcon,
-  WrenchScrewdriverIcon
+  WrenchScrewdriverIcon,
+  UserIcon,
+  UserPlusIcon
 } from '@heroicons/react/24/outline'
+import { useRouter } from 'next/navigation';
 
 function classNames(...classes:any) {
   return classes.filter(Boolean).join(' ')
@@ -35,6 +37,7 @@ export interface MenuItem {
 
 export interface NavProps {
   menuitems: MenuItem[];
+  isUserProfilePage?: boolean;
 }
 
 const icons: { [iconName: string]: React.ElementType } = {
@@ -45,15 +48,17 @@ const icons: { [iconName: string]: React.ElementType } = {
   HomeIcon:HomeIcon,
   UsersIcon:UsersIcon,
   BuildingOfficeIcon:BuildingOfficeIcon,
-  WrenchScrewdriverIcon:WrenchScrewdriverIcon
+  WrenchScrewdriverIcon:WrenchScrewdriverIcon,
+  UserIcon: UserIcon,
+  UserPlusIcon: UserPlusIcon
 };
 
-const SideNavWithSub: React.FC<NavProps> = ({
-  menuitems}
-      ) => {
+const SideNavWithSub: React.FC<NavProps> = ({menuitems, isUserProfilePage}) => {
+  const router = useRouter()
+
   return (
     <div className="flex grow flex-col max-w-xs h-screen gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
-      <div className="flex h-16 shrink-0 items-center">
+      <div onClick={() => router.push('/')} className="flex h-16 shrink-0 items-center cursor-pointer">
         <img
           className="h-8 w-auto"
           src="/briggsplus.png"
@@ -124,7 +129,7 @@ const SideNavWithSub: React.FC<NavProps> = ({
               ))}
             </ul>
           </li>
-          <li className="-mx-6 mt-auto">
+          {!isUserProfilePage && <li className="-mx-6 mt-auto">
             <a
               href="#"
               className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50"
@@ -137,7 +142,7 @@ const SideNavWithSub: React.FC<NavProps> = ({
               <span className="sr-only">Your profile</span>
               <span aria-hidden="true">John Doe</span>
             </a>
-          </li>
+          </li>}
         </ul>
       </nav>
     </div>
