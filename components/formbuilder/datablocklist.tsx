@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Datablock } from '../../utils/data/types';
 import API from '@/utils/api/api';
-import { EyeIcon } from '@heroicons/react/20/solid';
+import { EyeIcon, ArrowPathIcon } from '@heroicons/react/20/solid';
 import { Model } from 'survey-core';
 import { Survey } from 'survey-react-ui';
 import 'survey-core/defaultV2.min.css';
@@ -14,6 +14,7 @@ const DatablockList: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [expandedDatablocks, setExpandedDatablocks] = useState<Set<string>>(new Set());
   const [selectedPreview, setSelectedPreview] = useState<string | null>(null);
+  const [refreshToggle, setRefreshToggle] = useState<boolean>(false);
 
   useEffect(() => {
     getFormDatablocks()
@@ -23,6 +24,10 @@ const DatablockList: React.FC = () => {
       const formDatablocks = await API.getFormDatablocks();
       setDatablocks(formDatablocks.data);
   }
+
+  const handleRefresh = () => {
+    setRefreshToggle(prev => !prev);
+  };
 
   const filteredDatablocks = datablocks.filter(block => 
     block.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -104,7 +109,10 @@ const DatablockList: React.FC = () => {
       <div className="flex-1">
         {selectedDatablock && (
             <div>
-              <h2 className="text-xl font-bold mb-4">{selectedDatablock.name}</h2>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold">{selectedDatablock.name}</h2>
+                <ArrowPathIcon className="w-5 h-5 cursor-pointer" onClick={handleRefresh} />
+              </div>
               {renderSurveyPreview()}
             </div>
           )}
