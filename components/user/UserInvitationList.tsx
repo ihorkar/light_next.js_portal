@@ -4,14 +4,12 @@ import API from "@/utils/api/api";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import FullWidthList from "../ui/lists/FullWidthList";
-import { useRouter } from "next/navigation";
 import { UserPlusIcon  } from "@heroicons/react/24/outline";
 import Modal from "../ui/modal/Modal";
 
 export default function UserInvitationList() {
   const [showAcceptModal, setShowAcceptModal] = useState(false)
   const [modalData, setModalData] = useState<any>()
-  const router = useRouter()
   const session = useSession();
   const [userInvitations, setUserInvitations] = useState<any[]>([])
 
@@ -32,9 +30,8 @@ export default function UserInvitationList() {
             })
             setUserInvitations(pendingInvitations);
         }
-      })
-      .catch(error => {
-        if(error.response.status === 404) router.push('/restricted')
+      }).catch(error => {
+        console.log("Error while getting the User Invitations", error)
       })
   }
 
