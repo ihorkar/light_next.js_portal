@@ -23,9 +23,7 @@ export default function UserOrganisationList() {
   const getUserOrganisations = async () => {
     await API.getOrganisationsByUser()
       .then(response => {
-        if (response.data.length > 0){
             setUserOrganisations(response.data);
-        }
       })
       .catch(error => {
         console.log("Error while getting the User Organisations", error)
