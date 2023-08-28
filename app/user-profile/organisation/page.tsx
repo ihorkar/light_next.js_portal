@@ -9,17 +9,17 @@ export default function Page() {
     return (
         <>
             <div>
-            <div className="inline-flex justify-between w-full">
-                <SimpleHeader Headline= "Organisations" />
-            </div>
+                <div className="inline-flex justify-between w-full">
+                    <SimpleHeader Headline= "Organisations" />
+                </div>
             
-            <UserOrganisationList />
+                <UserOrganisationList />
 
-            <div className="inline-flex justify-between w-full mt-10">
-                <SimpleHeader Headline= "Invitations" />
-            </div>
+                <div className="inline-flex justify-between w-full mt-10">
+                    <SimpleHeader Headline= "Invitations" />
+                </div>
             
-            <UserInvitationList />
+                <UserInvitationList />
             </div>
         </>
     )

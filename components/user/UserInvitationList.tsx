@@ -33,9 +33,6 @@ export default function UserInvitationList() {
             setUserInvitations(pendingInvitations);
         }
       })
-      .catch(error => {
-        if(error.response.status === 404) router.push('/restricted')
-      })
   }
 
   const handleAcceptInvitationModalOpen = (data: any) => {

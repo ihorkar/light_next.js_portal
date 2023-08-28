@@ -1,6 +1,9 @@
 'use client'
 
-import React from 'react';
+import React, { useState } from 'react';
+import API from "@/utils/api/api"
+import { useCallback } from "react"
+import DefaultButton from "@/components/ui/buttons/DefaultButton"
 import { Disclosure } from '@headlessui/react'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import {
@@ -16,6 +19,7 @@ import {
   UserPlusIcon
 } from '@heroicons/react/24/outline'
 import { useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 
 function classNames(...classes:any) {
   return classes.filter(Boolean).join(' ')
@@ -55,6 +59,31 @@ const icons: { [iconName: string]: React.ElementType } = {
 
 const SideNavWithSub: React.FC<NavProps> = ({menuitems, isUserProfilePage}) => {
   const router = useRouter()
+  const [ isUserOrganisation, setIsUserOrganisation ] = useState<boolean>(true)
+  
+  const deleteAccount = () => {
+    API.deleteUserAccount()
+      .then(response => {
+        if(response.status === 200){
+          signOut();
+        }
+      })
+      .catch(error => console.log("Error deleting the user account", error))
+  }
+  
+  const handleOnclickDeleteBtn = useCallback(() => {
+      API.getOrganisationsByUser()
+      .then(response => {
+        if(response.data.length > 0) {
+          setIsUserOrganisation(true)
+          alert("You have still the relations with organisations.")
+        } else {
+          setIsUserOrganisation(false)
+          deleteAccount()
+        }
+      })
+      .catch(error => {console.log("Error while getting user organisation", error)})
+  }, [])
 
   return (
     <div className="flex grow flex-col max-w-xs h-screen gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
@@ -129,20 +158,26 @@ const SideNavWithSub: React.FC<NavProps> = ({menuitems, isUserProfilePage}) => {
               ))}
             </ul>
           </li>
-          {!isUserProfilePage && <li className="-mx-6 mt-auto">
+          {!isUserProfilePage ? <li className="-mx-6 mt-auto">
             <div
               onClick={() => router.push('/user-profile')}
-              className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50 cursor-pointer"
+              className="flex items-center gap-x-4 px-6 py-3 font-semibold leading-6 text-gray-900 hover:bg-gray-50 cursor-pointer"
             >
-              <img
-                className="h-8 w-8 rounded-full bg-gray-50"
-                src="johndoeavatar.png"
-                alt=""
-              />
+            <img
+              className="h-8 w-8 rounded-full bg-gray-50"
+              src="johndoeavatar.png"
+              alt=""
+            />
               <span className="sr-only">Your profile</span>
-              <span aria-hidden="true">John Doe</span>
+              <span aria-hidden="true">Jhon Doe</span>
             </div>
-          </li>}
+          </li> : <li className="flex justify-center mt-auto">
+            <DefaultButton
+                onClick={handleOnclickDeleteBtn}
+                label={"delete account"}
+            />
+          </li>
+          }
         </ul>
       </nav>
     </div>

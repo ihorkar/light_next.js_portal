@@ -4,18 +4,14 @@ import API from "@/utils/api/api";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import FullWidthList from "../ui/lists/FullWidthList";
-import { useRouter } from "next/navigation";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Modal from "../ui/modal/Modal";
 
 export default function UserOrganisationList() {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [modalData, setModalData] = useState<any>()
-  const router = useRouter()
   const session = useSession();
   const [userOrganisations, setUserOrganisations] = useState<any[]>([])
-
-  const roleOptions = ["admin", "agent", "manager"];
 
   useEffect(() => {
     //@ts-ignore
@@ -29,9 +25,6 @@ export default function UserOrganisationList() {
         if (response.data.length > 0){
             setUserOrganisations(response.data);
         }
-      })
-      .catch(error => {
-        if(error.response.status === 404) router.push('/restricted')
       })
   }
 
@@ -81,7 +74,7 @@ export default function UserOrganisationList() {
 
   return (
     <>
-    {userOrganisations.length > 0 && <FullWidthList columns={columns} data={userOrganisations} actionButtons={actionButtons} />}
+    {userOrganisations.length > 0 ? <FullWidthList columns={columns} data={userOrganisations} actionButtons={actionButtons} /> : <p className="mt-10 text-center text-lg text-gray-500">No Organisations</p>}
     <Modal
       visible={showDeleteModal} 
       title="Delete this user?"

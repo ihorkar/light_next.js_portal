@@ -4,7 +4,6 @@ import { signOut } from "next-auth/react";
 import { UserData } from "../data/types";
 import { InvitationData } from "../data/types";
 import { UserRole } from "../data/types";
-import { resolve } from "path";
 
 export const BASE_URL = process.env.DATABACKEND_URL;
 
@@ -119,6 +118,13 @@ const API = {
             axios.get('/user')
                 .then(response => resolve(response))
                 .catch(error => reject(error))
+        })
+    },
+    deleteUserAccount: (): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.put('/user/deleteUser')
+            .then(response => resolve(response))
+            .catch(error => reject(error))
         })
     },
     acceptOrganisationInvitation: (token: string): Promise<AxiosResponse> => {
