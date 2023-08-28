@@ -1,4 +1,5 @@
 'use client'
+
 import { useEffect, useState } from "react";
 import API from "@/utils/api/api";
 import { useSession } from "next-auth/react";
@@ -25,6 +26,9 @@ export default function UserOrganisationList() {
         if (response.data.length > 0){
             setUserOrganisations(response.data);
         }
+      })
+      .catch(error => {
+        console.log("Error while getting the User Organisations", error)
       })
   }
 
