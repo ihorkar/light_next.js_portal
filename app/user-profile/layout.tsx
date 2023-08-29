@@ -1,6 +1,9 @@
+'use client'
+
 import ContainerFullWidth from "@/components/ui/Layout/ContainerFullWidth"
 import SideNavWithSub, { NavProps } from "@/components/ui/navbar/SideNavWithSub"
 import CheckLoginIsRequired from '../../utils/auth/CheckLoginIsRequired'
+import { usePathname } from "next/navigation"
 
 export default function Layout({
     children,
@@ -12,6 +15,7 @@ export default function Layout({
     }
   }) {
 
+    const pathName = usePathname();
     // Define menu
     const navigation: NavProps = {
       menuitems: [
@@ -19,13 +23,13 @@ export default function Layout({
           name: 'Profile',
           href: `/user-profile`,
           icon: 'UserIcon',
-          current: false,
+          current: pathName === '/user-profile',
         },
         {
           name: 'organisations',
           href: `/user-profile/organisation`,
           icon: 'BuildingOfficeIcon',
-          current: false,
+          current: pathName === '/user-profile/organisation',
         }
       ]
     }

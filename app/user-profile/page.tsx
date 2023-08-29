@@ -20,6 +20,7 @@ const UserProfile = () => {
     const session = useSession()
     const [ userData, setUserData ] = useState<UserData | undefined>()
     const [ isEdited, setIsEdited ] = useState(false)
+    const [ isUserOrganisation, setIsUserOrganisation ] = useState<boolean>(true)
 
     useEffect(() => {
         //@ts-ignore
@@ -75,6 +76,31 @@ const UserProfile = () => {
     const handelChangeUserData = useCallback((field: string) => (e: ChangeEvent<HTMLInputElement>) => {
         setUserData((prev) => ({...prev, [field]: e.target.value}))
     }, [])
+  
+    const handleOnclickDeleteBtn = useCallback(() => {
+        API.getOrganisationsByUser()
+        .then(response => {
+          if(response.data.length > 0) {
+            setIsUserOrganisation(true)
+            alert("You have still the relations with organisations.")
+          } else {
+            setIsUserOrganisation(false)
+            deleteAccount()
+          }
+        })
+        .catch(error => {console.log("Error while getting user organisation", error)})
+    }, [])
+    
+    const deleteAccount = () => {
+        API.deleteUserAccount()
+        .then(response => {
+            if(response.status === 200){
+            signOut();
+            }
+        })
+        .catch(error => console.log("Error deleting the user account", error))
+    }
+
 
     return (
         <>
@@ -171,6 +197,17 @@ const UserProfile = () => {
                         />
                     </div>
                 </div>
+            </div>
+                
+            <div className="inline-flex justify-end w-full mt-10">
+                <DefaultButton
+                    onClick={signOut}
+                    label={"log out"}
+                />
+                <DefaultButton
+                    onClick={handleOnclickDeleteBtn}
+                    label={"delete account"}
+                />
             </div>
         </>
     )
