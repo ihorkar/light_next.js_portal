@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import API from "@/utils/api/api"
 import { useCallback } from "react"
 import DefaultButton from "@/components/ui/buttons/DefaultButton"
@@ -60,6 +60,18 @@ const icons: { [iconName: string]: React.ElementType } = {
 const SideNavWithSub: React.FC<NavProps> = ({menuitems, isUserProfilePage}) => {
   const router = useRouter()
   const [ isUserOrganisation, setIsUserOrganisation ] = useState<boolean>(true)
+  const [ userData, setUserData ] = useState<any>();
+
+  useEffect(() => {
+    handleGetUserData()
+  }, [])
+
+  const handleGetUserData = () => {
+    API.getUserData()
+    .then(response => {
+      setUserData(response.data[0])
+    })
+  }
   
   const deleteAccount = () => {
     API.deleteUserAccount()
@@ -163,13 +175,13 @@ const SideNavWithSub: React.FC<NavProps> = ({menuitems, isUserProfilePage}) => {
               onClick={() => router.push('/user-profile')}
               className="flex items-center gap-x-4 px-6 py-3 font-semibold leading-6 text-gray-900 hover:bg-gray-50 cursor-pointer"
             >
-            <img
-              className="h-8 w-8 rounded-full bg-gray-50"
-              src="johndoeavatar.png"
-              alt=""
-            />
+              <img
+                className="h-8 w-8 rounded-full bg-gray-50"
+                src="johndoeavatar.png"
+                alt=""
+              />
               <span className="sr-only">Your profile</span>
-              <span aria-hidden="true">Jhon Doe</span>
+              {userData && <span aria-hidden="true">{`${userData?.firstName} ${userData?.lastName}`}</span>}
             </div>
           </li> : <li className="flex justify-center mt-auto">
             <DefaultButton
