@@ -7,6 +7,7 @@ import axios from "axios"
 import { useSession } from "next-auth/react"
 import DefaultInput from "@/components/ui/elements/DefaultInput"
 import DefaultButton from "@/components/ui/buttons/DefaultButton"
+import Modal from "@/components/ui/modal/Modal"
 import { signOut } from "next-auth/react"
 
 export interface UserData {
@@ -21,6 +22,7 @@ const UserProfile = () => {
     const [ userData, setUserData ] = useState<UserData | undefined>()
     const [ isEdited, setIsEdited ] = useState(false)
     const [ isUserOrganisation, setIsUserOrganisation ] = useState<boolean>(true)
+    const [showShowCreateProjectModal, setShowCreateProjectModal] = useState(false);
 
     useEffect(() => {
         //@ts-ignore
@@ -76,16 +78,26 @@ const UserProfile = () => {
     const handelChangeUserData = useCallback((field: string) => (e: ChangeEvent<HTMLInputElement>) => {
         setUserData((prev) => ({...prev, [field]: e.target.value}))
     }, [])
+
+    const handleShowDeleteAccountModal = useCallback(() => {
+      setShowCreateProjectModal(true)
+    }, [])
+
+    const handleCloseDeleteAccountModal = useCallback(() => {
+      setShowCreateProjectModal(false)
+    }, [])
   
     const handleOnclickDeleteBtn = useCallback(() => {
         API.getOrganisationsByUser()
         .then(response => {
           if(response.data.length > 0) {
             setIsUserOrganisation(true)
+            setShowCreateProjectModal(false)
             alert("You have still the relations with organisations.")
           } else {
             setIsUserOrganisation(false)
             deleteAccount()
+            setShowCreateProjectModal(false)
           }
         })
         .catch(error => {console.log("Error while getting user organisation", error)})
@@ -204,8 +216,18 @@ const UserProfile = () => {
                     onClick={signOut}
                     label={"log out"}
                 />
+                <Modal 
+                  visible={showShowCreateProjectModal} 
+                  title="Delete Account"
+                  ok_text={"Delete"}
+                  cancel_text={"Cancel"} 
+                  onCancelClick={handleCloseDeleteAccountModal} 
+                  onOkClick={handleOnclickDeleteBtn}
+                >
+                    <p className="mx-12">Do you really delete account?</p>
+                </Modal>
                 <DefaultButton
-                    onClick={handleOnclickDeleteBtn}
+                    onClick={handleShowDeleteAccountModal}
                     label={"delete account"}
                 />
             </div>
