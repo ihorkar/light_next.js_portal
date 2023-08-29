@@ -37,7 +37,7 @@ export default function Layout({
           name: 'Campaign',
           href: `/${params.organisationId}/campaign`,
           icon: 'WrenchScrewdriverIcon',
-          current: pathName === `/${params.organisationId}/campaign`,
+          current: pathName.includes(`/${params.organisationId}/campaign`),
         },
         { name: 'Results', href: `/${params.organisationId}/results`, icon: 'ClipboardDocumentListIcon', current: pathName === `/${params.organisationId}/results` },
       ]
