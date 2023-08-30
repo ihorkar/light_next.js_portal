@@ -41,16 +41,19 @@ export default function OrganisationFormsList({ organisationId }: ListProps) {
     {
       header: "Project",
       accessor: (item: any) => item._id,
+      name: "_id"
     },
     {
       header: "Description",
       accessor: (item: any) => item.formDescription,
       isBold: true,
+      name: "formDescription"
     },
     {
       header: "Name",
       accessor: (item: any) => item.project,
       isBold: true,
+      name: "project"
     }
   ];
 
