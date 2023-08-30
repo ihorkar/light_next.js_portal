@@ -50,19 +50,23 @@ export default function UserOrganisationList() {
     {
       header: "OrganisationId",
       accessor: (item: any) => item.organisationId._id,
+      name: "organisationId._id"
     },
     {
       header: "Name",
       accessor: (item: any) => item.organisationId.name,
       isBold: true,
+      name: "organisationId.name"
     },
     {
       header: "Slug",
       accessor: (item: any) => item.organisationId.slug,
+      name: "organisationId.slug"
     },
     {
       header: "User Role",
       accessor: (item: any) => item.role,
+      name: "role"
     },
   ];
 

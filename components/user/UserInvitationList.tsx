@@ -55,23 +55,28 @@ export default function UserInvitationList() {
     {
       header: "InvitationId",
       accessor: (item: any) => item._id,
+      name: "_id"
     },
     {
       header: "Organisation Name",
       accessor: (item: any) => item.organisationId.name,
       isBold: true,
+      name: "organisationId.name"
     },
     {
       header: "Organisation Slug",
       accessor: (item: any) => item.organisationId.slug,
+      name: "organisationId.slug"
     },
     {
       header: "Role",
       accessor: (item: any) => item.userRole,
+      name: "userRole"
     },
     {
       header: "Accepted",
       accessor: (item: any) => item.used ? 'true' : 'false',
+      name: "used"
     }
   ];
 

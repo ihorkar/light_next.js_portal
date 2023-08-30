@@ -86,19 +86,23 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
     {
       header: "Role",
       accessor: (item: any) => item.user.role,
+      name: "user.role"
     },
     {
       header: "Username",
       accessor: (item: any) => item.user.userId.userName,
       isBold: true,
+      name: "user.userId.userName"
     },
     {
       header: "Email",
       accessor: (item: any) => item.user.userId.email,
+      name: "user.userId.email"
     },
     {
       header: "IdentityId",
       accessor: (item: any) => item.user.userId.identityId,
+      name: "user.userId.identityId"
     },
   ];
 

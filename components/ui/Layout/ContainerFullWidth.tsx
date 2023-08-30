@@ -1,5 +1,7 @@
 export default function ContainerFullWidth({ children }: { children: React.ReactNode }) {
   return <div className="
+                  h-screen
+                  overflow-y-scroll
                   py-10 
                   lg:pl-72
                   mx-auto 

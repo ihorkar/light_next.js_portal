@@ -40,19 +40,23 @@ export default function OrganisationResultsList({ organisationId }: ListProps) {
     {
       header: "Result",
       accessor: (item: any) => item._id,
+      name: "_id"
     },
     {
       header: "Form",
       accessor: (item: any) => item.form,
       isBold: true,
+      name: "form"
     },
     {
       header: "Agent",
       accessor: (item: any) => item.agent.userName,
+      name: "agent.userName"
     },
     {
       header: "Date",
       accessor: (item: any) => item.date,
+      name: "date"
     },
   ];
 
