@@ -13,9 +13,14 @@ interface ListProps {
 
 export default function OrganisationFormsList({ organisationId }: ListProps) {
   const [formData, setFormData] = useState<any[]>([]);
+  const [toggleActive, setToggleActive] = useState(true)
   const session = useSession();
 
   const router = useRouter();
+
+  function classNames(...classes:any) {
+    return classes.filter(Boolean).join(' ')
+  }
 
   useEffect(() => {
     //@ts-ignore
@@ -30,11 +35,26 @@ export default function OrganisationFormsList({ organisationId }: ListProps) {
   };
 
   const handleToggleActive = (form: any) => {
-    // Logic to toggle form activity
+    API.deactivateOrganisationForm(organisationId, form._id)
+      .then(response => {
+        setToggleActive(true)
+      })
+      .catch(error => console.log("Error while creating organisation", error))
   };
 
+  const handleToggleDeactive = (form: any) => {
+    API.activateOrganisationForm(organisationId, form._id)
+      .then(response => {
+        setToggleActive(false)
+      })
+      .catch(error => console.log("Error while creating organisation", error))
+  };
   const handleArchiveForm = (form: any) => {
-      // Logic to archive the form
+    API.updateArchiveForm(organisationId, form._id)
+    .then(response => {
+      alert("Archived successfully!")
+    })
+    .catch(error => console.log("Errors while updating archived form", error))
   };
 
   const columns = [
@@ -60,12 +80,18 @@ export default function OrganisationFormsList({ organisationId }: ListProps) {
   const actionButtons = [
     {
       label: "Toggle Active",
-      icon: <PowerIcon className="h-5 w-5 text-blue-500" />,
-      onClick: handleToggleActive,
+      icon: <PowerIcon className={classNames(
+          toggleActive ? 'text-red-500' : 'text-blue-500',
+          'h-5 w-5'
+        )} />,
+      onClick: !toggleActive ? handleToggleActive : handleToggleDeactive,
     },
     {
       label: "Archive Form",
-      icon: <ArchiveBoxIcon className="h-5 w-5 text-red-500" />,
+      icon: <ArchiveBoxIcon className={classNames(
+          toggleActive ? '' : 'hidden',
+          'h-5 w-5 text-blue-500'
+        )} />,
       onClick: handleArchiveForm,
     }
   ];
