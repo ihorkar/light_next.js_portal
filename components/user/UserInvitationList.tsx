@@ -85,6 +85,7 @@ export default function UserInvitationList() {
       label: "Accept",
       icon: <UserPlusIcon className="h-5 w-5 text-red-500" />,
       onClick: handleAcceptInvitationModalOpen,
+      visible: (item: any) => true
     }
   ];
 

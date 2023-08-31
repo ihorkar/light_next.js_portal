@@ -13,7 +13,6 @@ interface ListProps {
 
 export default function OrganisationFormsList({ organisationId }: ListProps) {
   const [formData, setFormData] = useState<any[]>([]);
-  const [toggleActive, setToggleActive] = useState(true)
   const session = useSession();
 
   const router = useRouter();
@@ -34,21 +33,34 @@ export default function OrganisationFormsList({ organisationId }: ListProps) {
     });
   };
 
+  const handleOnclickActive = (form: any) => {
+    if(form.active){
+      handleToggleDeactive(form)
+    }else{
+      handleToggleActive(form)
+    }
+  }
+
   const handleToggleActive = (form: any) => {
-    API.deactivateOrganisationForm(organisationId, form._id)
+    API.activateOrganisationForm(organisationId, form._id)
       .then(response => {
-        setToggleActive(true)
+        if(response.status === 201){
+          handleGetFormData()
+        }
       })
       .catch(error => console.log("Error while creating organisation", error))
   };
 
   const handleToggleDeactive = (form: any) => {
-    API.activateOrganisationForm(organisationId, form._id)
+    API.deactivateOrganisationForm(organisationId, form._id)
       .then(response => {
-        setToggleActive(false)
+        if(response.status === 201){
+          handleGetFormData()
+        }
       })
       .catch(error => console.log("Error while creating organisation", error))
   };
+
   const handleArchiveForm = (form: any) => {
     API.updateArchiveForm(organisationId, form._id)
     .then(response => {
@@ -80,19 +92,21 @@ export default function OrganisationFormsList({ organisationId }: ListProps) {
   const actionButtons = [
     {
       label: "Toggle Active",
-      icon: <PowerIcon className={classNames(
-          toggleActive ? 'text-red-500' : 'text-blue-500',
-          'h-5 w-5'
-        )} />,
-      onClick: !toggleActive ? handleToggleActive : handleToggleDeactive,
+      icon: <PowerIcon className='text-red-500 h-5 w-5' />,
+      onClick: handleOnclickActive,
+      visible: (item: any) => !item.active
+    },
+    {
+      label: "Toggle Deactive",
+      icon: <PowerIcon  className='text-blue-500 h-5 w-5' />,
+      onClick: handleOnclickActive,
+      visible: (item: any) => item.active
     },
     {
       label: "Archive Form",
-      icon: <ArchiveBoxIcon className={classNames(
-          toggleActive ? '' : 'hidden',
-          'h-5 w-5 text-blue-500'
-        )} />,
+      icon: <ArchiveBoxIcon className='h-5 w-5 text-blue-500' />,
       onClick: handleArchiveForm,
+      visible: (item: any) => !item.active
     }
   ];
 

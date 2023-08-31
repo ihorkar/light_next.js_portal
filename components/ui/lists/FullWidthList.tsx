@@ -15,6 +15,7 @@ interface ActionButton {
   label: string;
   icon: JSX.Element;
   onClick: (...params: any) => void;
+  visible: (item: any) => any;
 }
 
 interface FullWidthListProps {
@@ -38,14 +39,6 @@ export default function FullWidthList({
   const [ sortedColumn, setSortedColumn ] = useState("")
   const [ itemsPerPage, setItemsPerPage ] = useState(10)
   const [ currentPage, setCurrentPage ] = useState(1)
-
-
-  const sortFunctions = {
-    string: (a: string, b: string) => a.localeCompare(b),
-    number: (a: number, b: number) => a - b,
-    //@ts-ignore
-    date: (a: string, b: string) => new Date(a) - new Date(b)
-  }
 
   const sortFunction = (a: string, b: string) => {
     return a.localeCompare(b)
@@ -147,13 +140,13 @@ export default function FullWidthList({
                       <td className="px-4 py-4"><p className="text-sm text-red-500 m-auto">You</p></td> : 
                       <td className="px-4 py-4">
                         {/*@ts-ignore*/}
-                        {actionButtons.map((btn, btnIndex) =>  (
+                        {actionButtons.map((btn, btnIndex) =>  btn.visible(item) && (
                           <button
                             key={btnIndex}
                             onClick={() => btn.onClick(item)}
                             aria-label={btn.label}
                             className="mr-2"
-                          >
+                          > 
                             {btn.icon}
                           </button>
                         ))}

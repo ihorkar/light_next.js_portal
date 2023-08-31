@@ -65,6 +65,7 @@ export default function OrganisationResultsList({ organisationId }: ListProps) {
       label: "View Contract",
       icon: <DocumentIcon className="h-5 w-5 text-green-500" />,
       onClick: (item: any) => handleViewContract(item._id),
+      visible: (item: any) => true
     }
   ];
 

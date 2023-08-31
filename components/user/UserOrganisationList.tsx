@@ -75,6 +75,7 @@ export default function UserOrganisationList() {
       label: "Delete User",
       icon: <TrashIcon className="h-5 w-5 text-red-500" />,
       onClick: handleDeleteModalOpen,
+      visible: (item: any) => true
     }
   ];
 

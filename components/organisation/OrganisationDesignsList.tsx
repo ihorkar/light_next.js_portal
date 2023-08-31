@@ -56,11 +56,13 @@ export default function OrganisationDesignsList({ organisationId }: ListProps) {
       label: "Edit Form",
       icon: <PencilIcon className="h-5 w-5 text-blue-500" />,
       onClick: handleEditForm,
+      visible: (item: any) => true
     },
     {
       label: "Delete Form",
       icon: <TrashIcon className="h-5 w-5 text-red-500" />,
       onClick: handleDeleteForm,
+      visible: (item: any) => true
     }
   ];
 

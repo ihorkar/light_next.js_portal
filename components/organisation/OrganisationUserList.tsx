@@ -111,11 +111,13 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
       label: "Edit User",
       icon: <PencilIcon className="h-5 w-5 text-blue-500" />,
       onClick: handleEditModalOpen,
+      visible: (item: any) => true
     },
     {
       label: "Delete User",
       icon: <UserMinusIcon className="h-5 w-5 text-red-500" />,
       onClick: handleDeleteModalOpen,
+      visible: (item: any) => true
     }
   ];
 
