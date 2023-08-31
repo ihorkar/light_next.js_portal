@@ -299,9 +299,9 @@ const API = {
                 })
         })
     },
-    updateArchiveForm: (slug: string, formId: string): Promise<AxiosResponse> => {
+    applyArchiveForm: (slug: string, formId: string): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
-            axios.patch(`/organisations/${slug}/forms/${formId}/updateArchiveForm`)
+            axios.patch(`/organisations/${slug}/forms/${formId}/archive`)
                 .then(response => resolve(response))
                 .catch(error => {
                     if(error.response.status === 401){

@@ -15,12 +15,6 @@ export default function OrganisationFormsList({ organisationId }: ListProps) {
   const [formData, setFormData] = useState<any[]>([]);
   const session = useSession();
 
-  const router = useRouter();
-
-  function classNames(...classes:any) {
-    return classes.filter(Boolean).join(' ')
-  }
-
   useEffect(() => {
     //@ts-ignore
     if (session.data?.accessToken) axios.defaults.headers.common["Authorization"] = `${session.data?.accessToken}`;
@@ -29,7 +23,7 @@ export default function OrganisationFormsList({ organisationId }: ListProps) {
 
   const handleGetFormData = async () => {
     await API.getFormsByOrganisation(organisationId, true).then(response => {
-      if (response.data.length > 0) setFormData(response.data);
+      if(response.status === 200) setFormData(response.data);
     });
   };
 
@@ -62,9 +56,11 @@ export default function OrganisationFormsList({ organisationId }: ListProps) {
   };
 
   const handleArchiveForm = (form: any) => {
-    API.updateArchiveForm(organisationId, form._id)
+    API.applyArchiveForm(organisationId, form._id)
     .then(response => {
-      alert("Archived successfully!")
+      if(response.status === 201){
+        handleGetFormData()
+      }
     })
     .catch(error => console.log("Errors while updating archived form", error))
   };

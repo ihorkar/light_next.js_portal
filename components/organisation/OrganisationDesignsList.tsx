@@ -25,7 +25,7 @@ export default function OrganisationDesignsList({ organisationId }: ListProps) {
 
   const handleGetFormData = async () => {
     await API.getFormsByOrganisation(organisationId, false).then(response => {
-      if (response.data.length > 0) setFormData(response.data);
+      if(response.status === 200) setFormData(response.data);
     });
   };
 

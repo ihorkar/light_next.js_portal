@@ -124,7 +124,7 @@ export default function FullWidthList({
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {pagedData.map((item, rowIndex) => (
+                {pagedData.length > 0 ? pagedData.map((item, rowIndex) => (
                   <tr key={rowIndex} className="hover:bg-gray-100 transition-all duration-200">
                   {columns.map((col, colIndex) => (
                       <td
@@ -153,7 +153,7 @@ export default function FullWidthList({
                       </td>
                     )}
                   </tr>
-                ))}
+                )) : <tr><td colSpan={4}><p className="text-center my-10 text-gray-500">No data found</p></td></tr>}
               </tbody>
             </table>
             <div className="mt-4 flex justify-end">
