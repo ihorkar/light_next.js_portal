@@ -102,9 +102,33 @@ const DatablockList = ({organisationId, formId}: DatablockListProps) => {
     .catch(error => console.log("Error while removing datablock", error))
   }, [])
 
-  function isElementInArray<T>(element: T, array: T[]): boolean {
-    return array.includes(element);
+  
+function isObjectEqual(obj1: Record<string, any>, obj2: Record<string, any>): boolean {
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length) {
+    return false;
   }
+
+  for (const key of keys1) {
+    if (obj1[key] !== obj2[key]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function isElementInArray<T>(element: T, Array: T[]): boolean {
+  for (const item of Array) {
+    //@ts-ignore
+    if (isObjectEqual(item, element)) {
+      return true;
+    }
+  }
+  return false;
+}
 
   return (
     <div className="flex space-x-4 w-full">
@@ -133,8 +157,8 @@ const DatablockList = ({organisationId, formId}: DatablockListProps) => {
                 {expandedDatablocks.has(block._id) ? '▲' : '▼'}
               </span> */}
               {isElementInArray(block, datablocksForm) ?
-                <PlusIcon className='w-5 h-5 ml-2' onClick={addDatablockFromForm(organisationId, formId, block)} />
-                : <MinusIcon className='w-5 h-5 ml-2' onClick={removeDatablockFromForm(organisationId, formId, block)} />
+                <MinusIcon className='w-5 h-5 ml-2' onClick={removeDatablockFromForm(organisationId, formId, block)} />
+                : <PlusIcon className='w-5 h-5 ml-2' onClick={addDatablockFromForm(organisationId, formId, block)} />
               }
             </div>
 
