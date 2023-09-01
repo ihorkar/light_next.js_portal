@@ -1,7 +1,7 @@
 import axios, { Axios } from "axios"
 import { AxiosResponse } from "axios";
 import { signOut } from "next-auth/react";
-import { UserData } from "../data/types";
+import { Datablock, UserData } from "../data/types";
 import { InvitationData } from "../data/types";
 import { UserRole } from "../data/types";
 
@@ -302,6 +302,45 @@ const API = {
     applyArchiveForm: (slug: string, formId: string): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
             axios.patch(`/organisations/${slug}/forms/${formId}/archive`)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
+        })
+    },
+    getDatablockFromForm: (slug: string, formId: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.get(`/organisations/${slug}/forms/${formId}/design`)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
+        })
+    },
+    addDatablockFromForm: (slug: string, formId: string, block: Datablock): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.patch(`/organisations/${slug}/forms/${formId}/design`, block)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
+        })
+    },
+    removeDatablockFromForm: (slug: string, formId: string, block: Datablock): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.delete(`/organisations/${slug}/forms/${formId}/design`)
                 .then(response => resolve(response))
                 .catch(error => {
                     if(error.response.status === 401){

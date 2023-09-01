@@ -4,7 +4,8 @@ import { PanelStepper } from "@/components/ui/steps/PanelStepper"
 export default function Page({ params }: {
     params: { 
         organisationId: string,
-        formId: number}
+        formId: string
+    }
   }) {
   return (
     <div>
@@ -17,7 +18,7 @@ export default function Page({ params }: {
             ]}
         />
     <div className="mt-4">
-        <DatablockList />
+        <DatablockList organisationId={params.organisationId} formId={params.formId} />
     </div>
     </div>
   )
