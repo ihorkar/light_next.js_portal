@@ -312,6 +312,32 @@ const API = {
                 })
         })
     },
+    getProjectByOrganisation: (slug: string, formId: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.get(`/organisations/${slug}/forms/${formId}/project`)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    } else {
+                        reject(error);
+                    }
+                })
+        })
+    },
+    setProjectByOrganisation: (slug: string, formId: string, project: Object): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.post(`/organisations/${slug}/forms/${formId}/project`, project)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    } else {
+                        reject(error);
+                    }
+                })
+        })
+    },
     getDatablockFromForm: (slug: string, formId: string): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
             axios.get(`/organisations/${slug}/forms/${formId}/design`)
