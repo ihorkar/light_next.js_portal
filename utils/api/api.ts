@@ -340,7 +340,7 @@ const API = {
     },
     removeDatablockFromForm: (slug: string, formId: string, block: Datablock): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
-            axios.delete(`/organisations/${slug}/forms/${formId}/design`)
+            axios.delete(`/organisations/${slug}/forms/${formId}/design/${block._id}`)
                 .then(response => resolve(response))
                 .catch(error => {
                     if(error.response.status === 401){

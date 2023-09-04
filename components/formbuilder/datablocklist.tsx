@@ -6,6 +6,7 @@ import API from '@/utils/api/api';
 import { EyeIcon, ArrowPathIcon, PlusIcon, MinusIcon } from '@heroicons/react/20/solid';
 import { Model } from 'survey-core';
 import { Survey } from 'survey-react-ui';
+import isExistInArray from '@/utils/utils';
 import 'survey-core/defaultV2.min.css';
 
 export interface DatablockListProps {
@@ -17,7 +18,7 @@ const DatablockList = ({organisationId, formId}: DatablockListProps) => {
   const [datablocks, setDatablocks] = useState<Datablock[]>([]);
   const [datablocksForm, setDatablocksForm] = useState<Datablock[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
-  // const [expandedDatablocks, setExpandedDatablocks] = useState<Set<string>>(new Set());
+  const [expandedDatablocks, setExpandedDatablocks] = useState<Set<string>>(new Set());
   const [selectedPreview, setSelectedPreview] = useState<string | null>(null);
   const [refreshToggle, setRefreshToggle] = useState<boolean>(false);
 
@@ -60,15 +61,15 @@ const DatablockList = ({organisationId, formId}: DatablockListProps) => {
     return null;
   };
 
-  // const toggleExpand = (blockId: string) => { // Updated the type here
-  //   const updatedExpandedBlocks = new Set(expandedDatablocks);
-  //   if (updatedExpandedBlocks.has(blockId)) {
-  //     updatedExpandedBlocks.delete(blockId);
-  //   } else {
-  //     updatedExpandedBlocks.add(blockId);
-  //   }
-  //   setExpandedDatablocks(updatedExpandedBlocks);
-  // };
+  const toggleExpand = (blockId: string) => { // Updated the type here
+    const updatedExpandedBlocks = new Set(expandedDatablocks);
+    if (updatedExpandedBlocks.has(blockId)) {
+      updatedExpandedBlocks.delete(blockId);
+    } else {
+      updatedExpandedBlocks.add(blockId);
+    }
+    setExpandedDatablocks(updatedExpandedBlocks);
+  };
 
   const handlePreview = useCallback((blockId: string) => () => {
     if (selectedPreview === blockId) {
@@ -81,6 +82,7 @@ const DatablockList = ({organisationId, formId}: DatablockListProps) => {
   const selectedDatablock = datablocks.find(db => db._id === selectedPreview);
 
   const addDatablockFromForm = useCallback((organisaionId: string, formId: string, block: Datablock) => () => {
+    console.log
     API.addDatablockFromForm(organisaionId, formId, block)
     .then(response => {
       if(response.status === 200) {
@@ -102,34 +104,6 @@ const DatablockList = ({organisationId, formId}: DatablockListProps) => {
     .catch(error => console.log("Error while removing datablock", error))
   }, [])
 
-  
-function isObjectEqual(obj1: Record<string, any>, obj2: Record<string, any>): boolean {
-  const keys1 = Object.keys(obj1);
-  const keys2 = Object.keys(obj2);
-
-  if (keys1.length !== keys2.length) {
-    return false;
-  }
-
-  for (const key of keys1) {
-    if (obj1[key] !== obj2[key]) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-function isElementInArray<T>(element: T, Array: T[]): boolean {
-  for (const item of Array) {
-    //@ts-ignore
-    if (isObjectEqual(item, element)) {
-      return true;
-    }
-  }
-  return false;
-}
-
   return (
     <div className="flex space-x-4 w-full">
       {/* Datablock List */}
@@ -150,23 +124,21 @@ function isElementInArray<T>(element: T, Array: T[]): boolean {
                   className={`w-5 h-5 mr-2 ${selectedPreview === block._id ? 'text-green-500' : 'text-gray-400'}`}
                    onClick={handlePreview(block._id)}
                 />
-                <span>{block.name}</span>
+                <span onClick={(e) => {e.stopPropagation(); toggleExpand(block._id);}}>{block.name}</span>
               </div>
-              
-              {/* <span onClick={(e) => {e.stopPropagation(); toggleExpand(block._id);}}>
-                {expandedDatablocks.has(block._id) ? '▲' : '▼'}
-              </span> */}
-              {isElementInArray(block, datablocksForm) ?
+
+              {
+                isExistInArray(datablocksForm, block) ?
                 <MinusIcon className='w-5 h-5 ml-2' onClick={removeDatablockFromForm(organisationId, formId, block)} />
                 : <PlusIcon className='w-5 h-5 ml-2' onClick={addDatablockFromForm(organisationId, formId, block)} />
               }
             </div>
 
-            {/* {expandedDatablocks.has(block._id) && (
+            {expandedDatablocks.has(block._id) && (
               <div className="mt-2 text-gray-600">
                 {block.description}
               </div>
-            )} */}
+            )}
           </div>
         ))}
       </div>
