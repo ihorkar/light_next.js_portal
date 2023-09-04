@@ -14,7 +14,8 @@ export interface DatablockListProps {
   formId: string;
 }
 
-const DatablockList = ({organisationId, formId}: DatablockListProps) => {
+const 
+DatablockList = ({organisationId, formId}: DatablockListProps) => {
   const [datablocks, setDatablocks] = useState<Datablock[]>([]);
   const [datablocksForm, setDatablocksForm] = useState<Datablock[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -116,7 +117,10 @@ const DatablockList = ({organisationId, formId}: DatablockListProps) => {
           className="p-2 border rounded w-full"
         />
 
-        {filteredDatablocks.map(block => (
+        <div className='mt-4'>
+          <span>Selected</span>
+        </div>
+        {datablocksForm.map(block => (
           <div key={block._id} className="border rounded p-2 hover:bg-gray-100 cursor-pointer">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
@@ -141,11 +145,45 @@ const DatablockList = ({organisationId, formId}: DatablockListProps) => {
             )}
           </div>
         ))}
+
+        <hr></hr>
+
+        <div className='mt-4'>
+          <span>Unselected</span>
+        </div>
+
+        {filteredDatablocks.map(block => (
+            !isExistInArray(datablocksForm, block) && (
+            <div key={block._id} className="border rounded p-2 hover:bg-gray-100 cursor-pointer">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <EyeIcon
+                    className={`w-5 h-5 mr-2 ${selectedPreview === block._id ? 'text-green-500' : 'text-gray-400'}`}
+                     onClick={handlePreview(block._id)}
+                  />
+                  <span onClick={(e) => {e.stopPropagation(); toggleExpand(block._id);}}>{block.name}</span>
+                </div>
+  
+                {
+                  isExistInArray(datablocksForm, block) ?
+                  <MinusIcon className='w-5 h-5 ml-2' onClick={removeDatablockFromForm(organisationId, formId, block)} />
+                  : <PlusIcon className='w-5 h-5 ml-2' onClick={addDatablockFromForm(organisationId, formId, block)} />
+                }
+              </div>
+  
+              {expandedDatablocks.has(block._id) && (
+                <div className="mt-2 text-gray-600">
+                  {block.description}
+                </div>
+              )}
+            </div>)
+        ))}
       </div>
 
       {/* Datablock Preview */}
       <div className="flex-1">
-        {selectedDatablock && (
+        <div className='sticky top-0'>
+          {selectedDatablock && (
             <div>
               <div className="flex items-center justify-between p-4">
                 <h2 className="text-xl font-bold">{selectedDatablock.name}</h2>
@@ -157,6 +195,7 @@ const DatablockList = ({organisationId, formId}: DatablockListProps) => {
               {renderSurveyPreview()}
             </div>
           )}
+        </div>
       </div>
     </div>
   );
