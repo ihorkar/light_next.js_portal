@@ -376,6 +376,19 @@ const API = {
                     }
                 })
         })
+    },
+    getOrganisationFormByID: (slug: string, formId: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.get(`/organisations/${slug}/forms/${formId}`)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
+        })
     }
 }
 

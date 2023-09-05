@@ -14,8 +14,7 @@ export interface DatablockListProps {
   formId: string;
 }
 
-const 
-DatablockList = ({organisationId, formId}: DatablockListProps) => {
+const DatablockList = ({organisationId, formId}: DatablockListProps) => {
   const [datablocks, setDatablocks] = useState<Datablock[]>([]);
   const [datablocksForm, setDatablocksForm] = useState<Datablock[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');

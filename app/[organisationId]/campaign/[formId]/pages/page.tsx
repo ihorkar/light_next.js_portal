@@ -1,13 +1,15 @@
 'use client'
 
+import React from "react";
 import { PanelStepper } from "@/components/ui/steps/PanelStepper"
 import DefaultButton from "@/components/ui/buttons/DefaultButton"
 import { useRouter } from "next/navigation";
+import { DropZone } from "@/components/ui/dropzone/dropzone";
 
 export default function Page({ params }: {
     params: { 
         organisationId: string,
-        formId: number}
+        formId: string}
   }) {
     
     const router = useRouter();
@@ -22,14 +24,14 @@ export default function Page({ params }: {
                     { id: '04', name: 'Review', description: "Let's organise", href: '#', status: 'upcoming' },
                 ]}
             />
-            <div>Form pages</div>
-
-            <div className="flex justify-end">
+            <div className="flex justify-end mt-4">
                 <DefaultButton
                     label="Next"
                     onClick={() => router.push(`/${params.organisationId}/campaign/${params.formId}/review`)}
                 />
             </div> 
+
+            <DropZone organisationId={params.organisationId} formId={params.formId} />
         </div>
     )
 }
