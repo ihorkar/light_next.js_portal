@@ -174,8 +174,8 @@ export const DropZone = (
 
   const returnItemsForColumn = (columnName: string, dataBlocks: any[]) => {
     return dataBlocks?.filter((item: any) => item.column === columnName)
-      .map((item: any, index: number) => 
-        <div className="p-1 m-1 border border-gray-900">
+      .map((item: any, index: number) => (
+        <div key={index} className="p-1 m-1 border border-gray-900">
           <MovableItem
             key={item._id}
             name={item.datablock.name}
@@ -185,7 +185,7 @@ export const DropZone = (
             moveCardHandler={moveCardHandler}
           />
         </div>
-      );
+      ));
   };
 
   const handleChangeProjectInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -199,11 +199,10 @@ export const DropZone = (
   }
   
   const handleNextRouter = async () => {
-    console.log(dataBlocks)
-    // await API.setOrganisationFormByID(params.organisationId, params.formId, dataBlocks)
-    // .then(response => {
-    //   if(response.status === 201) router.push(`/${params.organisationId}/campaign/${params.formId}/review`)
-    // })
+    await API.setOrganisationFormByID(params.organisationId, params.formId, dataBlocks)
+    .then(response => {
+      if(response.status === 201) router.push(`/${params.organisationId}/campaign/${params.formId}/review`)
+    })
   }
 
   return (
