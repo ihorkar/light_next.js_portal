@@ -392,7 +392,7 @@ const API = {
     },
     setOrganisationFormByID: (slug: string, formId: string, data: any): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
-            axios.post(`/organisations/${slug}/forms/${formId}`)
+            axios.post(`/organisations/${slug}/forms/${formId}`, {pages: data})
             .then(response => resolve(response))
             .catch(error => {
                 if(error.response.status === 401){

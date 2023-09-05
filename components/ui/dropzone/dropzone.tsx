@@ -30,7 +30,7 @@ const MovableItem = ({
         return prevState.map((e: any) => {
           return {
             ...e,
-            column: e.datablock.name === currentItem.name ? columnName : e.column
+            name: e.element.name === currentItem.name ? columnName : e.name
           };
         });
       });
@@ -137,20 +137,29 @@ export const DropZone = (
 
   const initializeDropZone = async () => {
     let datablocks: any[] = [];
+    let pagelist: any[] = [];
 
     const form = await API.getOrganisationFormByID(params.organisationId, params.formId);
     const pages = form.data.form.pages;
     setPages(pages)
-    const formDataBlocks = await API.getDatablockFromForm(params.organisationId, params.formId);
-    formDataBlocks.data.map((block: any, blockIndex: number) => {
-      datablocks.push({column: "initialList", datablock: block})
-      pages.map((page: any) => {
-        page.elements.map((element: any) => {
-          if(block.datablock.name === element.name){
-            datablocks[blockIndex] = {column: page.name, datablock: block}
-          }
-        })
+    
+    pages.map((page: any) => {
+      page.elements.map((element: any) => {
+        pagelist.push({name: page.name, element: element})
       })
+    })
+
+    const formDataBlocks = await API.getDatablockFromForm(params.organisationId, params.formId);
+
+    formDataBlocks.data.map((block: any, blockIndex: number) => {
+      datablocks.push({name: "initialList", element: block.datablock})
+      pagelist.map((page: any) => {
+        if(page.element.name === block.datablock.name) datablocks.splice(blockIndex-1, 1)
+      })
+    })
+
+    pagelist.map((page: any) => {
+      datablocks.push(page)
     })
     setDatablocks(datablocks)
   }
@@ -173,13 +182,13 @@ export const DropZone = (
   };
 
   const returnItemsForColumn = (columnName: string, dataBlocks: any[]) => {
-    return dataBlocks?.filter((item: any) => item.column === columnName)
+    return dataBlocks?.filter((item: any) => item.name === columnName)
       .map((item: any, index: number) => (
         <div key={index} className="p-1 m-1 border border-gray-900">
           <MovableItem
             key={item._id}
-            name={item.datablock.name}
-            currentColumnName={item.column}
+            name={item.element.name}
+            currentColumnName={item.element.name}
             setItems={setDatablocks}
             index={index}
             moveCardHandler={moveCardHandler}
@@ -197,9 +206,32 @@ export const DropZone = (
     setPages(prevState => [...prevState, {name: pageName}])
     setVisibleModal(false)
   }
+
+  const getDataList = () => {
+    let dataList: any[] = []
+
+    dataBlocks.forEach((item: any) => {
+      if(item.name !== "initialList") {
+        const existingItem = dataList.find((newItem: any) => newItem.name === item.name);
   
-  const handleNextRouter = async () => {
-    await API.setOrganisationFormByID(params.organisationId, params.formId, dataBlocks)
+        if(existingItem) {
+          existingItem.elements.push(item.element)
+        } else {
+          dataList.push({
+            name: item.name,
+            elements: [item.element]
+          })
+        }
+      }
+    })
+
+    return dataList
+  }
+  
+  const handleOnClickNextBtn = async () => {
+    let data = getDataList()
+    console.log(data)
+    await API.setOrganisationFormByID(params.organisationId, params.formId, data)
     .then(response => {
       if(response.status === 201) router.push(`/${params.organisationId}/campaign/${params.formId}/review`)
     })
@@ -210,7 +242,7 @@ export const DropZone = (
       <div className="flex justify-end mt-4">
           <DefaultButton
               label="Next"
-              onClick={handleNextRouter}
+              onClick={handleOnClickNextBtn}
           />
       </div> 
       <DndProvider backend={HTML5Backend}>
