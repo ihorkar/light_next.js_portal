@@ -1,6 +1,7 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback, ChangeEvent } from "react";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { useRouter } from "next/navigation";
 import API from "@/utils/api/api";
 import DefaultButton from "../buttons/DefaultButton";
 import Modal from "../modal/Modal";
@@ -126,6 +127,9 @@ export const DropZone = (
   const [ pages, setPages ] = useState<any[]>([])
   const [ visibleModal, setVisibleModal ] = useState(false)
   const [ pageName, setPageName ] = useState("");
+  const formEl = useRef<HTMLFormElement>(null);
+  
+  const router = useRouter();
 
   useEffect(() => {
     initializeDropZone()
@@ -170,7 +174,7 @@ export const DropZone = (
 
   const returnItemsForColumn = (columnName: string, dataBlocks: any[]) => {
     return dataBlocks?.filter((item: any) => item.column === columnName)
-      .map((item: any, index: number) => {
+      .map((item: any, index: number) => 
         <div className="p-1 m-1 border border-gray-900">
           <MovableItem
             key={item._id}
@@ -181,25 +185,45 @@ export const DropZone = (
             moveCardHandler={moveCardHandler}
           />
         </div>
-      });
+      );
   };
 
+  const handleChangeProjectInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setPageName(e.target.value)
+  }, [pageName])
+
   const addNewPage = () => {
+    if(!formEl.current?.reportValidity()) return;
+    setPages(prevState => [...prevState, {name: pageName}])
     setVisibleModal(false)
+  }
+  
+  const handleNextRouter = async () => {
+    console.log(dataBlocks)
+    // await API.setOrganisationFormByID(params.organisationId, params.formId, dataBlocks)
+    // .then(response => {
+    //   if(response.status === 201) router.push(`/${params.organisationId}/campaign/${params.formId}/review`)
+    // })
   }
 
   return (
     <div className="container">
+      <div className="flex justify-end mt-4">
+          <DefaultButton
+              label="Next"
+              onClick={handleNextRouter}
+          />
+      </div> 
       <DndProvider backend={HTML5Backend}>
         <div className="flex h-screen overflow-y-scroll">
           <Column title="initialList" className="w-1/4 border rounded p-3 h-full">
             {returnItemsForColumn("initialList", dataBlocks)}
           </Column>
           <div className="w-3/4 border rounded p-3">
-            {pages?.length > 0 ? pages?.map((page, index) => <Column key={`column${index}`} title={page.name} className="h-48 border m-1">{returnItemsForColumn(page.name, dataBlocks)}</Column>) :
-              <Column title="initialList" className="column">{returnItemsForColumn("initialList", dataBlocks)}</Column>
+            {
+              pages?.length > 0 && pages?.map((page, index) => <Column key={`column${index}`} title={page.name} className="h-48 border m-1">{returnItemsForColumn(page.name, dataBlocks)}</Column>)
             }
-            <div className="flex justify-end">
+            <div className="flex justify-end mt-3">
               <DefaultButton
                 label="Add New Page"
                 onClick={() => setVisibleModal(true)}
@@ -212,14 +236,17 @@ export const DropZone = (
                 ok_text="Add"
                 cancel_text="Cancle"
               >
-                <DefaultInput
-                  name="New Page"
-                  title="New page"
-                  id="newPage"
-                  autoComplete="Page Name"
-                  placeholder="Page Name"
-                  onChange={(e) => setPageName(e.target.value)}
-                />
+                <form ref={formEl}>
+                  <DefaultInput
+                    name="New Page"
+                    title="New page"
+                    id="newPage"
+                    autoComplete="Page Name"
+                    placeholder="Page Name"
+                    onChange={handleChangeProjectInput}
+                    required
+                  />
+                </form>
               </Modal>
             </div>
           </div>

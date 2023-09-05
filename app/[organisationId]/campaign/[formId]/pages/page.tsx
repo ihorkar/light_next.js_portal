@@ -2,8 +2,6 @@
 
 import React from "react";
 import { PanelStepper } from "@/components/ui/steps/PanelStepper"
-import DefaultButton from "@/components/ui/buttons/DefaultButton"
-import { useRouter } from "next/navigation";
 import { DropZone } from "@/components/ui/dropzone/dropzone";
 
 export default function Page({ params }: {
@@ -11,8 +9,6 @@ export default function Page({ params }: {
         organisationId: string,
         formId: string}
   }) {
-    
-    const router = useRouter();
 
     return (
         <div>
@@ -24,13 +20,6 @@ export default function Page({ params }: {
                     { id: '04', name: 'Review', description: "Let's organise", href: '#', status: 'upcoming' },
                 ]}
             />
-            <div className="flex justify-end mt-4">
-                <DefaultButton
-                    label="Next"
-                    onClick={() => router.push(`/${params.organisationId}/campaign/${params.formId}/review`)}
-                />
-            </div> 
-
             <DropZone organisationId={params.organisationId} formId={params.formId} />
         </div>
     )
