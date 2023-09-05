@@ -4,6 +4,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import API from "@/utils/api/api";
 import DefaultButton from "../buttons/DefaultButton";
 import Modal from "../modal/Modal";
+import DefaultInput from "../elements/DefaultInput";
 
 const ItemTypes = {
   CARD: "card"
@@ -124,6 +125,7 @@ export const DropZone = (
   const [ dataBlocks, setDatablocks ] = useState<any[]>([])
   const [ pages, setPages ] = useState<any[]>([])
   const [ visibleModal, setVisibleModal ] = useState(false)
+  const [ pageName, setPageName ] = useState("");
 
   useEffect(() => {
     initializeDropZone()
@@ -168,7 +170,7 @@ export const DropZone = (
 
   const returnItemsForColumn = (columnName: string, dataBlocks: any[]) => {
     return dataBlocks?.filter((item: any) => item.column === columnName)
-      .map((item: any, index: number) => 
+      .map((item: any, index: number) => {
         <div className="p-1 m-1 border border-gray-900">
           <MovableItem
             key={item._id}
@@ -179,7 +181,7 @@ export const DropZone = (
             moveCardHandler={moveCardHandler}
           />
         </div>
-      );
+      });
   };
 
   const addNewPage = () => {
@@ -194,7 +196,7 @@ export const DropZone = (
             {returnItemsForColumn("initialList", dataBlocks)}
           </Column>
           <div className="w-3/4 border rounded p-3">
-            {pages?.length > 0 ? pages?.map(page => <Column title={page.name} className="h-48 border m-1">{returnItemsForColumn(page.name, dataBlocks)}</Column>) :
+            {pages?.length > 0 ? pages?.map((page, index) => <Column key={`column${index}`} title={page.name} className="h-48 border m-1">{returnItemsForColumn(page.name, dataBlocks)}</Column>) :
               <Column title="initialList" className="column">{returnItemsForColumn("initialList", dataBlocks)}</Column>
             }
             <div className="flex justify-end">
@@ -209,8 +211,16 @@ export const DropZone = (
                 title="Add New Page"
                 ok_text="Add"
                 cancel_text="Cancle"
-                children=""
-              />
+              >
+                <DefaultInput
+                  name="New Page"
+                  title="New page"
+                  id="newPage"
+                  autoComplete="Page Name"
+                  placeholder="Page Name"
+                  onChange={(e) => setPageName(e.target.value)}
+                />
+              </Modal>
             </div>
           </div>
         </div>
