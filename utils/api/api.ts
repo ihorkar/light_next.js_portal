@@ -312,6 +312,19 @@ const API = {
                 })
         })
     },
+    definitiveForm: (slug: string, formId: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.patch(`/organisations/${slug}/forms/${formId}/finalize`)
+            .then(response => resolve(response))
+            .catch(error => {
+                if(error.response.status === 401){
+                    signOut();
+                }else{
+                    reject(error)
+                }
+            })
+        })
+    },
     getProjectByOrganisation: (slug: string, formId: string): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
             axios.get(`/organisations/${slug}/forms/${formId}/project`)

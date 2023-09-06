@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import FullWidthList from "../ui/lists/FullWidthList";
 import { useRouter } from "next/navigation";
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, TrashIcon, DocumentCheckIcon } from "@heroicons/react/24/outline";
 
 interface ListProps {
     organisationId: string;
@@ -34,7 +34,24 @@ export default function OrganisationDesignsList({ organisationId }: ListProps) {
   };
 
   const handleDeleteForm = (form: any) => {
-      // Logic for deleting a user goes here
+  };
+
+  const handleArchiveForm = async (form: any) => {
+    const formElement = await API.getOrganisationFormByID(organisationId, form._id);
+
+    if(formElement.data.form.pages.length > 0 && formElement.data.project !== "" && formElement.data.formDescription !== "") {
+      await API.definitiveForm(organisationId, form._id)
+        .then(response => {
+          if(response.status === 201) {
+            handleGetFormData()
+          }
+        })
+        .catch(error => {
+          alert("Please check your connection!")
+        })
+    } else {
+      alert("Not allowed to make the form definitive")
+    }
   };
 
   const columns = [
@@ -63,9 +80,15 @@ export default function OrganisationDesignsList({ organisationId }: ListProps) {
       icon: <TrashIcon className="h-5 w-5 text-red-500" />,
       onClick: handleDeleteForm,
       visible: (item: any) => true
+    },
+    {
+      label: "Archive Form",
+      icon: <DocumentCheckIcon className='h-5 w-5 text-blue-500' />,
+      onClick: handleArchiveForm,
+      visible: (item: any) => true
     }
   ];
 
 
-  return <FullWidthList columns={columns} data={formData} actionButtons={actionButtons}  />;
+  return <FullWidthList columns={columns} data={formData} actionButtons={actionButtons} />;
 }
