@@ -203,9 +203,9 @@ export const DropZone = (
 
   const addNewPage = () => {
     if(!formEl.current?.reportValidity()) return;
-    const existedPage = pages.filter((page: any) => {page.name === pageName})
+    let existedPage = pages.filter((page: any) => page.name === pageName)
     
-    if(!existedPage) {
+    if(existedPage.length === 0) {
       setPages(prevState => [...prevState, {name: pageName}])
       setVisibleModal(false)
     } else {
