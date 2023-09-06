@@ -9,11 +9,16 @@ import { PowerIcon, ArchiveBoxIcon } from "@heroicons/react/24/outline";
 
 interface ListProps {
     organisationId: string;
+    refreshHandler: boolean;
   }
 
-export default function OrganisationFormsList({ organisationId }: ListProps) {
+export default function OrganisationFormsList({ organisationId, refreshHandler }: ListProps) {
   const [formData, setFormData] = useState<any[]>([]);
   const session = useSession();
+
+  useEffect(() => {
+    handleGetFormData()
+  }, [refreshHandler])
 
   useEffect(() => {
     //@ts-ignore
@@ -106,6 +111,6 @@ export default function OrganisationFormsList({ organisationId }: ListProps) {
     }
   ];
 
-
-  return <FullWidthList columns={columns} data={formData} actionButtons={actionButtons}  />;
+  return <FullWidthList columns={columns} data={formData} actionButtons={actionButtons} />
+  
 }

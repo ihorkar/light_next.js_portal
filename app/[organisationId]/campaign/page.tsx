@@ -19,6 +19,7 @@ export default function Page({ params }: {
   const [isSentProject, setIsSentProject] = useState(false);
   const formEl = useRef<HTMLFormElement>(null);
   const [projectName, setProjectName] = useState("");
+  const [refresh, setRefresh] = useState(true)
   const router = useRouter();
 
   const handleCreateProjectClick = useCallback(() => {
@@ -62,11 +63,11 @@ export default function Page({ params }: {
 
     <div className="mt-4">
       <SimpleHeader Headline= "Projects" />
-      <OrganisationFormsList organisationId={params.organisationId} />
+      <OrganisationFormsList organisationId={params.organisationId} refreshHandler={refresh}  />
     </div>
     <div className="mt-4">
       <SimpleHeader Headline= "Designs" />
-      <OrganisationDesignsList organisationId={params.organisationId} />
+      <OrganisationDesignsList organisationId={params.organisationId} handleRefresh={() => setRefresh(!refresh)} />
     </div>
     <Modal 
       visible={showShowCreateProjectModal} 

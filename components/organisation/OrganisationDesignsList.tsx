@@ -9,9 +9,10 @@ import { PencilIcon, TrashIcon, DocumentCheckIcon } from "@heroicons/react/24/ou
 
 interface ListProps {
     organisationId: string;
+    handleRefresh: () => void
   }
 
-export default function OrganisationDesignsList({ organisationId }: ListProps) {
+export default function OrganisationDesignsList({ organisationId, handleRefresh }: ListProps) {
   const [formData, setFormData] = useState<any[]>([]);
   const session = useSession();
 
@@ -40,10 +41,11 @@ export default function OrganisationDesignsList({ organisationId }: ListProps) {
     const formElement = await API.getOrganisationFormByID(organisationId, form._id);
 
     if(formElement.data.form.pages.length > 0 && formElement.data.project !== "" && formElement.data.formDescription !== "") {
-      await API.definitiveForm(organisationId, form._id)
+      API.definitiveForm(organisationId, form._id)
         .then(response => {
           if(response.status === 201) {
             handleGetFormData()
+            handleRefresh()
           }
         })
         .catch(error => {
