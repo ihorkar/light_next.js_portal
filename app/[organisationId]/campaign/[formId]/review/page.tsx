@@ -1,15 +1,36 @@
 'use client'
 
+import React, { useState, useEffect} from 'react'
 import { PanelStepper } from "@/components/ui/steps/PanelStepper"
 import DefaultButton from "@/components/ui/buttons/DefaultButton"
-import { useRouter } from "next/navigation";
+import 'survey-core/defaultV2.min.css'
+import { Model } from 'survey-core'
+import { Survey } from 'survey-react-ui'
+import { useRouter } from "next/navigation"
+import API from '@/utils/api/api'
 
 export default function Page({ params }: {
-    params: { organisationId: string,
-        formId: number}
+    params: { 
+      organisationId: string,
+      formId: string
+    }
   }) {
+    const [formData, setFormData] = useState<any>()
     
     const router = useRouter();
+    
+    useEffect(() => {
+      getFormDataFromID()
+    }, [])
+
+    const getFormDataFromID = async () => {
+      const form = await API.getOrganisationFormByID(params.organisationId, params.formId);
+      setFormData(form.data.form)
+    }
+
+    const survey = new Model(formData)
+
+    survey.sendResultOnPageNext = true;
 
     return (
       <div>
@@ -22,6 +43,9 @@ export default function Page({ params }: {
                 ]}
         />
         <div>Form review</div>
+        <div className='m-10'>
+          <Survey model={survey} />
+        </div>
         <div className="flex justify-between mt-4">
           <DefaultButton
               label="Prev"
