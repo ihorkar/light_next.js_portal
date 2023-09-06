@@ -203,8 +203,14 @@ export const DropZone = (
 
   const addNewPage = () => {
     if(!formEl.current?.reportValidity()) return;
-    setPages(prevState => [...prevState, {name: pageName}])
-    setVisibleModal(false)
+    const existedPage = pages.filter((page: any) => {page.name === pageName})
+    
+    if(!existedPage) {
+      setPages(prevState => [...prevState, {name: pageName}])
+      setVisibleModal(false)
+    } else {
+      alert("The page already exists!")
+    }
   }
 
   const getDataList = () => {
@@ -239,14 +245,8 @@ export const DropZone = (
 
   return (
     <div className="container">
-      <div className="flex justify-end mt-4">
-          <DefaultButton
-              label="Next"
-              onClick={handleOnClickNextBtn}
-          />
-      </div> 
       <DndProvider backend={HTML5Backend}>
-        <div className="flex h-screen overflow-y-scroll">
+        <div className="flex h-[44rem] overflow-y-scroll mt-4">
           <Column title="initialList" className="w-1/4 border rounded p-3 h-full">
             {returnItemsForColumn("initialList", dataBlocks)}
           </Column>
@@ -283,6 +283,12 @@ export const DropZone = (
           </div>
         </div>
       </DndProvider>
+      <div className="flex justify-end mt-4">
+          <DefaultButton
+              label="Next"
+              onClick={handleOnClickNextBtn}
+          />
+      </div> 
     </div>
   );
 };

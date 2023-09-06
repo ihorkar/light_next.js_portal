@@ -22,12 +22,16 @@ export default function Page({ params }: {
                 ]}
         />
         <div>Form review</div>
-        <div className="flex justify-end">
-            <DefaultButton
-                label="Next"
-                onClick={() => router.push(`/${params.organisationId}/campaign/${params.formId}/pages`)}
-            />
-        </div> 
+        <div className="flex justify-between mt-4">
+          <DefaultButton
+              label="Prev"
+              onClick={() => router.push(`/${params.organisationId}/campaign/${params.formId}/pages`)}
+          />
+          <DefaultButton
+              label="Next"
+              onClick={() => router.push(`/${params.organisationId}/campaign`)}
+          />
+        </div>
       </div>
     )
 }
