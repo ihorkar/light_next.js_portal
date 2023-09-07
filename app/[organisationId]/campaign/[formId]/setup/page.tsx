@@ -34,7 +34,7 @@ export default function Page({ params }: {
       name: projectName,
       description: projectDescription
     }
-    if (projectName != "" && projectDescription != "") {
+    if (projectName && projectDescription) {
       await API.setProjectByOrganisation(params.organisationId, params.formId, project)
       .then(response => {
         if(response.status === 201) router.push(`/${params.organisationId}/campaign/${params.formId}/components`)
