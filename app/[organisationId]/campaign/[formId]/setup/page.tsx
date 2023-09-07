@@ -6,6 +6,7 @@ import { PanelStepper } from "@/components/ui/steps/PanelStepper"
 import { useRouter } from "next/navigation";
 import DefaultInput from "@/components/ui/elements/DefaultInput";
 import API from "@/utils/api/api";
+import Notiflix from "notiflix";
 
 export default function Page({ params }: {
     params: { organisationId: string, formId: string}
@@ -33,12 +34,13 @@ export default function Page({ params }: {
       name: projectName,
       description: projectDescription
     }
-    if (projectName != "") {
+    if (projectName != "" && projectDescription != "") {
       await API.setProjectByOrganisation(params.organisationId, params.formId, project)
       .then(response => {
         if(response.status === 201) router.push(`/${params.organisationId}/campaign/${params.formId}/components`)
       })
     } else {
+      Notiflix.Notify.failure('Please input information correctly!')
     }
   }
 

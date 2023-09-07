@@ -2,8 +2,6 @@
 
 import DatablockList from "@/components/formbuilder/datablocklist"
 import { PanelStepper } from "@/components/ui/steps/PanelStepper"
-import DefaultButton from "@/components/ui/buttons/DefaultButton"
-import { useRouter } from "next/navigation";
 
 export default function Page({ params }: {
     params: { 
@@ -11,8 +9,6 @@ export default function Page({ params }: {
         formId: string
     }
   }) {
-    
-    const router = useRouter();
 
     return (
         <div>
@@ -27,13 +23,6 @@ export default function Page({ params }: {
             <div className="mt-4">
                 <DatablockList organisationId={params.organisationId} formId={params.formId} />
             </div>
-            
-            <div className="flex justify-end mt-4">
-                <DefaultButton
-                    label="Next"
-                    onClick={() => router.push(`/${params.organisationId}/campaign/${params.formId}/pages`)}
-                />
-            </div> 
         </div>
     )
 }

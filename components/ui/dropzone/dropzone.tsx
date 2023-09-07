@@ -6,6 +6,7 @@ import API from "@/utils/api/api";
 import DefaultButton from "../buttons/DefaultButton";
 import Modal from "../modal/Modal";
 import DefaultInput from "../elements/DefaultInput";
+import Notiflix from "notiflix";
 
 const ItemTypes = {
   CARD: "card"
@@ -140,10 +141,11 @@ export const DropZone = (
     let pagelist: any[] = [];
 
     const form = await API.getOrganisationFormByID(params.organisationId, params.formId);
-    const pages = form.data.form.pages;
+    
+    const pages = form.data.form?.pages;
     setPages(pages)
     
-    pages.map((page: any) => {
+    pages?.map((page: any) => {
       page.elements.map((element: any) => {
         pagelist.push({name: page.name, element: element})
       })
@@ -235,12 +237,17 @@ export const DropZone = (
   }
   
   const handleOnClickNextBtn = async () => {
-    let data = getDataList()
-    console.log(data)
-    await API.setOrganisationFormByID(params.organisationId, params.formId, data)
-    .then(response => {
-      if(response.status === 201) router.push(`/${params.organisationId}/campaign/${params.formId}/review`)
-    })
+    const initialData = dataBlocks.filter((item: any) => item.name === "initialList");
+
+    if(initialData.length !== 0) {
+      Notiflix.Notify.failure("Not all datablocks have been assigned to a page.")
+    }else {
+      let data = getDataList()
+      await API.setOrganisationFormByID(params.organisationId, params.formId, data)
+      .then(response => {
+        if(response.status === 201) router.push(`/${params.organisationId}/campaign/${params.formId}/review`)
+      })
+    }
   }
 
   return (

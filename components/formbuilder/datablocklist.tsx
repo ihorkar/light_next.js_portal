@@ -7,7 +7,10 @@ import { EyeIcon, ArrowPathIcon, PlusIcon, MinusIcon } from '@heroicons/react/20
 import { Model } from 'survey-core';
 import { Survey } from 'survey-react-ui';
 import isExistInArray from '@/utils/utils';
+import DefaultButton from "@/components/ui/buttons/DefaultButton"
+import { useRouter } from "next/navigation";
 import 'survey-core/defaultV2.min.css';
+import Notiflix from 'notiflix';
 
 export interface DatablockListProps {
   organisationId: string;
@@ -21,6 +24,8 @@ const DatablockList = ({organisationId, formId}: DatablockListProps) => {
   const [expandedDatablocks, setExpandedDatablocks] = useState<Set<string>>(new Set());
   const [selectedPreview, setSelectedPreview] = useState<string | null>(null);
   const [refreshToggle, setRefreshToggle] = useState<boolean>(false);
+    
+  const router = useRouter();
 
   useEffect(() => {
     getFormDatablocks();
@@ -104,7 +109,13 @@ const DatablockList = ({organisationId, formId}: DatablockListProps) => {
     .catch(error => console.log("Error while removing datablock", error))
   }, [])
 
+  const handleNextBtn = () => {
+    if(datablocksForm.length != 0) router.push(`/${organisationId}/campaign/${formId}/pages`);
+    else Notiflix.Notify.failure('You should select one at least!')
+  }
+
   return (
+    <div>
     <div className="flex space-x-4 w-full">
       {/* Datablock List */}
       <div className="flex-1 space-y-4">
@@ -196,6 +207,14 @@ const DatablockList = ({organisationId, formId}: DatablockListProps) => {
           )}
         </div>
       </div>
+    </div>
+            
+      <div className="flex justify-end mt-4">
+          <DefaultButton
+              label="Next"
+              onClick={() => handleNextBtn()}
+          />
+      </div> 
     </div>
   );
 }
