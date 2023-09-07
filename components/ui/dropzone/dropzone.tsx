@@ -141,8 +141,10 @@ export const DropZone = (
     let pagelist: any[] = [];
 
     const form = await API.getOrganisationFormByID(params.organisationId, params.formId);
-    
-    const pages = form.data.form?.pages;
+    let pages: any[] =[]
+
+    if (form.data.form) pages = form.data.form.pages;
+
     setPages(pages)
     
     pages?.map((page: any) => {
