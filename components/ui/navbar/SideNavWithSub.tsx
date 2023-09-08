@@ -16,7 +16,7 @@ import {
   UserIcon,
   UserPlusIcon
 } from '@heroicons/react/24/outline'
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 
 function classNames(...classes:any) {
   return classes.filter(Boolean).join(' ')
@@ -72,14 +72,25 @@ const SideNavWithSub: React.FC<NavProps> = ({menuitems, isUserProfilePage}) => {
     })
   }
 
+  const navigateAnotherSite = () => {
+    const newUrl = 'https://app.briggsdev.tech';
+
+    window.location.href = newUrl
+  }
+
   return (
     <div className="flex grow flex-col max-w-xs h-screen gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
-      <div onClick={() => router.push('/')} className="flex h-16 shrink-0 items-center cursor-pointer">
-        <img
-          className="h-8 w-auto"
-          src="/briggsplus.png"
-          alt="Light Portal"
-        />
+      <div className='flex justify-between'>
+        <div onClick={() => router.push('/')} className="flex h-16 shrink-0 items-center cursor-pointer">
+          <img
+            className="h-8 w-auto"
+            src="/briggsplus.png"
+            alt="Light Portal"
+          />
+        </div>
+        <div className='flex align-middle'>
+          <button className='rounded border p-2 m-1 cursor-pointer' onClick={() => navigateAnotherSite()}>Lets signup!</button>
+        </div>
       </div>
       <nav className="flex flex-1 flex-col">
         <ul role="list" className="flex flex-1 flex-col gap-y-7">
