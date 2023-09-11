@@ -88,8 +88,8 @@ const SideNavWithSub: React.FC<NavProps> = ({menuitems, isUserProfilePage}) => {
             alt="Light Portal"
           />
         </div>
-        <div className='flex align-middle'>
-          <button className='rounded border p-2 m-1 cursor-pointer' onClick={() => navigateAnotherSite()}>Lets signup!</button>
+        <div className='flex'>
+          <button className=' bg-[#6AF475] h-12 rounded px-2 py-1 m-1 cursor-pointer' onClick={() => navigateAnotherSite()}>Lets signup!</button>
         </div>
       </div>
       <nav className="flex flex-1 flex-col">

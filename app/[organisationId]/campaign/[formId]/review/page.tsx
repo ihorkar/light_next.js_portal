@@ -16,6 +16,7 @@ export default function Page({ params }: {
     }
   }) {
     const [formData, setFormData] = useState<any>()
+    const [optin, setOptin] = useState<any[]>([])
     
     const router = useRouter();
     
@@ -26,6 +27,7 @@ export default function Page({ params }: {
     const getFormDataFromID = async () => {
       const form = await API.getOrganisationFormByID(params.organisationId, params.formId);
       setFormData(form.data.form)
+      setOptin(form.data.FormDesign.optin)
     }
 
     const survey = new Model(formData)
@@ -35,17 +37,29 @@ export default function Page({ params }: {
     return (
       <div>
         <PanelStepper 
-                steps={[
-                    { id: '01', name: 'Setup', description: 'Basic settings', href: `/${params.organisationId}/campaign/${params.formId}/setup`, status: 'complete' },
-                    { id: '02', name: 'Components', description: 'The information we need', href: `/${params.organisationId}/campaign/${params.formId}/components`, status: 'complete' },
-                    { id: '03', name: 'Pages', description: "Let's organise", href: `/${params.organisationId}/campaign/${params.formId}/pages`, status: 'complete' },
-                    { id: '04', name: 'Review', description: "Let's organise", href: '#', status: 'current' },
-                ]}
+          steps={[
+              { id: '01', name: 'Setup', description: 'Basic settings', href: `/${params.organisationId}/campaign/${params.formId}/setup`, status: 'complete' },
+              { id: '02', name: 'Components', description: 'The information we need', href: `/${params.organisationId}/campaign/${params.formId}/components`, status: 'complete' },
+              { id: '03', name: 'Pages', description: "Let's organise", href: `/${params.organisationId}/campaign/${params.formId}/pages`, status: 'complete' },
+              { id: '04', name: 'Review', description: "Let's organise", href: '#', status: 'current' },
+          ]}
         />
         <div>Form review</div>
         <div className='m-10'>
           <Survey model={survey} />
         </div>
+        <div className='mx-10'>
+          {optin &&
+            optin.map((item: any, index: number) => (
+              <div>
+                <input type="checkbox" id='checkbox_`${index}`' aria-describedby="description_${index}" />
+                <label>{item.name}</label>
+                {item.description && <p id="description_`${index}`">{item.description}</p>}
+              </div>
+            ))
+          }
+        </div>
+
         <div className="flex justify-between mt-4">
           <DefaultButton
               label="Prev"

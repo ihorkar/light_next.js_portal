@@ -21,7 +21,7 @@ export default function DefaultSelect ({options, selectedOption, onChange, requi
             >
                 {options.map((option, index) => {
                     return (
-                        <option key={`option-${index}`}>{option}</option>
+                        <option className="p-1 rounded" key={`option-${index}`}>{option}</option>
                     )
                 })}    
             </select>
