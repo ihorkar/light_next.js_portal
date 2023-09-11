@@ -8,18 +8,24 @@ import { useRouter } from "next/navigation";
 import API from "@/utils/api/api";
 import Notiflix from "notiflix";
 import Modal from "../modal/Modal";
+import { TrashIcon } from "@heroicons/react/20/solid";
 
 export interface TwoColumnLayoutProps {
     organisationId: string;
     formId: string;
 }
 
+export interface IOptInfo {
+    name: string;
+    description: string;
+    active: boolean;
+} 
+
 const TwoColumnLayout = ({organisationId, formId}: TwoColumnLayoutProps) => {
 
     const [projectName, setProjectName] = useState("");
     const [projectDescription, setProjectDescription] = useState("");
-    const [optName, setOptName] = useState<string[]>([])
-    const [optDescription, setOptDescription] = useState<string[]>([])
+    const [optInfo, setOptInfo] = useState<IOptInfo[]>([])
     const [goalForm, setGoalForm] = useState("")
     const [payCondition, setPayCondition] = useState("")
     const [showOptinModal, setShowOptinModal] = useState(false)
@@ -33,36 +39,19 @@ const TwoColumnLayout = ({organisationId, formId}: TwoColumnLayoutProps) => {
     }, [])
     
     const handleGetProjectData = async () => {
-      let optName: string[] = []
-      let optDescription: string[] = []
+      let optInfo: IOptInfo[] = [];
       await API.getProjectByOrganisation(organisationId, formId)
       .then(response => {
-        console.log(response.data)
         response.data.FormDesign.optin.map((optin: any) => {
-          optName.push(optin.name)
-          optDescription.push(optin.description)
+            optInfo.push(optin)
         })
 
         setProjectName(response.data.project)
         setProjectDescription(response.data.formDescription)
         setGoalForm(response.data.formGoal)
         setPayCondition(response.data.payCondition)
-        setOptName(optName)
-        setOptDescription(optDescription)
+        setOptInfo(optInfo)
       })
-    }
-
-    const handleMakeOptin = () => {
-      const optin: any[] = []
-      optName.map((nameItem: string, index: number) => {
-        optin.push({
-            name: nameItem,
-            description: optDescription[index],
-            active: 0
-        })
-      })
-
-      return optin;
     }
 
     const handleInputName = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -75,16 +64,15 @@ const TwoColumnLayout = ({organisationId, formId}: TwoColumnLayoutProps) => {
   
     const handleOnClickBtn = async () => {
       let flag = 1
-      const optin = handleMakeOptin()      
       const project = {
         name: projectName,
         description: projectDescription,
         goalForm: goalForm,
         payCondition: payCondition,
-        optin: optin
+        optin: optInfo
       }
-      optName.map((item: string) => {
-        if(item === "") {
+      optInfo.map((item: any) => {
+        if(item.name === "") {
             Notiflix.Notify.failure('You should input Opt in Name.')
             flag = 0
         }
@@ -100,34 +88,24 @@ const TwoColumnLayout = ({organisationId, formId}: TwoColumnLayoutProps) => {
         }
       }
     }
-    // const createNewOpt = () => {
-    //     const updatedOptName = [...optName, ""]
-    //     const updatedOptDescription = [...optDescription, ""]
-
-    //     setOptName(updatedOptName)
-    //     setOptDescription(updatedOptDescription)
-    // }
+    
     const handleAddOptin = () => {
-        let addOptName = optName
-        let addOptDescription = optDescription
-
-        addOptName.push(optNameItem)
-        addOptDescription.push(optDescriptionItem)
-        
-        setOptName(addOptName)
-        setOptDescription(addOptDescription)
+        setOptInfo((prevState: IOptInfo[]) => {
+            let optInfos = prevState;
+            optInfos?.push({name: optNameItem, description: optDescriptionItem, active: false})
+            return optInfos
+        })
         setShowOptinModal(false)
     }
-    // const handleChangeOptName = (index: number, newValue: any) => {
-    //     const updatedOptName = [...optName];
-    //     updatedOptName[index] = newValue;
-    //     setOptName(updatedOptName)
-    // }
-    // const handleChangeOptDescription = (index: number, newValue: any) => {
-    //     const updatedOptDescription = [...optDescription];
-    //     updatedOptDescription[index] = newValue;
-    //     setOptDescription(updatedOptDescription)
-    // }
+
+    const handleDeleteOptinItem = (index: number) => {
+        setOptInfo((prevState?: IOptInfo[]) => {
+            let optInfos = [...prevState as IOptInfo[]];
+            optInfos?.splice(index, 1)
+            return optInfos
+        })
+    }
+
     return(
         <div className="container mx-8">
             <div className="flex mt-12">
@@ -223,11 +201,18 @@ const TwoColumnLayout = ({organisationId, formId}: TwoColumnLayoutProps) => {
                             <tr>
                                 <th className="py-2 border border-slate-400 bg-gray-300">Short Name</th>
                                 <th className="py-2 border border-slate-400 bg-gray-300">Description</th>
+                                <th className="py-2 border border-slate-400 bg-gray-300">Action</th>
                             </tr>
-                            {optDescription.map((item: any, index: number) => (
+                            {optInfo?.map((item: any, index: number) => (
                                 <tr key={`optin_${index}`}>
-                                    <td className="px-2 py-1 border border-slate-300">{optName[index]}</td>
-                                    <td className="px-2 py-1 border border-slate-300">{optDescription[index]}</td>
+                                    <td className="px-2 py-1 border border-slate-300">{item.name}</td>
+                                    <td className="px-2 py-1 border border-slate-300">{item.description}</td>
+                                    <td className="flex justify-center px-2 py-1 border border-slate-300">
+                                        <DefaultButton
+                                            label="delete"
+                                            onClick={() => handleDeleteOptinItem(index)}
+                                        />
+                                    </td>
                                 </tr>
                             ))}
                         </table>
