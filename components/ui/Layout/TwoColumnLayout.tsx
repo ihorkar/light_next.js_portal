@@ -225,7 +225,7 @@ const TwoColumnLayout = ({organisationId, formId}: TwoColumnLayoutProps) => {
                                 <th className="py-2 border border-slate-400 bg-gray-300">Description</th>
                             </tr>
                             {optDescription.map((item: any, index: number) => (
-                                <tr>
+                                <tr key={`optin_${index}`}>
                                     <td className="px-2 py-1 border border-slate-300">{optName[index]}</td>
                                     <td className="px-2 py-1 border border-slate-300">{optDescription[index]}</td>
                                 </tr>

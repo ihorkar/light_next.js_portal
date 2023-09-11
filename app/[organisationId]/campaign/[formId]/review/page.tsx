@@ -52,7 +52,7 @@ export default function Page({ params }: {
           {optin &&
             optin.map((item: any, index: number) => (
               <div>
-                <input type="checkbox" id='checkbox_`${index}`' aria-describedby="description_${index}" />
+                <input type="checkbox" id={`description_${index}`} aria-describedby={`description_${index}`} />
                 <label>{item.name}</label>
                 {item.description && <p id="description_`${index}`">{item.description}</p>}
               </div>
