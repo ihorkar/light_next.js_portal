@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import API from "@/utils/api/api";
 import Notiflix from "notiflix";
 import Modal from "../modal/Modal";
-import { TrashIcon } from "@heroicons/react/20/solid";
+import { TrashIcon, PlusIcon } from "@heroicons/react/20/solid";
 
 export interface TwoColumnLayoutProps {
     organisationId: string;
@@ -163,7 +163,9 @@ const TwoColumnLayout = ({organisationId, formId}: TwoColumnLayoutProps) => {
                     <div className="mt-4">
                         <div className="flex justify-between">
                             <p>Opt-in</p>
-                            <button className="bg-[#55CB64] p-1 rounded text-white" onClick={() => setShowOptinModal(true)}>New Opt</button>
+                            <button className="bg-[#55CB64] p-1 rounded text-white" onClick={() => setShowOptinModal(true)}>
+                                <PlusIcon className='w-5 h-5' />
+                            </button>
                         </div>
 
                         <Modal
@@ -208,10 +210,7 @@ const TwoColumnLayout = ({organisationId, formId}: TwoColumnLayoutProps) => {
                                     <td className="px-2 py-1 border border-slate-300">{item.name}</td>
                                     <td className="px-2 py-1 border border-slate-300">{item.description}</td>
                                     <td className="flex justify-center px-2 py-1 border border-slate-300">
-                                        <DefaultButton
-                                            label="delete"
-                                            onClick={() => handleDeleteOptinItem(index)}
-                                        />
+                                        <TrashIcon className="h-full w-5 text-red-500" onClick={() => handleDeleteOptinItem(index)} />
                                     </td>
                                 </tr>
                             ))}

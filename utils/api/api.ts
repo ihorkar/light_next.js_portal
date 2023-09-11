@@ -415,6 +415,19 @@ const API = {
                 }
             })
         })
+    },
+    updateOptinFromForm: (slug: string, formId: string, data: any): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.patch(`/organisations/${slug}/forms/${formId}/optin`, data)
+            .then(response => resolve(response))
+            .catch(error => {
+                if(error.response.status === 401){
+                    signOut();
+                }else{
+                    reject(error)
+                }
+            })
+        })
     }
 }
 

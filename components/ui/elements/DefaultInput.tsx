@@ -14,10 +14,11 @@ interface InputProps {
     value?: string;
     pattern?: string;
     inputType?: string;
+    checked?: boolean;
   }
   
-  export default function DefaultInput({ name, title, id, autoComplete, placeholder, onChange, required, type = 'default', disabled = false, value, pattern, inputType = 'text' }: InputProps) {
-    let classNames = inputType != "checkbox" ? "w-72 h-9 bg-white rounded border flex items-center gap-3" : "w-4 h-4 m-1 bg-white rounded border flex items-center gap-3";
+  export default function DefaultInput({ name, title, id, autoComplete, placeholder, onChange, required, type = 'default', disabled = false, value, pattern, inputType = 'text', checked }: InputProps) {
+    let classNames = inputType != "checkbox" ? "w-72 h-9 bg-white rounded border flex items-center gap-3" : "w-4 h-4 mt-2 bg-white rounded border flex items-center gap-3";
     if(type === "default"){
       classNames += "border-gray-400";
     }else{
@@ -39,6 +40,7 @@ interface InputProps {
             disabled={disabled}
             value={value}
             pattern={pattern}
+            checked={checked}
           />
           {type === "warning" && <div className="pointer-events-none absolute inset-y-0 right-36 flex items-center pr-3 -top-8">
             <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />

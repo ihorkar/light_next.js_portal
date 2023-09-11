@@ -35,6 +35,15 @@ export default function Page({ params }: {
 
     survey.sendResultOnPageNext = true;
 
+    const handleActiveOptin = (index: number) => {
+      let updatedOptin = optin;
+      updatedOptin[index].active = !updatedOptin[index].active
+      API.updateOptinFromForm(params.organisationId, params.formId, updatedOptin)
+      .then(response => {
+        if(response.status === 200) getFormDataFromID()
+      })
+    }
+
     return (
       <div>
         <PanelStepper 
@@ -49,23 +58,22 @@ export default function Page({ params }: {
         <div className='m-10'>
           <Survey model={survey} />
         </div>
-        <div className='mx-10'>
+        <div className='mx-10 flex flex-wrap'>
           {optin &&
             optin.map((item: any, index: number) => (
-              <div key={`showOptin_${index}`}>
-                <div className='flex'>
-                  <DefaultInput
-                    name='Optin'
-                    id='Optin'
-                    autoComplete='Optin'
-                    placeholder='Optin'
-                    onChange={() => {alert("asdfasdfa")}}
-                    inputType='checkbox'
-                  />
-                  <div>
-                    <label className='text-black font-bold'>{item.name}</label>
-                    {item.description ? <p id="description_`${index}`">{item.description}</p> : <p>No description</p>}
-                  </div>
+              <div key={`showOptin_${index}`} className='flex w-1/2 mt-2'>
+                <DefaultInput
+                  name='Optin'
+                  id='Optin'
+                  autoComplete='Optin'
+                  placeholder='Optin'
+                  onChange={() => handleActiveOptin(index)}
+                  inputType='checkbox'
+                  checked={item.active}
+                />
+                <div className='ml-2'>
+                  <label className='text-black font-bold'>{item.name}</label>
+                  {item.description ? <p id="description_`${index}`">{item.description}</p> : <p>No description</p>}
                 </div>
               </div>
             ))
