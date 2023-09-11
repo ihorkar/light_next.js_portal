@@ -6,7 +6,7 @@ interface InputProps {
     title?: string;
     id: string;
     autoComplete: string;
-    placeholder: string;
+    placeholder?: string;
     onChange: ChangeEventHandler<HTMLInputElement>;
     required?: boolean;
     type?: 'default' | 'warning'
@@ -17,7 +17,7 @@ interface InputProps {
   }
   
   export default function DefaultInput({ name, title, id, autoComplete, placeholder, onChange, required, type = 'default', disabled = false, value, pattern, inputType = 'text' }: InputProps) {
-    let classNames = "w-72 h-9 bg-white rounded border flex items-center gap-3";
+    let classNames = inputType != "checkbox" ? "w-72 h-9 bg-white rounded border flex items-center gap-3" : "w-4 h-4 m-1 bg-white rounded border flex items-center gap-3";
     if(type === "default"){
       classNames += "border-gray-400";
     }else{
@@ -32,7 +32,7 @@ interface InputProps {
             name={name}
             id={id}
             autoComplete={autoComplete}
-            className="flex-grow rounded border-0 bg-transparent py-1.5 pl-3 text-gray-900 placeholder:text-gray-400 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600"
+            className="flex-grow rounded border-0 bg-transparent text-gray-900 placeholder:text-gray-400 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600"
             placeholder={placeholder}
             onChange={onChange}
             required={required ? required : false}

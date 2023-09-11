@@ -8,6 +8,7 @@ import { Model } from 'survey-core'
 import { Survey } from 'survey-react-ui'
 import { useRouter } from "next/navigation"
 import API from '@/utils/api/api'
+import DefaultInput from '@/components/ui/elements/DefaultInput'
 
 export default function Page({ params }: {
     params: { 
@@ -52,9 +53,20 @@ export default function Page({ params }: {
           {optin &&
             optin.map((item: any, index: number) => (
               <div key={`showOptin_${index}`}>
-                <input type="checkbox" id={`description_${index}`} aria-describedby={`description_${index}`} />
-                <label>{item.name}</label>
-                {item.description && <p id="description_`${index}`">{item.description}</p>}
+                <div className='flex'>
+                  <DefaultInput
+                    name='Optin'
+                    id='Optin'
+                    autoComplete='Optin'
+                    placeholder='Optin'
+                    onChange={() => {alert("asdfasdfa")}}
+                    inputType='checkbox'
+                  />
+                  <div>
+                    <label className='text-black font-bold'>{item.name}</label>
+                    {item.description ? <p id="description_`${index}`">{item.description}</p> : <p>No description</p>}
+                  </div>
+                </div>
               </div>
             ))
           }

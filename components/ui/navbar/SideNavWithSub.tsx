@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import API from "@/utils/api/api"
 import { Disclosure } from '@headlessui/react'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
+import DefaultButton from '../buttons/DefaultButton';
 import {
   CalendarIcon,
   ChartPieIcon,
@@ -88,8 +89,12 @@ const SideNavWithSub: React.FC<NavProps> = ({menuitems, isUserProfilePage}) => {
             alt="Light Portal"
           />
         </div>
-        <div className='flex'>
-          <button className=' bg-[#6AF475] h-12 rounded px-2 py-1 m-1 cursor-pointer' onClick={() => navigateAnotherSite()}>Lets signup!</button>
+        <div className='flex mt-6'>
+          <DefaultButton
+            label="Let's signup!"
+            onClick={navigateAnotherSite}
+          />
+          {/* <button className=' bg-[#6AF475] h-12 rounded px-2 py-1 m-1 cursor-pointer' onClick={() => navigateAnotherSite()}>Lets signup!</button> */}
         </div>
       </div>
       <nav className="flex flex-1 flex-col">
