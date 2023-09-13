@@ -26,7 +26,7 @@ const TwoColumnLayout = ({organisationId, formId}: TwoColumnLayoutProps) => {
     const [projectName, setProjectName] = useState("");
     const [projectDescription, setProjectDescription] = useState("");
     const [optInfo, setOptInfo] = useState<IOptInfo[]>([])
-    const [goalForm, setGoalForm] = useState("")
+    const [goalForm, setGoalForm] = useState("Lead Generation")
     const [payCondition, setPayCondition] = useState("")
     const [showOptinModal, setShowOptinModal] = useState(false)
     const [optNameItem, setOptNameItem] = useState("")
@@ -48,7 +48,6 @@ const TwoColumnLayout = ({organisationId, formId}: TwoColumnLayoutProps) => {
 
         setProjectName(response.data.project)
         setProjectDescription(response.data.formDescription)
-        setGoalForm(response.data.formGoal)
         setPayCondition(response.data.payCondition)
         setOptInfo(optInfo)
       })
