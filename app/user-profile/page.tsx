@@ -9,6 +9,8 @@ import DefaultInput from "@/components/ui/elements/DefaultInput"
 import DefaultButton from "@/components/ui/buttons/DefaultButton"
 import Modal from "@/components/ui/modal/Modal"
 import { signOut } from "next-auth/react"
+import IconButton from "@/components/ui/buttons/IconButton"
+import { PencilIcon } from "@heroicons/react/24/outline"
 
 export interface UserData {
     userName?: string;
@@ -131,10 +133,12 @@ const UserProfile = () => {
                     />
                 </div> : 
                 <div className="flex items-center justify-end p-6">
-                    <DefaultButton
-                        type="primary"
+                    <IconButton
+                        icon={<PencilIcon className="h-5 w-5" />}
                         onClick={handleClickEditButton}
-                        label={"edit"}
+                        label={"Edit"}
+                        type={"default"}
+                        visible={() => true}
                     />
                 </div> }
             </div>
@@ -214,6 +218,7 @@ const UserProfile = () => {
             <div className="inline-flex justify-end w-full mt-10">
                 <DefaultButton
                     onClick={signOut}
+                    type="secondary"
                     label={"log out"}
                 />
                 <Modal 
@@ -221,6 +226,7 @@ const UserProfile = () => {
                   title="Delete Account"
                   ok_text={"Delete"}
                   cancel_text={"Cancel"} 
+                  primarytype="critical"
                   onCancelClick={handleCloseDeleteAccountModal} 
                   onOkClick={handleOnclickDeleteBtn}
                 >
@@ -228,6 +234,7 @@ const UserProfile = () => {
                 </Modal>
                 <DefaultButton
                     onClick={handleShowDeleteAccountModal}
+                    type="critical"
                     label={"delete account"}
                 />
             </div>

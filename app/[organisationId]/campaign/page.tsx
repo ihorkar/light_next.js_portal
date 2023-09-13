@@ -3,12 +3,12 @@
 import { useState, useRef, ChangeEvent, useCallback } from "react"
 import OrganisationFormsList from "@/components/organisation/OrganisationFormsList"
 import DefaultButton from "@/components/ui/buttons/DefaultButton"
-import SimpleHeader from "@/components/ui/headers/SimpleHeader"
 import Modal from "@/components/ui/modal/Modal"
 import DefaultInput from "@/components/ui/elements/DefaultInput"
 import API from "@/utils/api/api"
 import { useRouter } from "next/navigation"
 import OrganisationDesignsList from "@/components/organisation/OrganisationDesignsList"
+import HeaderWithDescription from "@/components/ui/headers/HeaderWithDescription"
 
 
 export default function Page({ params }: {
@@ -56,17 +56,28 @@ export default function Page({ params }: {
 
   return (
     <div>
-        <div className="inline-flex justify-between w-full">
-        <SimpleHeader Headline= "Campaign" />
-        <DefaultButton label="Create project" onClick={handleCreateProjectClick} />
-      </div>
+        <HeaderWithDescription 
+          Headline={"Campaign"} 
+          Description={"Craft, manage, and optimize projects to drive your initiatives forward."}     
+          type="page"
+        />
 
     <div className="mt-4">
-      <SimpleHeader Headline= "Projects" />
+      <HeaderWithDescription 
+          Headline={"Projects"} 
+          Description={"Activate, deactivate or archive your current projects."}
+          type="section"
+        />
       <OrganisationFormsList organisationId={params.organisationId} refreshHandler={refresh}  />
     </div>
     <div className="mt-4">
-      <SimpleHeader Headline= "Designs" />
+      <HeaderWithDescription 
+        Headline={"Designs"} 
+        Description={"Craft new projects and prepare them for use."}
+        type="section"
+        PrimaryButtonLabel="New design"
+        PrimaryButtononClick={handleCreateProjectClick}
+      />
       <OrganisationDesignsList organisationId={params.organisationId} handleRefresh={() => setRefresh(!refresh)} />
     </div>
     <Modal 

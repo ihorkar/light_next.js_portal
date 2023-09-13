@@ -40,6 +40,10 @@ export default function Layout({
           current: pathName.includes(`/${params.organisationId}/campaign`),
         },
         { name: 'Results', href: `/${params.organisationId}/results`, icon: 'ClipboardDocumentListIcon', current: pathName === `/${params.organisationId}/results` },
+      ],
+      organisations: [
+        { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
+        { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
       ]
     }
 
@@ -50,6 +54,7 @@ export default function Layout({
               <CheckOrganisationExists organisationId={params.organisationId}>
                 <SideNavWithSub
                   menuitems={navigation.menuitems}
+                  organisations={navigation.organisations}
                   isUserProfilePage={false}
                 />
                 <ContainerFullWidth>

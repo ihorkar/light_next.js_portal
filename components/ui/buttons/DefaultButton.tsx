@@ -1,7 +1,7 @@
 interface ButtonProps {
     label: string;
     onClick: () => void;
-    type?: 'primary' | 'secondary';
+    type?: 'primary' | 'secondary' | 'critical';
 }
 
 const DefaultButton: React.FC<ButtonProps> = ({
@@ -9,12 +9,17 @@ const DefaultButton: React.FC<ButtonProps> = ({
     onClick,
     type = 'primary',
 }) => {
-    let classNames = "text-sm py-3 px-5 mr-2 mb-2 font-medium rounded-lg focus:ring-4 focus:outline-none";
+    let classNames = "text-sm py-3 px-5 mr-2 mb-2 font-medium rounded-lg";
 
-    if (type === 'primary') {
-        classNames += " text-white bg-actionprimarydefault hover:bg-actionprimaryhovered border border-actionprimarydefault focus:ring-blue-300";
-    } else if (type === 'secondary') {
-        classNames += " hover:text-gray-900 bg-white items-center text-center text-black border border-gray-500 hover:bg-gray-100 focus:ring-gray-400";
+    switch (type) {
+        case 'primary':
+            classNames += " text-textprimary bg-actionprimarydefault hover:bg-actionprimaryhovered border border-actionprimarydefault";
+            break;
+        case 'secondary':
+            classNames += " text-textdefault bg-surfacedefault hover:surfacehovered border border-borderdefault";break;
+        case 'critical':
+            classNames += " text-textprimary bg-actioncriticaldefault hover:actioncriticalhovered";
+            break;
     }
 
     return (

@@ -10,10 +10,13 @@ interface ModalProps {
     title: string;
     ok_text: string;
     cancel_text: string;
+    primarytype?: 'primary' | 'secondary' | 'critical';
+    secondarytype?: 'primary' | 'secondary' | 'critical';
 }
 
-const Modal = ({ visible, onOkClick, onCancelClick, children, title, ok_text, cancel_text }: ModalProps) => {
+const Modal = ({ visible, onOkClick, onCancelClick, children, title, ok_text, cancel_text, primarytype = 'primary', secondarytype = 'secondary' }: ModalProps) => {
     return (
+
       <>
         {visible ? (
            <>
@@ -44,12 +47,12 @@ const Modal = ({ visible, onOkClick, onCancelClick, children, title, ok_text, ca
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   {cancel_text && <DefaultButton
-                    type="secondary"
+                    type={secondarytype}
                     onClick={onCancelClick}
                     label={cancel_text}
                   />}
                   <DefaultButton
-                    type="primary"
+                    type={primarytype}
                     onClick={onOkClick}
                     label={ok_text}
                   />

@@ -10,6 +10,7 @@ import Modal from "../ui/modal/Modal";
 import DefaultInput from "../ui/elements/DefaultInput";
 import DefaultSelect from "../ui/elements/DefaultSelect";
 import { useUserData } from "@/utils/jotai";
+import { IconButtonProps } from "../ui/buttons/IconButton";
 
 interface ListProps {
   organisationId: string;
@@ -106,16 +107,18 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
     },
   ];
 
-  const actionButtons = [
+  const actionButtons: IconButtonProps[]   = [
     {
-      label: "Edit User",
-      icon: <PencilIcon className="h-5 w-5 text-blue-500" />,
+      label: "Edit Membership",
+      icon: <PencilIcon className="h-5 w-5" />,
+      type: 'default',
       onClick: handleEditModalOpen,
       visible: (item: any) => true
     },
     {
-      label: "Delete User",
-      icon: <UserMinusIcon className="h-5 w-5 text-red-500" />,
+      label: "Remove User",
+      icon: <UserMinusIcon className="h-5 w-5" />,
+      type: 'critical',
       onClick: handleDeleteModalOpen,
       visible: (item: any) => true
     }
@@ -126,8 +129,8 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
     {organisationUsersData.length > 0 && <FullWidthList columns={columns} data={organisationUsersData} actionButtons={actionButtons} loggedUserIndex={loggedUserIndex} />}
     <Modal 
       visible={showRoleEditModal} 
-      title="Edit user role"
-      ok_text="Update"
+      title="Change Membership"
+      ok_text="Change"
       cancel_text="Cancel"
       onCancelClick={() => setShowRoleEditModal(false)} 
       onOkClick={handleEditUser}
@@ -161,13 +164,14 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
     </Modal>
     <Modal
       visible={showDeleteModal} 
-      title="Delete this user?"
-      ok_text="Delete"
+      title="Revoke membership"
+      ok_text="Revoke"
+      primarytype="critical"
       cancel_text="Cancel"
       onCancelClick={() => setShowDeleteModal(false)} 
       onOkClick={handleDeleteUser}
     >
-      <p className="mx-20">Do you want delete this user?</p>
+      <p className="mx-20">Are you sure you want to revoke this user&rsquo;s access to your organization? They will need to be invited again.</p>
     </Modal>
     </>
   );

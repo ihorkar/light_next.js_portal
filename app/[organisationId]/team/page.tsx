@@ -9,6 +9,7 @@ import DefaultInput from "@/components/ui/elements/DefaultInput"
 import API from "@/utils/api/api"
 import { InvitationData } from "@/utils/data/types"
 import DefaultSelect from "@/components/ui/elements/DefaultSelect"
+import HeaderWithDescription from "@/components/ui/headers/HeaderWithDescription"
 
 export default function Page({ params }: {
     params: { organisationId: string}
@@ -60,15 +61,18 @@ export default function Page({ params }: {
 
   return (
     <div>
-      <div className="inline-flex justify-between w-full">
-        <SimpleHeader Headline= "Team" />
-        <DefaultButton label="Invite crew" onClick={handleInviteButtonClick} />
-      </div>
+      <HeaderWithDescription 
+        Headline="Team"
+        Description="Manage access, define roles, and set the stage for a successful crew."
+        type="page"
+        PrimaryButtonLabel="Invite members"
+        PrimaryButtononClick={handleInviteButtonClick}
+      />
     
     <OrganisationUserList organisationId={params.organisationId} />
     <Modal 
       visible={showInvitationModal} 
-      title="Invite a new memeber to your team."
+      title="Member Invitation"
       ok_text={isSentInvitation ? "OK" : "Invite"}
       cancel_text={isSentInvitation ? "" : "Cancel"} 
       onCancelClick={handelCloseModal} 
@@ -105,7 +109,7 @@ export default function Page({ params }: {
       </form>
        : 
       <p>
-        The invitation has been sent successfully.
+        Your invitation has been sent successfully. Please keep in mind that invitations can only be sent to existing platform members. If the intended recipient is not yet a member, kindly suggest they sign up before sending the invitation. This will ensure they receive your invitation promptly.
       </p>}
     </Modal>
     </div>

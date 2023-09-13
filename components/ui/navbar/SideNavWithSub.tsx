@@ -29,6 +29,14 @@ export interface MenuChild {
   current: boolean;
 }
 
+export interface Organisation {
+  id: number;
+  name: string;
+  href: string;
+  initial: string;
+  current: boolean;
+}
+
 export interface MenuItem {
   name: string;
   href: string;
@@ -39,6 +47,7 @@ export interface MenuItem {
 
 export interface NavProps {
   menuitems: MenuItem[];
+  organisations?: Organisation[];
   isUserProfilePage?: boolean;
 }
 
@@ -55,7 +64,7 @@ const icons: { [iconName: string]: React.ElementType } = {
   UserPlusIcon: UserPlusIcon
 };
 
-const SideNavWithSub: React.FC<NavProps> = ({menuitems, isUserProfilePage}) => {
+const SideNavWithSub: React.FC<NavProps> = ({menuitems, organisations, isUserProfilePage}) => {
   const router = useRouter()
   const [ userData, setUserData ] = useState<any>();
 
@@ -88,13 +97,6 @@ const SideNavWithSub: React.FC<NavProps> = ({menuitems, isUserProfilePage}) => {
             src="/briggsplus.png"
             alt="Light Portal"
           />
-        </div>
-        <div className='flex mt-6'>
-          <DefaultButton
-            label="Let's signup!"
-            onClick={navigateAnotherSite}
-          />
-          {/* <button className=' bg-[#6AF475] h-12 rounded px-2 py-1 m-1 cursor-pointer' onClick={() => navigateAnotherSite()}>Lets signup!</button> */}
         </div>
       </div>
       <nav className="flex flex-1 flex-col">
@@ -161,6 +163,36 @@ const SideNavWithSub: React.FC<NavProps> = ({menuitems, isUserProfilePage}) => {
               ))}
             </ul>
           </li>
+
+          {organisations && (
+              <li>
+                  <div className="text-xs font-semibold leading-6 text-gray-700">Managed Organisations</div>
+                  <ul role="list" className="-mx-2 mt-2 space-y-1">
+                      {organisations.map((organisation) => (
+                          <li key={organisation.name}>
+                              <a
+                                  href={organisation.href}
+                                  className={classNames(
+                                      organisation.current ? 'bg-gray-50' : 'hover:bg-gray-50',
+                                      'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700'
+                                  )}
+                              >
+                                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-400 bg-gray-500 text-[0.625rem] font-medium text-white">
+                                      {organisation.initial}
+                                  </span>
+                                  <span className="truncate">{organisation.name}</span>
+                              </a>
+                          </li>
+                      ))}
+                  </ul>
+              </li>
+          )}
+
+          <DefaultButton
+            label="Let's signup!"
+            onClick={navigateAnotherSite}
+          />
+
           {!isUserProfilePage && <li className="-mx-6 mt-auto">
             <div
               onClick={() => router.push('/user-profile')}

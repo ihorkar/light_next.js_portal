@@ -7,20 +7,12 @@ interface DataItem {
   }
   
   interface DataCardProps {
-    title: string;
-    description: string;
     data: DataItem[];
-    userAlert?: React.ReactNode
   }
 
-    const DataCard: React.FC<DataCardProps> = ({ title, description, data, userAlert }) => {
+    const DataCard: React.FC<DataCardProps> = ({ data}) => {
         return (
           <>
-            <div className="px-4 sm:px-0">
-              <h3 className="text-base font-semibold leading-7 text-gray-900">{title}</h3>
-              <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">{description}</p>
-            </div>
-            {userAlert}
             <div className="mt-6 border-t border-gray-100">
               <dl className="divide-y divide-gray-100">
                 {data.map((item, index) => (

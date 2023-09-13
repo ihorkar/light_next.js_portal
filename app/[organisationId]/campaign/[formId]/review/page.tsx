@@ -9,6 +9,7 @@ import { Survey } from 'survey-react-ui'
 import { useRouter } from "next/navigation"
 import API from '@/utils/api/api'
 import DefaultInput from '@/components/ui/elements/DefaultInput'
+import HeaderWithDescription from '@/components/ui/headers/HeaderWithDescription'
 
 export default function Page({ params }: {
     params: { 
@@ -54,7 +55,13 @@ export default function Page({ params }: {
               { id: '04', name: 'Review', description: "Let's organise", href: '#', status: 'current' },
           ]}
         />
-        <div>Form review</div>
+        <div className="mt-4">
+          <HeaderWithDescription
+              Headline="Ready to Go!"
+              Description="Your project form is ready for review. Take a moment to inspect the form you've created. If you wish to make any changes or improvements, feel free to revisit previous steps before finalizing your setup."
+              type="section"
+            />
+        </div>
         <div className='m-10'>
           <Survey model={survey} />
         </div>

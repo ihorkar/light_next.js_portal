@@ -6,6 +6,7 @@ import axios from "axios";
 import FullWidthList from "../ui/lists/FullWidthList";
 import { useRouter } from "next/navigation";
 import { PencilIcon, TrashIcon, DocumentCheckIcon } from "@heroicons/react/24/outline";
+import { IconButtonProps } from "../ui/buttons/IconButton";
 
 interface ListProps {
     organisationId: string;
@@ -58,35 +59,39 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
 
   const columns = [
     {
-      header: "Design",
-      accessor: (item: any) => item._id,
-      name: "_id"
+      header: "Description",
+      accessor: (item: any) => item.formDescription,
+      isBold: false,
+      name: "description"
     },
     {
-      header: "Project",
+      header: "Design",
       accessor: (item: any) => item.project,
       isBold: true,
-      name: "project"
+      name: "design"
     }
   ];
 
-  const actionButtons = [
+  const actionButtons: IconButtonProps[]  = [
     {
       label: "Edit Form",
-      icon: <PencilIcon className="h-5 w-5 text-blue-500" />,
+      icon: <PencilIcon className="h-5 w-5" />,
       onClick: handleEditForm,
+      type: 'default',
+      visible: (item: any) => true
+    },
+    {
+      label: "Activate Form",
+      icon: <DocumentCheckIcon className='h-5 w-5' />,
+      type: 'success',
+      onClick: handleArchiveForm,
       visible: (item: any) => true
     },
     {
       label: "Delete Form",
-      icon: <TrashIcon className="h-5 w-5 text-red-500" />,
+      icon: <TrashIcon className="h-5 w-5" />,
       onClick: handleDeleteForm,
-      visible: (item: any) => true
-    },
-    {
-      label: "Archive Form",
-      icon: <DocumentCheckIcon className='h-5 w-5 text-blue-500' />,
-      onClick: handleArchiveForm,
+      type: 'critical',
       visible: (item: any) => true
     }
   ];

@@ -6,6 +6,7 @@ import axios from "axios";
 import FullWidthList from "../ui/lists/FullWidthList";
 import { useRouter } from "next/navigation";
 import { PowerIcon, ArchiveBoxIcon } from "@heroicons/react/24/outline";
+import { IconButtonProps } from "../ui/buttons/IconButton";
 
 interface ListProps {
     organisationId: string;
@@ -72,14 +73,9 @@ export default function OrganisationFormsList({ organisationId, refreshHandler }
 
   const columns = [
     {
-      header: "Project",
-      accessor: (item: any) => item._id,
-      name: "_id"
-    },
-    {
       header: "Description",
       accessor: (item: any) => item.formDescription,
-      isBold: true,
+      isBold: false,
       name: "formDescription"
     },
     {
@@ -90,23 +86,26 @@ export default function OrganisationFormsList({ organisationId, refreshHandler }
     }
   ];
 
-  const actionButtons = [
+  const actionButtons: IconButtonProps[] = [
     {
       label: "Toggle Active",
-      icon: <PowerIcon className='text-red-500 h-5 w-5' />,
+      icon: <PowerIcon className='h-5 w-5' />,
       onClick: handleOnclickActive,
+      type: 'critical',
       visible: (item: any) => !item.active
     },
     {
       label: "Toggle Deactive",
-      icon: <PowerIcon  className='text-blue-500 h-5 w-5' />,
+      icon: <PowerIcon  className='h-5 w-5' />,
       onClick: handleOnclickActive,
+      type: 'success',
       visible: (item: any) => item.active
     },
     {
       label: "Archive Form",
-      icon: <ArchiveBoxIcon className='h-5 w-5 text-blue-500' />,
+      icon: <ArchiveBoxIcon className='h-5 w-5' />,
       onClick: handleArchiveForm,
+      type: 'default',
       visible: (item: any) => !item.active
     }
   ];

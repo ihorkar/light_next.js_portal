@@ -5,8 +5,9 @@ import API from "@/utils/api/api";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import FullWidthList from "../ui/lists/FullWidthList";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import Modal from "../ui/modal/Modal";
+import { IconButtonProps } from "../ui/buttons/IconButton";
 
 export default function UserOrganisationList() {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -70,10 +71,11 @@ export default function UserOrganisationList() {
     },
   ];
 
-  const actionButtons = [
+  const actionButtons: IconButtonProps[]  = [
     {
       label: "Delete User",
-      icon: <TrashIcon className="h-5 w-5 text-red-500" />,
+      icon: <ArrowRightOnRectangleIcon className="h-5 w-5" />,
+      type:'critical',
       onClick: handleDeleteModalOpen,
       visible: (item: any) => true
     }
@@ -84,13 +86,14 @@ export default function UserOrganisationList() {
     {userOrganisations.length > 0 ? <FullWidthList columns={columns} data={userOrganisations} actionButtons={actionButtons} /> : <p className="mt-10 text-center text-lg text-gray-500">No Organisations</p>}
     <Modal
       visible={showDeleteModal} 
-      title="Delete this user?"
+      title="Leaving organisation"
       ok_text="Delete"
+      primarytype="critical"
       cancel_text="Cancel"
       onCancelClick={() => setShowDeleteModal(false)} 
       onOkClick={handleDeleteUser}
     >
-      <p className="mx-20">Do you want delete this releation?</p>
+      <p className="mx-20">Are you sure you want to leave this organisation? You will need a new invitation if you want to join again.</p>
     </Modal>
     </>
   );

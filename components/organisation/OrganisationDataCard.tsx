@@ -9,7 +9,6 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Modal from "../ui/modal/Modal";
 import DefaultInput from "../ui/elements/DefaultInput";
-import UserAlerts from "../user-alerts/UserAlerts";
 
 export interface OrganisationDataCardProps {
     organisationId: string;
@@ -115,8 +114,6 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
     return (
         <>
             {organisationData && <DataCard 
-                title= "Organisation Information"
-                description= "An overview with organisational information"
                 data={[
                     {
                         label: 'Short Name',
@@ -160,7 +157,6 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                         onUpdate: openModals('contactDetails')
                     }
                 ]}
-                userAlert={<UserAlerts category="team" type="notification" showAlerts={true} />}
             />}
             {/* Edit name modal */}
             <Modal 

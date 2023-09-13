@@ -19,6 +19,7 @@ module.exports = {
         'briggs-fontsize-heading2xl-md-xl': '28px',
         'briggs-fontsize-headingxl-md-xl': '24px',
         'briggs-fontsize-headinglg-md-xl': '20px',
+        'briggs-fontsize-bodylg': '16px',
       },
       lineHeight: {
         'briggs-lineheight-heading4xl-xs-sm': '40px',
@@ -36,13 +37,39 @@ module.exports = {
         'briggs-weight-heading': 600
       },
       colors: {
+        // Buttons
         actionprimarydefault: '#55CB64',
         actionprimaryhovered: '#008A2B',
+        actioncriticaldefault: '#D82C0D',
+        actioncriticalhovered: '#BC2200',
+        descriptivesecondarydefault: '#17104F',
+        descriptivesecondaryhovered: '#0D0050',
+
+        // Background
+        backgrounddefault: '#FAFAFA',
+
+        // Text
         textprimarydefault: '007B5C',
+        textprimary: '#FFFFFF',
+        textdefault: '#202223',
+        textsubdued: '#6D7175',
+
+        // Surface
+        surfacedefault: '#FFFFFF',
+        surfacehovered: '#F6F6F7',
+
+        // Icons
+        icondefault: '#5C5F62',
+        iconhovered: '#1A1C1D',
+        iconcritical: '#D72C0D',
+        iconwarning: '#B98900',
+        iconsuccess: '#007F5F',
+        iconhighlight: '#00A0AC',
+
+        //Interactive
         interactivedefault: '2C6ECB',
         interactivedisabled: 'BDC1CC',
         surfacesuccessdefault: 'AEE9D1',
-        descriptivesecondary: '17104F',
       },
       fontFamily: {
         'briggs-typeface': ['Montserrat', 'sans-serif'],

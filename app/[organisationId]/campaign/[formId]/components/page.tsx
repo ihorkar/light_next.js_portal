@@ -1,6 +1,7 @@
 'use client'
 
 import DatablockList from "@/components/formbuilder/datablocklist"
+import HeaderWithDescription from "@/components/ui/headers/HeaderWithDescription"
 import { PanelStepper } from "@/components/ui/steps/PanelStepper"
 
 export default function Page({ params }: {
@@ -20,6 +21,13 @@ export default function Page({ params }: {
                     { id: '04', name: 'Review', description: "Let's organise", href: '#', status: 'upcoming' },
                 ]}
             />
+            <div className="mt-4">
+                <HeaderWithDescription
+                    Headline="What Data Do We Need?"
+                    Description="Select the specific data blocks that contain the information you'd like to collect for your project. Feel free to click on each datablock to get a preview and ensure it aligns with your project requirements."
+                    type="section"
+                />
+            </div>
             <div className="mt-4">
                 <DatablockList organisationId={params.organisationId} formId={params.formId} />
             </div>

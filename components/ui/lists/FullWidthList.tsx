@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import DefaultInput from "../elements/DefaultInput";
+import IconButton, { IconButtonProps } from "../buttons/IconButton";
 
 interface Column {
   header: string;
@@ -11,17 +12,10 @@ interface Column {
   isBold?: boolean;
 }
 
-interface ActionButton {
-  label: string;
-  icon: JSX.Element;
-  onClick: (...params: any) => void;
-  visible: (item: any) => any;
-}
-
 interface FullWidthListProps {
   columns: Column[];
   data: any[];
-  actionButtons?: ActionButton[];
+  actionButtons?: IconButtonProps[];
   loggedUserIndex?: number;
 }
 
@@ -82,10 +76,10 @@ export default function FullWidthList({
             <div className="flex justify-between">
               <div className="mt-2 sm:col-span-2 sm:mt-0">
                 <DefaultInput 
-                    name="Project name"
-                    id="project"
-                    autoComplete="Project name"
-                    placeholder="My Awesome Project"
+                    name="Search"
+                    id="search"
+                    autoComplete="Search..."
+                    placeholder="Search..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     inputType="search"
@@ -137,18 +131,19 @@ export default function FullWidthList({
                     ))}
                     {actionButtons.length > 0 && (
                       (loggedUserIndex !== null && loggedUserIndex === rowIndex) ? 
-                      <td className="px-4 py-4"><p className="text-sm text-red-500 m-auto">You</p></td> : 
+                      <td className="px-4 py-4"><p className="text-sm m-auto">You</p></td> : 
                       <td className="px-4 py-4">
                         {/*@ts-ignore*/}
                         {actionButtons.map((btn, btnIndex) =>  btn.visible(item) && (
-                          <button
-                            key={btnIndex}
-                            onClick={() => btn.onClick(item)}
-                            aria-label={btn.label}
-                            className="mr-2"
-                          > 
-                            {btn.icon}
-                          </button>
+                            <IconButton
+                              key={btnIndex}
+                              icon={btn.icon}
+                              onClick={btn.onClick}
+                              label={btn.label}
+                              type={btn.type}
+                              visible={btn.visible}
+                              item={item}
+                          />
                         ))}
                       </td>
                     )}
