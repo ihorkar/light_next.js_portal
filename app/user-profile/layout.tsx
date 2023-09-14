@@ -1,9 +1,11 @@
 'use client'
 
+import { useState, useEffect } from "react"
 import ContainerFullWidth from "@/components/ui/Layout/ContainerFullWidth"
 import SideNavWithSub, { NavProps } from "@/components/ui/navbar/SideNavWithSub"
 import CheckLoginIsRequired from '../../utils/auth/CheckLoginIsRequired'
 import { usePathname } from "next/navigation"
+import API from "@/utils/api/api"
 
 export default function Layout({
     children,
@@ -14,8 +16,27 @@ export default function Layout({
       organisationId: string
     }
   }) {
+    const [organisationdata, setOrganisationData] = useState<any[]>();
 
     const pathName = usePathname();
+
+    useEffect(() => {
+      getOrganisationData()
+    }, [])
+
+    const getOrganisationData = async () => {
+      let organisationList: any[] = []
+      const organisationData = await API.getOrganisationsByUser();
+      organisationData.data.map((item:any, index: number) => {
+        if (item.role === "admin" || "manager") {
+          organisationList.push({
+            id: index, name: item.organisationId.name, href: `/${item.organisationId.slug}`, initial: item.organisationId.name[0], current: false
+          })
+        }
+      })
+      setOrganisationData(organisationList);
+    }
+
     // Define menu
     const navigation: NavProps = {
       menuitems: [
@@ -31,7 +52,8 @@ export default function Layout({
           icon: 'BuildingOfficeIcon',
           current: pathName === '/user-profile/organisation',
         }
-      ]
+      ],
+      organisations: organisationdata
     }
     
     return (
@@ -41,6 +63,7 @@ export default function Layout({
                 <CheckLoginIsRequired>
                     <SideNavWithSub
                         menuitems={navigation.menuitems}
+                        organisations={navigation.organisations}
                         isUserProfilePage={true}
                     />
                     <ContainerFullWidth>

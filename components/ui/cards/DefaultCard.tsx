@@ -35,7 +35,6 @@ const DefaultCard: React.FC<CardProps> = ({
                 dark:border-gray-700
                 dark:hover:bg-gray-700
                 cursor-pointer
-                flex
                 justify-between
                 items-center
             "
