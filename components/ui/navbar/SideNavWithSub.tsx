@@ -89,7 +89,7 @@ const SideNavWithSub: React.FC<NavProps> = ({menuitems, organisations, isUserPro
   }
 
   return (
-    <div className="flex grow flex-col max-w-xs h-screen gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
+    <div className="flex flex-col w-[300px] min-w-[300px] h-screen gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
       <div className='flex justify-between'>
         <div onClick={() => router.push('/')} className="flex h-16 shrink-0 items-center cursor-pointer">
           <img

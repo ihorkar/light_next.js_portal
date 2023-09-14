@@ -8,8 +8,8 @@ import { Model } from 'survey-core'
 import { Survey } from 'survey-react-ui'
 import { useRouter } from "next/navigation"
 import API from '@/utils/api/api'
-import DefaultInput from '@/components/ui/elements/DefaultInput'
 import HeaderWithDescription from '@/components/ui/headers/HeaderWithDescription'
+import DefaultCheckBox from '@/components/ui/elements/DefaultCheckBox'
 
 export default function Page({ params }: {
     params: { 
@@ -36,15 +36,6 @@ export default function Page({ params }: {
 
     survey.sendResultOnPageNext = true;
 
-    const handleActiveOptin = (index: number) => {
-      let updatedOptin = optin;
-      updatedOptin[index].active = !updatedOptin[index].active
-      API.updateOptinFromForm(params.organisationId, params.formId, updatedOptin)
-      .then(response => {
-        if(response.status === 200) getFormDataFromID()
-      })
-    }
-
     return (
       <div>
         <PanelStepper 
@@ -62,29 +53,23 @@ export default function Page({ params }: {
               type="section"
             />
         </div>
-        <div className='m-10'>
-          <Survey model={survey} />
-        </div>
-        <div className='mx-10 flex flex-wrap'>
-          {optin &&
-            optin.map((item: any, index: number) => (
-              <div key={`showOptin_${index}`} className='flex w-1/2 mt-2'>
-                <DefaultInput
-                  name='Optin'
-                  id='Optin'
-                  autoComplete='Optin'
-                  placeholder='Optin'
-                  onChange={() => handleActiveOptin(index)}
-                  inputType='checkbox'
-                  checked={item.active}
-                />
-                <div className='ml-2'>
-                  <label className='text-black font-bold'>{item.name}</label>
-                  {item.description ? <p id="description_`${index}`">{item.description}</p> : <p>No description</p>}
-                </div>
-              </div>
-            ))
-          }
+        <div className='flex my-8 gap-x-2'>
+          <div className='w-3/4'>
+            <Survey model={survey} />
+          </div>
+          <div className=" bg-white drop-shadow-lg p-6">
+              <p className="text-lg font-semibold pb-3 text-center">Optin Information</p><hr />
+              {optin.map((item: any, index: number) => (
+                  <div key={`showOptin_${index}`} className='flex mt-2'>
+                      <DefaultCheckBox
+                          name=""
+                          id=""
+                          title={item.name}
+                          content={item.description}
+                      />
+                  </div>
+              ))}
+          </div>
         </div>
 
         <div className="flex justify-between mt-4">

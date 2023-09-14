@@ -1,11 +1,9 @@
 export default function ContainerFullWidth({ children }: { children: React.ReactNode }) {
   return <div className="
                   h-screen
-                  overflow-y-scroll
+                  overflow-y-auto
                   py-10 
-                  lg:pl-72
-                  mx-auto 
-                  max-w-7xl 
+                  lg:pl-10
                   flex-grow 
                   sm:px-6 
                   lg:px-8 
@@ -13,5 +11,6 @@ export default function ContainerFullWidth({ children }: { children: React.React
                   xl:px-20
                   md:px-10
                   px-4
+                  w-full
                   ">{children}</div>
 }

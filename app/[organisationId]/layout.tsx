@@ -49,7 +49,7 @@ export default function Layout({
 
     return (
       <html lang="en">
-        <body>
+        <body className="overflow-y-hidden">
             <div className="flex flex-row">
               <CheckOrganisationExists organisationId={params.organisationId}>
                 <SideNavWithSub
