@@ -11,7 +11,7 @@ declare module 'next-auth/jwt' {
   }
 }
 
-export const authOptions: NextAuthOptions = {
+export const authConfig: NextAuthOptions = {
     secret: String(process.env.NEXTAUTH_SECRET),
     providers: [
         KeycloakProvider({
@@ -40,7 +40,7 @@ export const authOptions: NextAuthOptions = {
     events: {
       async signOut({ token }: { token: JWT }) {
         if (token.provider === "keycloak") {
-          const issuerUrl = (authOptions.providers.find(p => p.id === "keycloak") as OAuthConfig<KeycloakProfile>).options!.issuer!
+          const issuerUrl = (authConfig.providers.find(p => p.id === "keycloak") as OAuthConfig<KeycloakProfile>).options!.issuer!
           const logOutUrl = new URL(`${issuerUrl}/protocol/openid-connect/logout`)
           logOutUrl.searchParams.set("id_token_hint", token.id_token!)
           await fetch(logOutUrl);
