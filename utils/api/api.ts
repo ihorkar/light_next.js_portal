@@ -93,6 +93,19 @@ const API = {
                 })
         })
     },
+    getActiveFormByOrganisation: (slug: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.get(`/organisations/${slug}/forms/active`)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401){
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
+        })
+    },
     getOrganisationInfo: (slug: string): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
             axios.get(`/organisations/${slug}`)
