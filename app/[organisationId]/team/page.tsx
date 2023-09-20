@@ -82,7 +82,7 @@ export default function Page({ params }: {
       <form ref={formEl}>
         <div className="mt-2 pl-10 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
           <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
+            <label htmlFor="Email" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
               Email
             </label>
             <div className="mt-2 sm:col-span-2 sm:mt-0">
@@ -90,7 +90,7 @@ export default function Page({ params }: {
                   name="email"
                   id="email"
                   autoComplete="email"
-                  placeholder="email"
+                  placeholder="john@myorganisation.com"
                   onChange={handleChangeEmailInput}
                   required
                   type={isInvalidEmail ? "warning" : "default"}
