@@ -13,7 +13,6 @@ export default function Page({ params }: {
         Description="Manage all information regarding your organisation"
         type="page"
       />
-      <UserAlerts category="team" type="notification" showAlerts={true} />
       <OrganisationDataCard organisationId={params.organisationId} />
     </div>
   )
