@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import { PencilIcon, TrashIcon, DocumentCheckIcon } from "@heroicons/react/24/outline";
 import { IconButtonProps } from "../ui/buttons/IconButton";
 import StatusCardPic from "../ui/cards/StatusCardPic";
-import DefaultButton from "../ui/buttons/DefaultButton";
 
 interface ListProps {
     organisationId: string;
@@ -40,7 +39,7 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
   const handleDeleteForm = (form: any) => {
   };
 
-  const handleArchiveForm = async (form: any) => {
+  const handleActivateForm = async (form: any) => {
     const formElement = await API.getOrganisationFormByID(organisationId, form._id);
 
     if(formElement.data.form.pages.length > 0 && formElement.data.project !== "" && formElement.data.formDescription !== "") {
@@ -55,7 +54,7 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
           alert("Please check your connection!")
         })
     } else {
-      alert("Not allowed to make the form definitive")
+      alert("Not allowed to activate form")
     }
   };
 
@@ -86,7 +85,7 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
       label: "Activate Form",
       icon: <DocumentCheckIcon className='h-5 w-5' />,
       type: 'success',
-      onClick: handleArchiveForm,
+      onClick: handleActivateForm,
       visible: (item: any) => true
     },
     {
