@@ -1,0 +1,99 @@
+'use client'
+
+import { useState, useEffect } from "react"
+import { StatsData } from "@/components/ui/data/StatsWithTrending"
+import HeaderWithDescription from "@/components/ui/headers/HeaderWithDescription"
+import StatsWithTrending from "@/components/ui/data/StatsWithTrending"
+import FullWidthList from "@/components/ui/lists/FullWidthList"
+import API from "@/utils/api/api"
+import { DocumentIcon } from "@heroicons/react/24/outline"
+
+export default function Page({ params }: {
+    params: { 
+        organisationId: string,
+        userId: string
+    }
+  }) {
+
+    const [statsResult, setStatsResult] = useState(
+      {
+        results: 0, days: 0, firstDate: "No activity", recentDate: "No activity"
+      }
+    );
+    const [resultData, setResultData] = useState<any[]>([]);
+
+    useEffect(() => {
+      handleGetResultData()
+    },[])
+    
+    const handleGetResultData = async () => {
+      await API.getAllStatsResultsByUser(params.userId).then(response => {
+        setResultData(response.data.resultdata)
+        setStatsResult({
+          results: response.data.totalResults,
+          days: response.data.dateResults,
+          firstDate: response.data.firstdate,
+          recentDate: response.data.recentdate
+        })
+      });
+    };
+
+    const handleViewContract = (resultId: string) => {
+      API.getResultContractURL(params.organisationId, resultId)
+        .then(response => {
+          if(response.status === 200) {
+            window.open(response.data, '_blank');
+          }
+        })
+        .catch(error => console.log("Error while updatng user data", error))
+    }
+    
+    const stats: StatsData[]  = [
+      { name: 'Total Results', value: statsResult.results},
+      { name: 'Worked days', value: statsResult.days},
+      { name: 'First day', value: statsResult.firstDate},
+      { name: 'Recent Activity', value: statsResult.recentDate},
+    ]
+
+    const columns = [
+      {
+        header: "Result",
+        accessor: (item: any) => item._id,
+        name: "_id"
+      },
+      {
+        header: "Form",
+        accessor: (item: any) => item.description,
+        isBold: true,
+        name: "form"
+      },
+      {
+        header: "Date",
+        accessor: (item: any) => item.createdAt,
+        name: "date"
+      },
+    ];
+  
+    const actionButtons = [
+      {
+        label: "View Contract",
+        icon: <DocumentIcon className="h-5 w-5 text-green-500" />,
+        onClick: (item: any) => handleViewContract(item._id),
+        visible: (item: any) => true
+      }
+    ];
+
+    console.log(statsResult, "111", resultData)
+
+    return (
+      <div>
+        <HeaderWithDescription 
+          Headline={"User Information"} 
+          Description={"This is user information"} 
+          type='page'   
+        />
+        <StatsWithTrending data = {stats} />
+        <FullWidthList columns={columns} data={resultData} actionButtons={actionButtons} />
+      </div>
+    )
+}

@@ -428,6 +428,34 @@ const API = {
                 }
             })
         })
+    },
+    getAllResultsByUser: (): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.get('/results/user')
+                .then(response => resolve(response))
+                .catch(error =>  {
+                    if (error.response.status === 401) {
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                }
+                )
+        })
+    },
+    getAllStatsResultsByUser: (userId: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.get(`/results/${userId}`)
+                .then(response => resolve(response))
+                .catch(error =>  {
+                    if (error.response.status === 401) {
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                }
+            )
+        })
     }
 }
 
