@@ -133,6 +133,13 @@ const API = {
                 .catch(error => reject(error))
         })
     },
+    getUserDataByUserId: (userId: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.get(`/user/${userId}`)
+                .then(response => resolve(response))
+                .catch(error => reject(error))
+        })
+    },
     deleteUserAccount: (): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
             axios.put('/user/deleteUser')

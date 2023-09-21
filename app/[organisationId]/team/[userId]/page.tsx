@@ -7,6 +7,8 @@ import StatsWithTrending from "@/components/ui/data/StatsWithTrending"
 import FullWidthList from "@/components/ui/lists/FullWidthList"
 import API from "@/utils/api/api"
 import { DocumentIcon } from "@heroicons/react/24/outline"
+import DefaultButton from "@/components/ui/buttons/DefaultButton"
+import { useRouter } from "next/navigation"
 
 export default function Page({ params }: {
     params: { 
@@ -21,10 +23,20 @@ export default function Page({ params }: {
       }
     );
     const [resultData, setResultData] = useState<any[]>([]);
+    const [userData, setUserData] = useState<any>();
+
+    const router = useRouter()
 
     useEffect(() => {
       handleGetResultData()
+      handleGetUserData()
     },[])
+
+    const handleGetUserData = async () => {
+      await API.getUserDataByUserId(params.userId).then(response => {
+        setUserData(response.data)
+      })
+    }
     
     const handleGetResultData = async () => {
       await API.getAllStatsResultsByUser(params.userId).then(response => {
@@ -83,14 +95,14 @@ export default function Page({ params }: {
       }
     ];
 
-    console.log(statsResult, "111", resultData)
-
     return (
       <div>
         <HeaderWithDescription 
-          Headline={"User Information"} 
-          Description={"This is user information"} 
-          type='page'   
+          Headline={`${userData?.userName} Results`} 
+          Description={`This is ${userData?.userName}'s information`} 
+          type='page'
+          PrimaryButtonLabel="Return to team"
+          PrimaryButtononClick={() => router.push(`${window.location.origin}/${params.organisationId}/team`)}
         />
         <StatsWithTrending data = {stats} />
         <FullWidthList columns={columns} data={resultData} actionButtons={actionButtons} />
