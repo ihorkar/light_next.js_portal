@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation"
 import OrganisationDesignsList from "@/components/organisation/OrganisationDesignsList"
 import HeaderWithDescription from "@/components/ui/headers/HeaderWithDescription"
 import TabNavigation from "@/components/ui/navbar/TabNavigation"
+import DefaultInput from "@/components/ui/elements/DefaultInput"
 
 
 export default function Page({ params }: {
@@ -84,17 +85,39 @@ export default function Page({ params }: {
         </div>
       )}
 
-      {/* Existing Modal code */}
-      <Modal 
-        visible={showShowCreateProjectModal} 
-        title="Create a new project."
-        ok_text={isSentProject ? "OK" : "Create"}
-        cancel_text={isSentProject ? "" : "Cancel"} 
-        onCancelClick={handelCloseModal} 
-        onOkClick={!isSentProject ? handleOnSendProject : handelCloseModal}
-      >
-        {/* ... */}
-      </Modal>
+<Modal 
+      visible={showShowCreateProjectModal} 
+      title="Create a new project."
+      ok_text={isSentProject ? "OK" : "Create"}
+      cancel_text={isSentProject ? "" : "Cancel"} 
+      onCancelClick={handelCloseModal} 
+      onOkClick={!isSentProject ? handleOnSendProject : handelCloseModal}
+    >      
+      {!isSentProject ? 
+      <form ref={formEl}>
+        <div className="mt-2 pl-10 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
+          <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+            <label htmlFor="project" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
+              Project name
+            </label>
+            <div className="mt-2 sm:col-span-2 sm:mt-0">
+              <DefaultInput 
+                  name="Project name"
+                  id="project"
+                  autoComplete="Project name"
+                  placeholder="My Awesome Project"
+                  onChange={handleChangeProjectInput}
+                  required
+              />
+            </div>
+          </div>
+          </div>
+      </form>
+       : 
+      <p>
+        The project has been created successfully.
+      </p>}
+    </Modal>
     </div>
   );
 }
