@@ -128,10 +128,10 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                         label: 'Address',
                         value: organisationData.address && (
                             <>
-                                <div>{`Street: ${organisationData.address.street ? organisationData.address.street : ""}`}</div>
-                                <div>{`Postal code: ${organisationData.address.postalcode ? organisationData.address.postalcode : ""}`}</div>
-                                <div>{`City: ${organisationData.address.city ? organisationData.address.city : ""}`}</div>
-                                <div>{`Country code: ${organisationData.address.countrycode ? organisationData.address.countrycode : ""}`}</div>
+                                <div>{`${organisationData.address.street ? organisationData.address.street : ""}`}</div>
+                                <div>{`${organisationData.address.postalcode ? organisationData.address.postalcode : ""}`}</div>
+                                <div>{`${organisationData.address.city ? organisationData.address.city : ""}`}</div>
+                                <div>{`${organisationData.address.countrycode ? organisationData.address.countrycode : ""}`}</div>
                             </>
                         ) ,
                         onUpdate: openModals('address')
@@ -150,8 +150,8 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                         label: 'Contact Details',
                         value:  organisationData.contactDetails && (
                             <>
-                                <div>{`Contact Email: ${organisationData.contactDetails.ContactEmail ? organisationData.contactDetails.ContactEmail : ""}`}</div>
-                                <div>{`Phone number: ${organisationData.contactDetails.ContactPhone ? organisationData.contactDetails.ContactPhone : ""}`}</div>
+                                <div>{`${organisationData.contactDetails.ContactEmail ? organisationData.contactDetails.ContactEmail : ""}`}</div>
+                                <div>{`${organisationData.contactDetails.ContactPhone ? organisationData.contactDetails.ContactPhone : ""}`}</div>
                             </>
                         ),
                         onUpdate: openModals('contactDetails')
@@ -161,7 +161,7 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
             {/* Edit name modal */}
             <Modal 
                 visible={isModalsOpen.name} 
-                title="Edit user name"
+                title="Edit name"
                 ok_text="Update"
                 cancel_text="Cancel"
                 onCancelClick={closeModals('name')} 
@@ -169,15 +169,15 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                 >      
                     <div className="mt-2 pl-10 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
                         <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-                            <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
-                            UserName
+                            <label htmlFor="My awesome organisation" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
+                            Name
                             </label>
                             <div className="mt-2 sm:col-span-2 sm:mt-0">
                                 <DefaultInput 
-                                    name="username"
-                                    id="username"
-                                    autoComplete="username"
-                                    placeholder="username"
+                                    name="name"
+                                    id="name"
+                                    autoComplete="name"
+                                    placeholder="name"
                                     onChange={modalDataChange("name", "")}
                                     value={name}
                                 />
@@ -188,7 +188,7 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
             {/* Edit Address modal */}
             <Modal 
                 visible={isModalsOpen.address} 
-                title="Edit user address"
+                title="Edit company address"
                 ok_text="Update"
                 cancel_text="Cancel"
                 onCancelClick={closeModals('address')} 
@@ -204,7 +204,7 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                                     name="street"
                                     id="street"
                                     autoComplete="street"
-                                    placeholder="street"
+                                    placeholder="123 Field Avenue"
                                     onChange={modalDataChange("address", "street")}
                                     value={address?.street}
                                 />
@@ -219,7 +219,7 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                                     name="postalcode"
                                     id="postalcode"
                                     autoComplete="postalcode"
-                                    placeholder="postalcode"
+                                    placeholder="X12 Y34"
                                     onChange={modalDataChange("address", "postalcode")}
                                     value={address?.postalcode}
                                 />
@@ -234,14 +234,14 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                                 name="city"
                                 id="city"
                                 autoComplete="city"
-                                placeholder="city"
+                                placeholder="Metropolis"
                                 onChange={modalDataChange("address", "city")}
                                 value={address?.city}
                             />
                             </div>
                         </div>
                         <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-                            <label htmlFor="countrycode" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
+                            <label htmlFor="Country" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
                             Country Code
                             </label>
                             <div className="mt-2 sm:col-span-2 sm:mt-0">
@@ -249,7 +249,7 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                                 name="countrycode"
                                 id="countrycode"
                                 autoComplete="countrycode"
-                                placeholder="countrycode"
+                                placeholder="Storyland"
                                 onChange={modalDataChange("address", "countrycode")}
                                 value={address?.countrycode}
                             />
@@ -260,7 +260,7 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
             {/* Edit Payment modal */}
             <Modal 
                 visible={isModalsOpen.payment} 
-                title="Edit user address"
+                title="Edit payment info"
                 ok_text="Update"
                 cancel_text="Cancel"
                 onCancelClick={closeModals('payment')} 
@@ -276,7 +276,7 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                                     name="type"
                                     id="type"
                                     autoComplete="type"
-                                    placeholder="type"
+                                    placeholder="SEPA Direct Debit"
                                     onChange={modalDataChange("payment", "type")}
                                     value={payment?.type}
                                 />
@@ -291,7 +291,7 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                                     name="SEPACreditorIdentifier"
                                     id="SEPACreditorIdentifier"
                                     autoComplete="SEPACreditorIdentifier"
-                                    placeholder="SEPACreditorIdentifier"
+                                    placeholder="NL98ZZZ999999990000"
                                     onChange={modalDataChange("payment", "SEPACreditorIdentifier")}
                                     value={payment?.SEPACreditorIdentifier}
                                 />
@@ -311,7 +311,7 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                     <form ref={phoneNumberInputEl}>
                         <div className="mt-2 pl-10 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
                             <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-                                <label htmlFor="ContactEmail" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
+                                <label htmlFor="Email" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
                                 Email
                                 </label>
                                 <div className="mt-2 sm:col-span-2 sm:mt-0">
@@ -326,7 +326,7 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                                 </div>
                             </div>
                             <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-                                <label htmlFor="ContactPhone" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
+                                <label htmlFor="Phone" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
                                 Phone number
                                 </label>
                                 <div className="mt-2 sm:col-span-2 sm:mt-0">

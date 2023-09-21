@@ -91,7 +91,7 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
       name: "user.role"
     },
     {
-      header: "Username",
+      header: "Member",
       accessor: (item: any) => item.user.userId.userName,
       isBold: true,
       name: "user.userId.userName"
@@ -100,11 +100,6 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
       header: "Email",
       accessor: (item: any) => item.user.userId.email,
       name: "user.userId.email"
-    },
-    {
-      header: "IdentityId",
-      accessor: (item: any) => item.user.userId.identityId,
-      name: "user.userId.identityId"
     },
   ];
 
@@ -145,15 +140,15 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
     >      
         {modalData && <div className="mt-2 pl-10 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
           <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-            <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
-              UserName
+            <label htmlFor="Member" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
+              Member
             </label>
             <div className="mt-2 sm:col-span-2 sm:mt-0">
               <DefaultInput 
-                  name="username"
+                  name="Username"
                   id="username"
                   autoComplete="username"
-                  placeholder="username"
+                  placeholder="JDoe"
                   onChange={() => {}}
                   disabled
                   value={modalData?.user.userId?.userName}
