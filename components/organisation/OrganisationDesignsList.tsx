@@ -7,6 +7,8 @@ import FullWidthList from "../ui/lists/FullWidthList";
 import { useRouter } from "next/navigation";
 import { PencilIcon, TrashIcon, DocumentCheckIcon } from "@heroicons/react/24/outline";
 import { IconButtonProps } from "../ui/buttons/IconButton";
+import StatusCardPic from "../ui/cards/StatusCardPic";
+import DefaultButton from "../ui/buttons/DefaultButton";
 
 interface ListProps {
     organisationId: string;
@@ -96,6 +98,17 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
     }
   ];
 
-
-  return <FullWidthList columns={columns} data={formData} actionButtons={actionButtons} />;
+  return(
+    formData && formData.length > 0 ? (
+      <FullWidthList columns={columns} data={formData} actionButtons={actionButtons} />
+    ) : (
+      <div className="flex">
+        <StatusCardPic
+            Icon="/launch.png"
+            headline="Let's design a new project!"
+            description="Use our form builder to design your project, once done activate the design and you're all set!"
+        />
+      </div>
+    )
+  )
 }

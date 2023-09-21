@@ -7,6 +7,7 @@ import FullWidthList from "../ui/lists/FullWidthList";
 import { useRouter } from "next/navigation";
 import { PowerIcon, ArchiveBoxIcon } from "@heroicons/react/24/outline";
 import { IconButtonProps } from "../ui/buttons/IconButton";
+import StatusCardPic from "../ui/cards/StatusCardPic";
 
 interface ListProps {
     organisationId: string;
@@ -110,6 +111,15 @@ export default function OrganisationFormsList({ organisationId, refreshHandler }
     }
   ];
 
-  return <FullWidthList columns={columns} data={formData} actionButtons={actionButtons} />
-  
+  return(
+    formData && formData.length > 0 ? (
+      <FullWidthList columns={columns} data={formData} actionButtons={actionButtons} />
+    ) : (
+      <StatusCardPic
+          Icon="/search-doc.png"
+          headline="No projects"
+          description="To be able to signup you first need to design a new project and activate it."
+      />
+    )
+  )
 }

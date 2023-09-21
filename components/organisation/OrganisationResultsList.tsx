@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import FullWidthList from "../ui/lists/FullWidthList";
 import { DocumentIcon } from "@heroicons/react/24/outline";
+import StatusCardPic from "../ui/cards/StatusCardPic";
 
 interface ListProps {
     organisationId: string;
@@ -69,5 +70,16 @@ export default function OrganisationResultsList({ organisationId }: ListProps) {
     }
   ];
 
-  return <FullWidthList columns={columns} data={resultData} actionButtons={actionButtons} />;
+  return(
+      resultData && resultData.length > 0 ? (
+        <FullWidthList columns={columns} data={resultData} actionButtons={actionButtons} />
+      ) : (
+        <StatusCardPic
+            Icon="/contract-time.png"
+            headline="No results yet"
+            description="Get your campaign going and start with some signups."
+        />
+      )
+
+  ) 
 }
