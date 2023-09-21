@@ -133,6 +133,13 @@ const API = {
                 .catch(error => reject(error))
         })
     },
+    getUserDataByUserId: (userId: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.get(`/user/${userId}`)
+                .then(response => resolve(response))
+                .catch(error => reject(error))
+        })
+    },
     deleteUserAccount: (): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
             axios.put('/user/deleteUser')
@@ -427,6 +434,34 @@ const API = {
                     reject(error)
                 }
             })
+        })
+    },
+    getAllResultsByUser: (): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.get('/results/user')
+                .then(response => resolve(response))
+                .catch(error =>  {
+                    if (error.response.status === 401) {
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                }
+                )
+        })
+    },
+    getAllStatsResultsByUser: (userId: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.get(`/results/${userId}`)
+                .then(response => resolve(response))
+                .catch(error =>  {
+                    if (error.response.status === 401) {
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                }
+            )
         })
     }
 }

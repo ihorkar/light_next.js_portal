@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import FullWidthList from "../ui/lists/FullWidthList";
 import { useRouter } from "next/navigation";
-import { PencilIcon, UserMinusIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, UserMinusIcon, InformationCircleIcon } from "@heroicons/react/24/outline";
 import Modal from "../ui/modal/Modal";
 import DefaultInput from "../ui/elements/DefaultInput";
 import DefaultSelect from "../ui/elements/DefaultSelect";
@@ -24,6 +24,7 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
   const [modalData, setModalData] = useState<any>()
   const [updatedUserRole, setUpdatedUserRole] = useState<string>("");
   const [loggedUserIndex, setLoggedUserIndex] = useState<number | undefined>()
+
   const router = useRouter()
   const session = useSession();
 
@@ -115,6 +116,13 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
       icon: <UserMinusIcon className="h-5 w-5" />,
       type: 'critical',
       onClick: handleDeleteModalOpen,
+      visible: (item: any) => true
+    },
+    {
+      label: "User Info",
+      icon: <InformationCircleIcon className="h-5 w-5" />,
+      type: 'default',
+      onClick: (item) => router.push(`/${organisationId}/team/${item.user.userId._id}`),
       visible: (item: any) => true
     }
   ];

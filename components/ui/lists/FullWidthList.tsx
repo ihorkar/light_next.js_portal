@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import DefaultInput from "../elements/DefaultInput";
 import IconButton, { IconButtonProps } from "../buttons/IconButton";
+import UserInfoIconBtn from "@/components/organisation/UserInfoIconBtn";
 
 interface Column {
   header: string;
@@ -131,7 +132,7 @@ export default function FullWidthList({
                     ))}
                     {actionButtons.length > 0 && (
                       (loggedUserIndex !== null && loggedUserIndex === rowIndex) ? 
-                      <td className="px-4 py-4"><p className="text-sm m-auto">You</p></td> : 
+                      <td className="px-4 py-4"><UserInfoIconBtn /></td> : 
                       <td className="px-4 py-4">
                         {/*@ts-ignore*/}
                         {actionButtons.map((btn, btnIndex) =>  btn.visible(item) && (

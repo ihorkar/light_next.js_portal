@@ -4,7 +4,7 @@ function classNames(...classes: string[]) {
 
 export interface StatsData {
   name: string;
-  value: number;
+  value: any;
   change?: string;
   changeType?: string;
 }
