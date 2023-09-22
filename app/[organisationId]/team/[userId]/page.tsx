@@ -41,12 +41,14 @@ export default function Page({ params }: {
     const handleGetResultData = async () => {
       await API.getAllStatsResultsByUser(params.organisationId, params.userId).then(response => {
         setResultData(response.data.resultdata)
-        setStatsResult({
-          results: response.data.totalResults,
-          days: response.data.dateResults,
-          firstDate: response.data.firstdate,
-          recentDate: response.data.recentdate
-        })
+        if(response.data.firstdate) {
+          setStatsResult({
+            results: response.data.totalResults,
+            days: response.data.dateResults,
+            firstDate: response.data.firstdate,
+            recentDate: response.data.recentdate
+          })
+        }
       });
     };
 
