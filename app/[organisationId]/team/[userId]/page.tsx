@@ -77,12 +77,12 @@ export default function Page({ params }: {
         header: "Form",
         accessor: (item: any) => item.description,
         isBold: true,
-        name: "form"
+        name: "description"
       },
       {
         header: "Date",
         accessor: (item: any) => item.createdAt,
-        name: "date"
+        name: "createdAt"
       },
     ];
   
@@ -105,7 +105,7 @@ export default function Page({ params }: {
           PrimaryButtononClick={() => router.push(`${window.location.origin}/${params.organisationId}/team`)}
         />
         <StatsWithTrending data = {stats} />
-        <FullWidthList columns={columns} data={resultData} actionButtons={actionButtons} />
+        <FullWidthList columns={columns} data={resultData} actionButtons={actionButtons} orderBy="createdAt" sortMethod="asc" />
       </div>
     )
 }

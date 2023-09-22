@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import DefaultInput from "../elements/DefaultInput";
 import IconButton, { IconButtonProps } from "../buttons/IconButton";
@@ -18,6 +18,8 @@ interface FullWidthListProps {
   data: any[];
   actionButtons?: IconButtonProps[];
   loggedUserIndex?: number;
+  orderBy?: string;
+  sortMethod?: string;
 }
 
 
@@ -25,7 +27,9 @@ export default function FullWidthList({
   columns,
   data,
   actionButtons = [],
-  loggedUserIndex
+  loggedUserIndex,
+  orderBy,
+  sortMethod
 }: FullWidthListProps) {
   const session = useSession();
 
@@ -35,12 +39,22 @@ export default function FullWidthList({
   const [ itemsPerPage, setItemsPerPage ] = useState(10)
   const [ currentPage, setCurrentPage ] = useState(1)
 
+  useEffect(() => {
+    if (orderBy && sortMethod) {
+      sortMethod === 'asc' ? setSortDirection('asc') : setSortDirection('desc')
+      setSortedColumn(orderBy);
+    }
+  }, []);
+
+
   const sortFunction = (a: string, b: string) => {
     return a.localeCompare(b)
   }
 
   const sortedData = [...data].sort((a: any, b: any) => {
-    if (!sortedColumn) return 0;
+    if (!sortedColumn || data.length === 0) return 0;
+
+    console.log(a, '1111111111111', b)
 
     let sortedColumns = sortedColumn.split(".");
     let aValue = a

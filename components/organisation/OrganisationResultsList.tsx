@@ -56,7 +56,7 @@ export default function OrganisationResultsList({ organisationId }: ListProps) {
     {
       header: "Date",
       accessor: (item: any) => item.date,
-      name: "date"
+      name: "date",
     },
   ];
 
@@ -69,5 +69,5 @@ export default function OrganisationResultsList({ organisationId }: ListProps) {
     }
   ];
 
-  return <FullWidthList columns={columns} data={resultData} actionButtons={actionButtons} />;
+  return <FullWidthList columns={columns} data={resultData} actionButtons={actionButtons} orderBy="date" sortMethod="asc" />;
 }
