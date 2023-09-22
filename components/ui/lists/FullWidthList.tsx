@@ -54,8 +54,6 @@ export default function FullWidthList({
   const sortedData = [...data].sort((a: any, b: any) => {
     if (!sortedColumn || data.length === 0) return 0;
 
-    console.log(a, '1111111111111', b)
-
     let sortedColumns = sortedColumn.split(".");
     let aValue = a
     let bValue = b

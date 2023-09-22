@@ -464,9 +464,9 @@ const API = {
                 )
         })
     },
-    getAllStatsResultsByUser: (userId: string): Promise<AxiosResponse> => {
+    getAllStatsResultsByUser: (slug: string, userId: string): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
-            axios.get(`/results/${userId}`)
+            axios.get(`/organisations/${slug}/results/${userId}`)
                 .then(response => resolve(response))
                 .catch(error =>  {
                     if (error.response.status === 401) {

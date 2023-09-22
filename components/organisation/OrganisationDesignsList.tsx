@@ -77,7 +77,7 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
       header: "Design",
       accessor: (item: any) => item.project,
       isBold: true,
-      name: "design"
+      name: "project"
     }
   ];
 
