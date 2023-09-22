@@ -2,18 +2,24 @@
 
 import { useState, useRef, ChangeEvent, useCallback } from "react"
 import OrganisationFormsList from "@/components/organisation/OrganisationFormsList"
-import DefaultButton from "@/components/ui/buttons/DefaultButton"
 import Modal from "@/components/ui/modal/Modal"
-import DefaultInput from "@/components/ui/elements/DefaultInput"
 import API from "@/utils/api/api"
 import { useRouter } from "next/navigation"
 import OrganisationDesignsList from "@/components/organisation/OrganisationDesignsList"
 import HeaderWithDescription from "@/components/ui/headers/HeaderWithDescription"
+import TabNavigation from "@/components/ui/navbar/TabNavigation"
+import DefaultInput from "@/components/ui/elements/DefaultInput"
 
 
 export default function Page({ params }: {
   params: { organisationId: string}
 }) {
+
+  const [activeTab, setActiveTab] = useState('Projects');
+  const tabs = [
+    { name: 'Projects', href: '#projects', current: activeTab === 'Projects' },
+    { name: 'Designs', href: '#designs', current: activeTab === 'Designs' },
+  ];
 
   const [showShowCreateProjectModal, setShowCreateProjectModal] = useState(false);
   const [isSentProject, setIsSentProject] = useState(false);
@@ -56,31 +62,30 @@ export default function Page({ params }: {
 
   return (
     <div>
-        <HeaderWithDescription 
-          Headline={"Campaign"} 
-          Description={"Craft, manage, and optimize projects to drive your initiatives forward."}     
-          type="page"
-        />
-
-    <div className="mt-4">
       <HeaderWithDescription 
-          Headline={"Projects"} 
-          Description={"Activate, deactivate or archive your current projects."}
-          type="section"
-        />
-      <OrganisationFormsList organisationId={params.organisationId} refreshHandler={refresh}  />
-    </div>
-    <div className="mt-4">
-      <HeaderWithDescription 
-        Headline={"Designs"} 
-        Description={"Craft new projects and prepare them for use."}
-        type="section"
+        Headline={"Campaign"} 
+        Description={"Craft, manage, and optimize projects to drive your initiatives forward."}     
+        type="page"
         PrimaryButtonLabel="New design"
         PrimaryButtononClick={handleCreateProjectClick}
       />
-      <OrganisationDesignsList organisationId={params.organisationId} handleRefresh={() => setRefresh(!refresh)} />
-    </div>
-    <Modal 
+
+      <TabNavigation tabs={tabs} setActiveTab={setActiveTab} />
+
+      {/* Tab contents */}
+      {activeTab === 'Projects' && (
+        <div className="mt-4">
+          <OrganisationFormsList organisationId={params.organisationId} refreshHandler={refresh} />
+        </div>
+      )}
+
+      {activeTab === 'Designs' && (
+        <div className="mt-4">
+          <OrganisationDesignsList organisationId={params.organisationId} handleRefresh={() => setRefresh(!refresh)} />
+        </div>
+      )}
+
+<Modal 
       visible={showShowCreateProjectModal} 
       title="Create a new project."
       ok_text={isSentProject ? "OK" : "Create"}
@@ -106,7 +111,7 @@ export default function Page({ params }: {
               />
             </div>
           </div>
-        </div>
+          </div>
       </form>
        : 
       <p>
@@ -114,5 +119,5 @@ export default function Page({ params }: {
       </p>}
     </Modal>
     </div>
-  )
+  );
 }

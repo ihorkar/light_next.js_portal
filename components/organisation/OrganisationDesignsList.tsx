@@ -7,6 +7,7 @@ import FullWidthList from "../ui/lists/FullWidthList";
 import { useRouter } from "next/navigation";
 import { PencilIcon, TrashIcon, DocumentCheckIcon } from "@heroicons/react/24/outline";
 import { IconButtonProps } from "../ui/buttons/IconButton";
+import StatusCardPic from "../ui/cards/StatusCardPic";
 
 interface ListProps {
     organisationId: string;
@@ -38,7 +39,7 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
   const handleDeleteForm = (form: any) => {
   };
 
-  const handleArchiveForm = async (form: any) => {
+  const handleActivateForm = async (form: any) => {
     const formElement = await API.getOrganisationFormByID(organisationId, form._id);
 
     if(formElement.data.form.pages.length > 0 && formElement.data.project !== "" && formElement.data.formDescription !== "") {
@@ -53,7 +54,7 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
           alert("Please check your connection!")
         })
     } else {
-      alert("Not allowed to make the form definitive")
+      alert("Not allowed to activate form")
     }
   };
 
@@ -84,7 +85,7 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
       label: "Activate Form",
       icon: <DocumentCheckIcon className='h-5 w-5' />,
       type: 'success',
-      onClick: handleArchiveForm,
+      onClick: handleActivateForm,
       visible: (item: any) => true
     },
     {
@@ -96,6 +97,17 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
     }
   ];
 
-
-  return <FullWidthList columns={columns} data={formData} actionButtons={actionButtons} />;
+  return(
+    formData && formData.length > 0 ? (
+      <FullWidthList columns={columns} data={formData} actionButtons={actionButtons} />
+    ) : (
+      <div className="flex">
+        <StatusCardPic
+            Icon="/launch.png"
+            headline="Let's design a new project!"
+            description="Use our form builder to design your project, once done activate the design and you're all set!"
+        />
+      </div>
+    )
+  )
 }
