@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { PencilIcon, TrashIcon, DocumentCheckIcon } from "@heroicons/react/24/outline";
 import { IconButtonProps } from "../ui/buttons/IconButton";
 import StatusCardPic from "../ui/cards/StatusCardPic";
+import Notiflix from "notiflix";
 
 interface ListProps {
     organisationId: string;
@@ -33,10 +34,17 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
   };
 
   const handleEditForm = (form: any) => {
-      router.push(`/${organisationId}/campaign/${form._id}/setup`);
+    router.push(`/${organisationId}/campaign/${form._id}/setup`);
   };
 
   const handleDeleteForm = (form: any) => {
+    API.deleteOrganisationFormByID(organisationId, form._id)
+      .then(response => {
+        if(response.status === 201) {
+          Notiflix.Notify.success("Deleted the design successfully!")
+          handleGetFormData()
+        }
+      })
   };
 
   const handleActivateForm = async (form: any) => {

@@ -4,6 +4,7 @@ import { signOut } from "next-auth/react";
 import { Datablock, UserData } from "../data/types";
 import { InvitationData } from "../data/types";
 import { UserRole } from "../data/types";
+import { resolve } from "path";
 
 export const BASE_URL = process.env.DATABACKEND_URL;
 
@@ -434,6 +435,19 @@ const API = {
                     reject(error)
                 }
             })
+        })
+    },
+    deleteOrganisationFormByID: (slug: string, formId: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.delete(`/organisations/${slug}/forms/${formId}`)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401) {
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
         })
     },
     getAllResultsByUser: (): Promise<AxiosResponse> => {
