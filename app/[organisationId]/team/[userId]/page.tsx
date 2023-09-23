@@ -39,14 +39,16 @@ export default function Page({ params }: {
     }
     
     const handleGetResultData = async () => {
-      await API.getAllStatsResultsByUser(params.userId).then(response => {
+      await API.getAllStatsResultsByUser(params.organisationId, params.userId).then(response => {
         setResultData(response.data.resultdata)
-        setStatsResult({
-          results: response.data.totalResults,
-          days: response.data.dateResults,
-          firstDate: response.data.firstdate,
-          recentDate: response.data.recentdate
-        })
+        if(response.data.firstdate) {
+          setStatsResult({
+            results: response.data.totalResults,
+            days: response.data.dateResults,
+            firstDate: response.data.firstdate,
+            recentDate: response.data.recentdate
+          })
+        }
       });
     };
 
@@ -77,12 +79,12 @@ export default function Page({ params }: {
         header: "Form",
         accessor: (item: any) => item.description,
         isBold: true,
-        name: "form"
+        name: "description"
       },
       {
         header: "Date",
         accessor: (item: any) => item.createdAt,
-        name: "date"
+        name: "createdAt"
       },
     ];
   
@@ -105,7 +107,7 @@ export default function Page({ params }: {
           PrimaryButtononClick={() => router.push(`${window.location.origin}/${params.organisationId}/team`)}
         />
         <StatsWithTrending data = {stats} />
-        <FullWidthList columns={columns} data={resultData} actionButtons={actionButtons} />
+        <FullWidthList columns={columns} data={resultData} actionButtons={actionButtons} orderBy="createdAt" sortMethod="asc" />
       </div>
     )
 }

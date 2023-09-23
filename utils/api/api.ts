@@ -4,6 +4,7 @@ import { signOut } from "next-auth/react";
 import { Datablock, UserData } from "../data/types";
 import { InvitationData } from "../data/types";
 import { UserRole } from "../data/types";
+import { resolve } from "path";
 
 export const BASE_URL = process.env.DATABACKEND_URL;
 
@@ -436,6 +437,19 @@ const API = {
             })
         })
     },
+    deleteOrganisationFormByID: (slug: string, formId: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.delete(`/organisations/${slug}/forms/${formId}`)
+                .then(response => resolve(response))
+                .catch(error => {
+                    if(error.response.status === 401) {
+                        signOut();
+                    }else{
+                        reject(error)
+                    }
+                })
+        })
+    },
     getAllResultsByUser: (): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
             axios.get('/results/user')
@@ -450,9 +464,9 @@ const API = {
                 )
         })
     },
-    getAllStatsResultsByUser: (userId: string): Promise<AxiosResponse> => {
+    getAllStatsResultsByUser: (slug: string, userId: string): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
-            axios.get(`/results/${userId}`)
+            axios.get(`/organisations/${slug}/results/${userId}`)
                 .then(response => resolve(response))
                 .catch(error =>  {
                     if (error.response.status === 401) {

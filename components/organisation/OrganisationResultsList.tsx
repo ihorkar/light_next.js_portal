@@ -57,7 +57,7 @@ export default function OrganisationResultsList({ organisationId }: ListProps) {
     {
       header: "Date",
       accessor: (item: any) => item.date,
-      name: "date"
+      name: "date",
     },
   ];
 
@@ -72,7 +72,7 @@ export default function OrganisationResultsList({ organisationId }: ListProps) {
 
   return(
       resultData && resultData.length > 0 ? (
-        <FullWidthList columns={columns} data={resultData} actionButtons={actionButtons} />
+        <FullWidthList columns={columns} data={resultData} actionButtons={actionButtons}  orderBy="date" sortMethod="asc" />
       ) : (
         <StatusCardPic
             Icon="/contract-time.png"
