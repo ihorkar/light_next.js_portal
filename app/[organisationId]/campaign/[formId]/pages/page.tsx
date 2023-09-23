@@ -2,7 +2,7 @@
 
 import React from "react";
 import { PanelStepper } from "@/components/ui/steps/PanelStepper"
-import { DropZone } from "@/components/ui/dropzone/dropzone";
+import { FormPagesDropzone } from "@/components/formbuilder/FormPagesDropzone";
 import HeaderWithDescription from "@/components/ui/headers/HeaderWithDescription";
 
 export default function Page({ params }: {
@@ -22,14 +22,14 @@ export default function Page({ params }: {
                 ]}
             />
 
-            <div className="mt-4">
+            <div className="mt-4 mb-4">
                     <HeaderWithDescription
                         Headline="Let's Get Organized"
                         Description="To make your form clear and manageable, let's organize the selected datablocks into distinct pages. This step ensures that your data collection process is efficient and user-friendly."
                         type="section"
                     />
             </div>
-            <DropZone organisationId={params.organisationId} formId={params.formId} />
+            <FormPagesDropzone organisationId={params.organisationId} formId={params.formId} />
         </div>
     )
 }

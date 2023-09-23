@@ -66,6 +66,9 @@ module.exports = {
         iconsuccess: '#007F5F',
         iconhighlight: '#00A0AC',
 
+        // Border
+        borderdefault: '#8C9196',
+
         //Interactive
         interactivedefault: '2C6ECB',
         interactivedisabled: 'BDC1CC',
