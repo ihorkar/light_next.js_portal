@@ -17,7 +17,7 @@ export interface MovableItemProps {
   name: string;
   index: number;
   currentFormPageName: string;
-  moveCardHandler: (dragIndex: number, hoverIndex: number) => void
+  moveCardHandler: (dragIndex: number, hoverIndex: number, currentFormPageName: string) => void
   setItems: any
 }
 
@@ -53,7 +53,7 @@ const MovableItem = ({
       if (dragIndex === hoverIndex) {
         return;
       }
-      moveCardHandler(dragIndex, hoverIndex);
+      moveCardHandler(dragIndex, hoverIndex, item.currentFormPageName);
       item.index = hoverIndex;
     }
   });
@@ -219,14 +219,17 @@ export const FormPagesDropzone = (
     setDatablocks([...datablocks, ...pagelist]);
   };
 
-  const moveCardHandler = (dragIndex: number, hoverIndex: number) => {
-    const dragItem = dataBlocks[dragIndex];
+  const moveCardHandler = (dragIndex: number, hoverIndex: number, currentFormPageName: string) => {
+    let filteredDataBlocks = dataBlocks.filter(block => block.name === currentFormPageName)
+    const dragItem = filteredDataBlocks[dragIndex];
     if (dragItem) {
       setDatablocks((prevState: any) => {
-        const copiedStateArray = [...prevState];
+        const copiedStateArray = [...prevState].filter(block => block.name === currentFormPageName);
+        const restArray = [...prevState].filter(block => block.name !== currentFormPageName);
         const [removed] = copiedStateArray.splice(dragIndex, 1);
         copiedStateArray.splice(hoverIndex, 0, removed);
-        return copiedStateArray;
+        const resultArray = [...restArray, ...copiedStateArray];
+        return resultArray;
       });
     }
   };
@@ -238,7 +241,7 @@ export const FormPagesDropzone = (
           <MovableItem
             key={item._id}
             name={item.element.name}
-            currentFormPageName={item.element.name}
+            currentFormPageName={item.name}
             setItems={setDatablocks}
             index={index}
             moveCardHandler={moveCardHandler}
