@@ -8,11 +8,12 @@ import { useRouter } from "next/navigation";
 import { PowerIcon, ArchiveBoxIcon } from "@heroicons/react/24/outline";
 import { IconButtonProps } from "../ui/buttons/IconButton";
 import StatusCardPic from "../ui/cards/StatusCardPic";
+import Notiflix from "notiflix";
 
 interface ListProps {
-    organisationId: string;
-    refreshHandler: boolean;
-  }
+  organisationId: string;
+  refreshHandler: boolean;
+}
 
 export default function OrganisationFormsList({ organisationId, refreshHandler }: ListProps) {
   const [formData, setFormData] = useState<any[]>([]);
@@ -49,7 +50,11 @@ export default function OrganisationFormsList({ organisationId, refreshHandler }
           handleGetFormData()
         }
       })
-      .catch(error => console.log("Error while creating organisation", error))
+      .catch(error => {
+        if(error.response.status === 404) {
+          Notiflix.Notify.failure(error.response.data.message)
+        }
+      })
   };
 
   const handleToggleDeactive = (form: any) => {
