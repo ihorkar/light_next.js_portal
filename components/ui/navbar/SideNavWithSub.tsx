@@ -164,11 +164,12 @@ const SideNavWithSub: React.FC<NavProps> = ({menuitems, organisations, isUserPro
             </ul>
           </li>
 
-          {organisations && (
+          { //@ts-ignore
+            organisations?.length > 0 && (
               <li>
                   <div className="text-xs font-semibold leading-6 text-gray-700">Managed Organisations</div>
                   <ul role="list" className="-mx-2 mt-2 space-y-1">
-                      {organisations.map((organisation) => (
+                      {organisations?.map((organisation) => (
                           <li key={organisation.name}>
                               <a
                                   href={organisation.href}
