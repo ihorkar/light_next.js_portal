@@ -22,9 +22,13 @@ export default function OrganisationResultsList({ organisationId }: ListProps) {
   }, []);
 
   const handleGetResultData = async () => {
-    await API.getResultsByOrganisation(organisationId).then(response => {
-      if (response.data.length > 0) setResultData(response.data);
-    });
+    await API.getResultsByOrganisation(organisationId)
+      .then(response => {
+        if (response.data.length > 0) setResultData(response.data);
+      })
+      .catch(error => {
+        if(error.response.status === 404) setResultData([]);
+      })
   };
 
   const handleViewContract = (resultId: string) => {

@@ -17,6 +17,7 @@ export default function Layout({
     }
   }) {
     const [organisationdata, setOrganisationData] = useState<any[]>();
+    const [organisationRole, setOrganisationRole] = useState("");
 
     const pathName = usePathname();
 
@@ -28,7 +29,10 @@ export default function Layout({
       let organisationList: any[] = []
       const organisationData = await API.getOrganisationsByUser();
       organisationData.data.map((item:any, index: number) => {
-        if (item.role === "admin" || "manager") {
+        if (item.organisationId.slug === params.organisationId) {
+          setOrganisationRole(item.role)
+        }
+        if (item.role !== "agent") {
           organisationList.push({
             id: index, name: item.organisationId.name, href: `/${item.organisationId.slug}`, initial: item.organisationId.name[0], current: false
           })
@@ -37,30 +41,41 @@ export default function Layout({
       setOrganisationData(organisationList);
     }
 
+    const menuItems = organisationRole === "manager" ? [
+      { name: 'Dashboard', href: `/${params.organisationId}`, icon: 'HomeIcon', current: pathName === `/${params.organisationId}` },
+      {
+        name: 'Team',
+        href: `/${params.organisationId}/team`,
+        icon: 'UsersIcon',
+        current: pathName === `/${params.organisationId}/team`,
+      },
+      { name: 'Results', href: `/${params.organisationId}/results`, icon: 'ClipboardDocumentListIcon', current: pathName === `/${params.organisationId}/results` },
+    ] : [
+      { name: 'Dashboard', href: `/${params.organisationId}`, icon: 'HomeIcon', current: pathName === `/${params.organisationId}` },
+      {
+        name: 'Organisation',
+        href: `/${params.organisationId}/organisation`,
+        icon: 'BuildingOfficeIcon',
+        current: pathName === `/${params.organisationId}/organisation`,
+      },
+      {
+        name: 'Team',
+        href: `/${params.organisationId}/team`,
+        icon: 'UsersIcon',
+        current: pathName === `/${params.organisationId}/team`,
+      },
+      {
+        name: 'Campaign',
+        href: `/${params.organisationId}/campaign`,
+        icon: 'WrenchScrewdriverIcon',
+        current: pathName.includes(`/${params.organisationId}/campaign`),
+      },
+      { name: 'Results', href: `/${params.organisationId}/results`, icon: 'ClipboardDocumentListIcon', current: pathName === `/${params.organisationId}/results` },
+    ]
+
     // Define menu
     const navigation: NavProps = {
-      menuitems: [
-        { name: 'Dashboard', href: `/${params.organisationId}`, icon: 'HomeIcon', current: pathName === `/${params.organisationId}` },
-        {
-          name: 'Organisation',
-          href: `/${params.organisationId}/organisation`,
-          icon: 'BuildingOfficeIcon',
-          current: pathName === `/${params.organisationId}/organisation`,
-        },
-        {
-          name: 'Team',
-          href: `/${params.organisationId}/team`,
-          icon: 'UsersIcon',
-          current: pathName === `/${params.organisationId}/team`,
-        },
-        {
-          name: 'Campaign',
-          href: `/${params.organisationId}/campaign`,
-          icon: 'WrenchScrewdriverIcon',
-          current: pathName.includes(`/${params.organisationId}/campaign`),
-        },
-        { name: 'Results', href: `/${params.organisationId}/results`, icon: 'ClipboardDocumentListIcon', current: pathName === `/${params.organisationId}/results` },
-      ],
+      menuitems: menuItems,
       organisations: organisationdata
     }
 

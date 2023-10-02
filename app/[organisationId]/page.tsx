@@ -16,9 +16,10 @@ export default function Page({ params }: {
     }, []);
 
     const handleStatsResultData = async () => {
-      await API.getStatsResultByOrganisation(params.organisationId).then(response => {
-        setResultData(response.data)
-      })
+      await API.getStatsResultByOrganisation(params.organisationId)
+        .then(response => {
+          setResultData(response.data)
+        })
     }
     
   const stats: StatsData[]  = [

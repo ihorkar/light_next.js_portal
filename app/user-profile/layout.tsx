@@ -27,7 +27,6 @@ export default function Layout({
     const getOrganisationData = async () => {
       let organisationList: any[] = []
       const organisationData = await API.getOrganisationsByUser();
-      console.log(organisationData.data, 'aaaaaaaa')
       organisationData.data.map((item:any, index: number) => {
         if (item.role !== "agent") {
           organisationList.push({
