@@ -28,8 +28,8 @@ export default function Page() {
     const columns = [
       {
         header: "Result",
-        accessor: (item: any) => item._id,
-        name: "_id"
+        accessor: (item: any) => item.resultId,
+        name: "resultId"
       },
       {
         header: "Timestamp",
