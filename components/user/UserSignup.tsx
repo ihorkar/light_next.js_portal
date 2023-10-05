@@ -110,7 +110,11 @@ export default function UserSignUp() {
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
+        <button
+          type="button"
+          onClick={() => router.push('/')}
+          className="text-sm font-semibold leading-6 text-gray-900"
+        >
           Cancel
         </button>
         <button

@@ -47,10 +47,16 @@ export default function Layout({
           current: pathName === '/user-profile',
         },
         {
-          name: 'organisations',
+          name: 'Organisations',
           href: `/user-profile/organisation`,
           icon: 'BuildingOfficeIcon',
           current: pathName === '/user-profile/organisation',
+        },
+        {
+          name: 'Results',
+          href: `/user-profile/results`,
+          icon: 'ClipboardDocumentListIcon',
+          current: pathName === '/user-profile/results'
         }
       ],
       organisations: organisationdata
