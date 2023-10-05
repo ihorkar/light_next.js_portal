@@ -20,6 +20,21 @@ export const authConfig: NextAuthOptions = {
             issuer: String(process.env.KEYCLOAK_ISSUER),
         })
     ],
+    cookies: {
+      sessionToken: {
+        name: `next-auth.session-token`,
+        options: {
+          httpOnly: true,
+          maxAge: 1 * 24 * 60 * 60, // 1 day
+          path: "/",
+          sameSite: 'lax',
+        },
+      },
+    },
+    session: {
+      maxAge: 24 * 60 * 60, // Set the session max age
+      updateAge: 60 * 60, // Update the session every hour
+    },
     callbacks: {
         async jwt({ token, account }) {
             // Persist the OAuth access_token to the token right after signin
