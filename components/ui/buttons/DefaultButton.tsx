@@ -16,7 +16,8 @@ const DefaultButton: React.FC<ButtonProps> = ({
             classNames += " text-textprimary bg-actionprimarydefault hover:bg-actionprimaryhovered border border-actionprimarydefault";
             break;
         case 'secondary':
-            classNames += " text-textdefault bg-surfacedefault hover:surfacehovered border border-borderdefault";break;
+            classNames += " text-textdefault bg-surfacedefault hover:surfacehovered border border-borderdefault";
+            break;
         case 'critical':
             classNames += " text-textprimary bg-actioncriticaldefault hover:actioncriticalhovered";
             break;

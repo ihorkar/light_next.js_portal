@@ -16,10 +16,94 @@
   }
 }
 
+.briggs-heading3xl {
+  font-size: 28px;
+  line-height: 32px;
+  font-weight: 600; /* Adjust accordingly */
+  font-family: 'Montserrat', sans-serif;
+
+  @screen md {
+     font-size: 32px;
+     line-height: 40px;
+  }
+}
+
+.briggs-heading2xl {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 600; /* Adjust accordingly */
+  font-family: 'Montserrat', sans-serif;
+
+  @screen md {
+     font-size: 28px;
+     line-height: 32px;
+  }
+}
+
+.briggs-headingXl {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 600; /* Adjust accordingly */
+  font-family: 'Montserrat', sans-serif;
+
+  @screen md {
+     font-size: 24px;
+     line-height: 28px;
+  }
+}
+
+.briggs-headingLg {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600; /* Adjust accordingly */
+  font-family: 'Montserrat', sans-serif;
+
+  @screen md {
+     font-size: 20px;
+     line-height: 40px;
+  }
+}
+
+.briggs-bodyLg {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400; /* Adjust accordingly */
+  font-family: 'Montserrat', sans-serif;
+
+  @screen md {
+     font-size: 20px;
+     line-height: 24px;
+  }
+}
+
+.briggs-bodyMd {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400; /* Adjust accordingly */
+  font-family: 'Montserrat', sans-serif;
+
+  @screen md {
+     font-size: 16px;
+     line-height: 20px;
+  }
+}
+
+.briggs-bodySm {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400; /* Adjust accordingly */
+  font-family: 'Montserrat', sans-serif;
+
+  @screen md {
+     font-size: 14px;
+     line-height: 18px;
+  }
+}
+
 @layer components {
   .briggs-heading4xl8 {
     @apply 
-      briggs-fontsize-heading4xl-xs-sm 
+      briggs-fontsize-heading4xl-xs-sm
       briggs-lineheight-heading4xl-xs-sm
       briggs-weight-heading
       briggs-typeface;

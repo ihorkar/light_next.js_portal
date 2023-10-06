@@ -7,6 +7,7 @@ import FullWidthList from "../ui/lists/FullWidthList";
 import { useRouter } from "next/navigation";
 import { PowerIcon, ArchiveBoxIcon } from "@heroicons/react/24/outline";
 import { IconButtonProps } from "../ui/buttons/IconButton";
+import Modal from "../ui/modal/Modal";
 import StatusCardPic from "../ui/cards/StatusCardPic";
 import Notiflix from "notiflix";
 
@@ -17,6 +18,9 @@ interface ListProps {
 
 export default function OrganisationFormsList({ organisationId, refreshHandler }: ListProps) {
   const [formData, setFormData] = useState<any[]>([]);
+  const [showActiveModal, setShowActiveModal] = useState<boolean>(false);
+  const [showArchiveModal, setShowArchiveModal] = useState<boolean>(false);
+  const [individualForm, setIndividualForm] = useState<any>()
   const session = useSession();
 
   useEffect(() => {
@@ -36,11 +40,22 @@ export default function OrganisationFormsList({ organisationId, refreshHandler }
   };
 
   const handleOnclickActive = (form: any) => {
-    if(form.active){
-      handleToggleDeactive(form)
+    setShowActiveModal(true)
+    setIndividualForm(form)
+  }
+
+  const handleOnclickArchive = (form: any) => {
+    setShowArchiveModal(true)
+    setIndividualForm(form)
+  }
+
+  const handleActiveOkBtn = () => {
+    if(individualForm.active){
+      handleToggleDeactive(individualForm)
     }else{
-      handleToggleActive(form)
+      handleToggleActive(individualForm)
     }
+    setShowActiveModal(false)
   }
 
   const handleToggleActive = (form: any) => {
@@ -67,14 +82,15 @@ export default function OrganisationFormsList({ organisationId, refreshHandler }
       .catch(error => console.log("Error while creating organisation", error))
   };
 
-  const handleArchiveForm = (form: any) => {
-    API.applyArchiveForm(organisationId, form._id)
+  const handleArchiveForm = () => {
+    API.applyArchiveForm(organisationId, individualForm._id)
     .then(response => {
       if(response.status === 201){
         handleGetFormData()
       }
     })
     .catch(error => console.log("Errors while updating archived form", error))
+    setShowArchiveModal(false)
   };
 
   const columns = [
@@ -110,21 +126,47 @@ export default function OrganisationFormsList({ organisationId, refreshHandler }
     {
       label: "Archive Form",
       icon: <ArchiveBoxIcon className='h-5 w-5' />,
-      onClick: handleArchiveForm,
+      onClick: handleOnclickArchive,
       type: 'default',
       visible: (item: any) => !item.active
     }
   ];
 
   return(
-    formData && formData.length > 0 ? (
-      <FullWidthList columns={columns} data={formData} actionButtons={actionButtons} />
-    ) : (
-      <StatusCardPic
-          Icon="/search-doc.png"
-          headline="No projects"
-          description="To be able to signup you first need to design a new project and activate it."
-      />
-    )
+    <div>
+      {formData && formData.length > 0 ? (
+        <FullWidthList columns={columns} data={formData} actionButtons={actionButtons} />
+      ) : (
+        <StatusCardPic
+            Icon="/search-doc.png"
+            headline="No projects"
+            description="To be able to signup you first need to design a new project and activate it."
+        />
+      )}
+      <Modal
+        visible={showActiveModal}
+        onOkClick={handleActiveOkBtn}
+        onCancelClick={() => setShowActiveModal(false)}
+        title=""
+        ok_text="OK"
+        cancel_text="Cancel"
+        primarytype={individualForm?.active ? "primary" : "critical"}
+        secondarytype="secondary"
+      >
+        {individualForm?.active ? <p>Do you really want to active the form?</p> : <p>Do you really want to deactive the form?</p>}
+      </Modal>
+      <Modal
+        visible={showArchiveModal}
+        onOkClick={handleArchiveForm}
+        onCancelClick={() => setShowArchiveModal(false)}
+        title=""
+        ok_text="OK"
+        cancel_text="Cancel"
+        primarytype="critical"
+        secondarytype="secondary"
+      >
+        <p>Do you really want to archeive the form?</p>
+      </Modal>
+    </div>
   )
 }
