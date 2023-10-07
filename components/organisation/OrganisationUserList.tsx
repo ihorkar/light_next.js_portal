@@ -137,6 +137,7 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
       cancel_text="Cancel"
       onCancelClick={() => setShowRoleEditModal(false)} 
       onOkClick={handleEditUser}
+      type="secondary"
     >      
         {modalData && <div className="mt-2 pl-10 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
           <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
@@ -169,12 +170,12 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
       visible={showDeleteModal} 
       title="Revoke membership"
       ok_text="Revoke"
-      primarytype="critical"
+      type="critical"
       cancel_text="Cancel"
       onCancelClick={() => setShowDeleteModal(false)} 
       onOkClick={handleDeleteUser}
     >
-      <p className="mx-20">Are you sure you want to revoke this user&rsquo;s access to your organization? They will need to be invited again.</p>
+      <p className="w-[450px]">Are you sure you want to revoke this user&rsquo;s access to your organization? They will need to be invited again.</p>
     </Modal>
     </>
   );

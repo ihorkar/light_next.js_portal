@@ -88,12 +88,12 @@ export default function UserOrganisationList() {
       visible={showDeleteModal} 
       title="Leaving organisation"
       ok_text="Delete"
-      primarytype="critical"
+      type="critical"
       cancel_text="Cancel"
       onCancelClick={() => setShowDeleteModal(false)} 
       onOkClick={handleDeleteUser}
     >
-      <p className="mx-20">Are you sure you want to leave this organisation? You will need a new invitation if you want to join again.</p>
+      <p className="w-[450px]">Are you sure you want to leave this organisation? You will need a new invitation if you want to join again.</p>
     </Modal>
     </>
   );

@@ -92,6 +92,7 @@ export default function Page({ params }: {
       cancel_text={isSentProject ? "" : "Cancel"} 
       onCancelClick={handelCloseModal} 
       onOkClick={!isSentProject ? handleOnSendProject : handelCloseModal}
+      type="secondary"
     >      
       {!isSentProject ? 
       <form ref={formEl}>

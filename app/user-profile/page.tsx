@@ -226,11 +226,11 @@ const UserProfile = () => {
                   title="Delete Account"
                   ok_text={"Delete"}
                   cancel_text={"Cancel"} 
-                  primarytype="critical"
+                  type="critical"
                   onCancelClick={handleCloseDeleteAccountModal} 
                   onOkClick={handleOnclickDeleteBtn}
                 >
-                    <p className="mx-12">Do you really delete account?</p>
+                    <p>Do you really delete account?</p>
                 </Modal>
                 <DefaultButton
                     onClick={handleShowDeleteAccountModal}

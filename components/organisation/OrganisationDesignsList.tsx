@@ -65,8 +65,6 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
   const handleActivateForm = async () => {
     const formElement = await API.getOrganisationFormByID(organisationId, selectForm._id);
 
-    console.log(formElement.data, "111")
-
     if(formElement.data.form.pages.length > 0 && formElement.data.project !== "" && formElement.data.formDescription !== "") {
       API.definitiveForm(organisationId, selectForm._id)
         .then(response => {
@@ -138,27 +136,25 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
       )}
       <Modal
         visible={showActivateModal}
-        title=""
+        title="Active the form"
         onOkClick={handleActivateForm}
         onCancelClick={() => setShowActivateModal(false)}
         ok_text="Activate"
         cancel_text="Cancel"
-        primarytype="primary"
-        secondarytype="secondary"
+        type="primary"
       >
-        <p>Do you really want to activate the form?</p>
+        <p className="w-[450px]">Are you sure you want to deactivate your account?</p>
       </Modal>
       <Modal
         visible={showDeleteModal}
-        title=""
+        title="Do you really want to delete the form?"
         onOkClick={handleDeleteForm}
         onCancelClick={() => setShowDeleteModal(false)}
         ok_text="Delete"
         cancel_text="Cancel"
-        primarytype="critical"
-        secondarytype="secondary"
+        type="critical"
       >
-        <p>Do you really want to delete the form?</p>
+        <p className="w-[400px]">Are you sure you want to delete the form? All of you data will be permanently removed. This action cannot be undone.</p>
       </Modal>
     </div>
   )
