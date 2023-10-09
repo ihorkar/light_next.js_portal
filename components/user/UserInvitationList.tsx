@@ -97,6 +97,7 @@ export default function UserInvitationList() {
       title="Accept this invitation?"
       ok_text="Accept"
       cancel_text="Cancel"
+      type="secondary"
       onCancelClick={() => setShowAcceptModal(false)} 
       onOkClick={handleAcceptUser}
     >
