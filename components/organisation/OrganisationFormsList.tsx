@@ -153,23 +153,23 @@ export default function OrganisationFormsList({ organisationId, refreshHandler }
         visible={showActiveModal}
         onOkClick={handleActiveOkBtn}
         onCancelClick={() => setShowActiveModal(false)}
-        title={individualForm?.active ? "Active the form?": "Deactive the form?"}
-        ok_text={individualForm?.active ? "Active": "Deactive"}
+        title={individualForm?.active ? "Deactivate the form?": "Activate the form?"}
+        ok_text={individualForm?.active ? "Deactivate": "Activate"}
         cancel_text={individualForm?.active? undefined :"Cancel"}
-        type={individualForm?.active ? "primary" : "critical"}
+        type={individualForm?.active ? "critical" : "primary"}
       >
-        {individualForm?.active ? <p>Are you sure you want to active the form?</p> : <p>Are you sure you want to deactive the form?</p>}
+        {individualForm?.active ? <p>Are you sure you want to deactivate the form?</p> : <p>Are you sure you want to activate the form?</p>}
       </Modal>
       <Modal
         visible={showArchiveModal}
         onOkClick={handleArchiveForm}
         onCancelClick={() => setShowArchiveModal(false)}
-        title="Archeive the form"
-        ok_text="Archeive"
+        title="Archive the form"
+        ok_text="Archive"
         cancel_text="Cancel"
         type="critical"
       >
-        <p>Do you really want to archeive the form?</p>
+        <p>Do you really want to archive the form?</p>
       </Modal>
     </div>
   )
