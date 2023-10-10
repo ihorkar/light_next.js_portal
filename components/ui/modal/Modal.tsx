@@ -24,7 +24,7 @@ const Modal = ({ visible, onOkClick, onCancelClick, children, title, ok_text, ca
               <div className="flex-col items-end px-6 py-8 bg-white mx-auto z-50">
                 {type === "secondary" ? 
                   <>
-                    <div className="briggs-headingLg mb-[13px]">{title}</div>
+                    <div className="mb-[13px]"><p className="briggs-headingLg">{title}</p></div>
                     <div className="briggs-bodyMd">{children}</div>
                     <div className="flex justify-end gap-x-3 mt-8">
                       <DefaultButton
@@ -46,7 +46,7 @@ const Modal = ({ visible, onOkClick, onCancelClick, children, title, ok_text, ca
                         <span className="text-actionprimarydefault opacity-100 h-[60px] w-[60px] p-2 block"><CheckCircleIcon /></span>
                       }
                     </div>
-                    <div className="flex justify-center briggs-headingLg pb-[13px]">{title}</div>
+                    <div className="flex justify-center pb-[13px]"><p className="briggs-headingLg">{title}</p></div>
                     <div className="mb-8 briggs-bodyMd">{children}</div>
                     <div className="flex justify-around">
                       {cancel_text && <DefaultButton
