@@ -1,7 +1,7 @@
 'use client'
 
 import DefaultButton from "../buttons/DefaultButton";
-import { XMarkIcon, InformationCircleIcon, CheckCircleIcon } from "@heroicons/react/20/solid";
+import { InformationCircleIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
 
 interface ModalProps {
     visible: boolean;
