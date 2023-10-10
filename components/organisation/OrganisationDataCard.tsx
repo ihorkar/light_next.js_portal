@@ -168,7 +168,7 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                 onCancelClick={closeModals('name')} 
                 onOkClick={handleEditOrganisationData('name', name)}
                 >      
-                    <div className="mt-2 pl-10 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
+                    <div className="mt-2 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
                         <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                             <label htmlFor="My awesome organisation" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
                             Name
@@ -192,11 +192,11 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                 title="Edit company address"
                 ok_text="Update"
                 cancel_text="Cancel"
-                type="primary"
+                type="secondary"
                 onCancelClick={closeModals('address')} 
                 onOkClick={handleEditOrganisationData('address', address)}
                 >      
-                    <div className="mt-2 pl-10 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
+                    <div className="mt-2 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
                         <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                             <label htmlFor="street" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
                             Street
@@ -265,11 +265,11 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                 title="Edit payment info"
                 ok_text="Update"
                 cancel_text="Cancel"
-                type="primary"
+                type="secondary"
                 onCancelClick={closeModals('payment')} 
                 onOkClick={handleEditOrganisationData('payment', payment)}
                 >      
-                    <div className="mt-2 pl-10 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
+                    <div className="mt-2space-y-8 pb-12 sm:space-y-0 sm:pb-0">
                         <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                             <label htmlFor="type" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
                             Type
@@ -308,12 +308,12 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                 title="Edit contact details"
                 ok_text="Update"
                 cancel_text="Cancel"
-                type="primary"
+                type="secondary"
                 onCancelClick={closeModals('contactDetails')} 
                 onOkClick={handleEditOrganisationData('contactDetails', contactDetails)}
                 >      
                     <form ref={phoneNumberInputEl}>
-                        <div className="mt-2 pl-10 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
+                        <div className="mt-2 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
                             <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                                 <label htmlFor="Email" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
                                 Email

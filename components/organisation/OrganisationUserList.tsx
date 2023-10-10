@@ -140,7 +140,7 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
       onOkClick={handleEditUser}
       type="secondary"
     >      
-        {modalData && <div className="mt-2 pl-10 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
+        {modalData && <div className="mt-2 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
           <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
             <label htmlFor="Member" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
               Member

@@ -28,12 +28,14 @@ const JumbotronPicture: React.FC<JumboProps> = ({
                         <DefaultButton 
                             label={PrimaryButtonLabel} 
                             onClick={PrimaryButtononClick}
+                            size="big"
                             type="primary" 
                         />
                         {SecondaryButtonLabel && SecondaryButtononClick && (
                             <DefaultButton 
                                 label={SecondaryButtonLabel} 
                                 onClick={SecondaryButtononClick}
+                                size="big"
                                 type="secondary"
                             />
                         )}

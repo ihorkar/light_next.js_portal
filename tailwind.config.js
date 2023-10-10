@@ -40,10 +40,16 @@ module.exports = {
         // Buttons
         actionprimarydefault: '#55CB64',
         actionprimaryhovered: '#008A2B',
+        actionprimarypressed: '#004310',
+        actionprimarydepressed: '#002606',
+        actionsecondarydefault: '#FFFFFF',
+        actionsecondaryhovered: '#F6F6F7',
+        actionsecondarypressed: '#F1F2F3',
+        actionsecondarydepressed: '#EDEEEF',
         actioncriticaldefault: '#D82C0D',
         actioncriticalhovered: '#BC2200',
-        descriptivesecondarydefault: '#17104F',
-        descriptivesecondaryhovered: '#0D0050',
+        actioncriticalpressed: '#A21B00',
+        actioncriticaldepressed: '#6C0F00',
 
         // Background
         backgrounddefault: '#FAFAFA',
@@ -53,10 +59,6 @@ module.exports = {
         textprimary: '#FFFFFF',
         textdefault: '#202223',
         textsubdued: '#6D7175',
-
-        // Surface
-        surfacedefault: '#FFFFFF',
-        surfacehovered: '#F6F6F7',
 
         // Icons
         icondefault: '#5C5F62',

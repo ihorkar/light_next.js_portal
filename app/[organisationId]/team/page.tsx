@@ -81,12 +81,12 @@ export default function Page({ params }: {
     >      
       {!isSentInvitation ? 
       <form ref={formEl}>
-        <div className="mt-2 pl-10 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
-          <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+        <div className="space-y-8 sm:space-y-0">
+          <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4">
             <label htmlFor="Email" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
               Email
             </label>
-            <div className="mt-2 sm:col-span-2 sm:mt-0">
+            <div className="sm:col-span-2">
               <DefaultInput 
                   name="email"
                   id="email"
@@ -102,7 +102,7 @@ export default function Page({ params }: {
             <label htmlFor="role" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
               Role
             </label>
-            <div className="mt-2 sm:col-span-2 sm:mt-0">
+            <div className="sm:col-span-2">
               <DefaultSelect options={roleOptions} onChange={handleChangeUserRoleInput} selectedOption="admin" />
             </div>
           </div>

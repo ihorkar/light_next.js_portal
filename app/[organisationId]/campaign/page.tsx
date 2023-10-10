@@ -96,12 +96,12 @@ export default function Page({ params }: {
     >      
       {!isSentProject ? 
       <form ref={formEl}>
-        <div className="mt-2 pl-10 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
-          <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+        <div className="space-y-8 sm:space-y-0 sm:pb-0">
+          <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4">
             <label htmlFor="project" className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
               Project name
             </label>
-            <div className="mt-2 sm:col-span-2 sm:mt-0">
+            <div className="sm:col-span-2">
               <DefaultInput 
                   name="Project name"
                   id="project"

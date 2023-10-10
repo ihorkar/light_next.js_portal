@@ -106,7 +106,7 @@ const FormPage = ({ children, className, title, onDelete }: FormPageType) => {
     <div 
       key={title} 
       ref={drop} 
-      className={`overflow-hidden rounded-xl border border-borderdefault mb-4 ${isOver ? 'bg-surfacehovered' : ''}`}
+      className={`overflow-hidden rounded-xl border border-borderdefault mb-4 ${isOver ? 'bg-actionsecondaryhovered' : ''}`}
     >
       <div className="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
         <div className="text-sm font-medium leading-6 text-gray-900">{title}</div>
@@ -140,7 +140,7 @@ const InitialList = ({ children, className, title, onAddNewPage }: { children: a
   });
 
   return (
-    <div ref={drop} className={`overflow-hidden rounded-xl border border-borderdefault mb-4 ${isOver ? 'bg-surfacehovered' : ''} ${className}`}>
+    <div ref={drop} className={`overflow-hidden rounded-xl border border-borderdefault mb-4 ${isOver ? 'bg-actionsecondaryhovered' : ''} ${className}`}>
       <div className="flex justify-between items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
         <div className="text-sm font-medium leading-6 text-gray-900">{title}</div>
         <IconButton

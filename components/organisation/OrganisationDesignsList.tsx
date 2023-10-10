@@ -140,25 +140,25 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
       )}
       <Modal
         visible={showActivateModal}
-        title="Active the form"
+        title="Activate the form"
         onOkClick={handleActivateForm}
         onCancelClick={() => setShowActivateModal(false)}
         ok_text="Activate"
         cancel_text="Cancel"
         type="primary"
       >
-        <p className="w-[450px]">Are you sure you want to deactivate your account?</p>
+        <p>Are you sure you want to deactivate your account?</p>
       </Modal>
       <Modal
         visible={showDeleteModal}
-        title="Do you really want to delete the form?"
+        title="Delete the form?"
         onOkClick={handleDeleteForm}
         onCancelClick={() => setShowDeleteModal(false)}
         ok_text="Delete"
         cancel_text="Cancel"
         type="critical"
       >
-        <p className="w-[400px]">Are you sure you want to delete the form? All of you data will be permanently removed. This action cannot be undone.</p>
+        <p>Are you sure you want to delete the form? All of you data will be permanently removed. This action cannot be undone.</p>
       </Modal>
     </div>
   )

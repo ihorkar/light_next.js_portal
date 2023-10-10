@@ -2,24 +2,26 @@ interface ButtonProps {
     label: string;
     onClick: () => void;
     type?: 'primary' | 'secondary' | 'critical';
+    size?: 'big';
 }
 
 const DefaultButton: React.FC<ButtonProps> = ({
     label,
     onClick,
     type = 'primary',
+    size
 }) => {
-    let classNames = "text-sm py-3 px-5 mr-2 mb-2 font-medium rounded-lg";
+    let classNames = size ? "py-[14px] px-8 briggs-bodyMd rounded gap-3" : "py-2 px-4 briggs-bodySm rounded gap-3";
 
     switch (type) {
         case 'primary':
             classNames += " text-textprimary bg-actionprimarydefault hover:bg-actionprimaryhovered border border-actionprimarydefault";
             break;
         case 'secondary':
-            classNames += " text-textdefault bg-surfacedefault hover:surfacehovered border border-borderdefault";
+            classNames += " text-textdefault bg-actionsecondarydefault hover:bg-actionsecondaryhovered border border-borderdefault";
             break;
         case 'critical':
-            classNames += " text-textprimary bg-actioncriticaldefault hover:actioncriticalhovered";
+            classNames += " text-textprimary bg-actioncriticaldefault hover:bg-actioncriticalhovered border border-actioncriticaldefault";
             break;
     }
 
