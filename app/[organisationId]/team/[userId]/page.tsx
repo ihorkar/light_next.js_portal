@@ -59,7 +59,10 @@ export default function Page({ params }: {
             window.open(response.data, '_blank');
           }
         })
-        .catch(error => console.log("Error while updatng user data", error))
+        .catch(error => {
+          console.log("Error while updatng user data", error)
+          if(error.response.status === 500) router.push('/service-unavailabled')
+        })
     }
     
     const stats: StatsData[]  = [

@@ -42,8 +42,12 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
   }
 
   const handleGetFormData = async () => {
-    await API.getFormsByOrganisation(organisationId, false).then(response => {
+    await API.getFormsByOrganisation(organisationId, false)
+    .then(response => {
       if(response.status === 200) setFormData(response.data);
+    })
+    .catch(error => {
+      if(error.response.status === 500) router.push('/service-unavailabled')
     });
   };
 

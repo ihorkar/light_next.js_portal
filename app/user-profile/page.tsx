@@ -5,6 +5,7 @@ import API from "@/utils/api/api"
 import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import axios from "axios"
 import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 import DefaultInput from "@/components/ui/elements/DefaultInput"
 import DefaultButton from "@/components/ui/buttons/DefaultButton"
 import Modal from "@/components/ui/modal/Modal"
@@ -25,6 +26,8 @@ const UserProfile = () => {
     const [ isEdited, setIsEdited ] = useState(false)
     const [ isUserOrganisation, setIsUserOrganisation ] = useState<boolean>(true)
     const [showShowCreateProjectModal, setShowCreateProjectModal] = useState(false);
+
+    const router = useRouter()
 
     useEffect(() => {
         //@ts-ignore
@@ -102,7 +105,10 @@ const UserProfile = () => {
             setShowCreateProjectModal(false)
           }
         })
-        .catch(error => {console.log("Error while getting user organisation", error)})
+        .catch(error => {
+            console.log("Error while getting user organisation", error)
+            if(error.response.status === 500) router.push('/service-anavailabled')
+        })
     }, [])
     
     const deleteAccount = () => {

@@ -23,6 +23,8 @@ export default function OrganisationFormsList({ organisationId, refreshHandler }
   const [individualForm, setIndividualForm] = useState<any>()
   const session = useSession();
 
+  const router = useRouter()
+
   useEffect(() => {
     handleGetFormData()
   }, [refreshHandler])
@@ -34,8 +36,12 @@ export default function OrganisationFormsList({ organisationId, refreshHandler }
   }, []);
 
   const handleGetFormData = async () => {
-    await API.getFormsByOrganisation(organisationId, true).then(response => {
+    await API.getFormsByOrganisation(organisationId, true)
+    .then(response => {
       if(response.status === 200) setFormData(response.data);
+    })
+    .catch(error => {
+      if(error.response.status === 500) router.push('/service-unavailabled')
     });
   };
 

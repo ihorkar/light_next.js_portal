@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import API from "@/utils/api/api";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import FullWidthList from "../ui/lists/FullWidthList";
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import Modal from "../ui/modal/Modal";
@@ -14,6 +15,8 @@ export default function UserOrganisationList() {
   const [modalData, setModalData] = useState<any>()
   const session = useSession();
   const [userOrganisations, setUserOrganisations] = useState<any[]>([])
+
+  const router = useRouter()
 
   useEffect(() => {
     //@ts-ignore
@@ -28,6 +31,7 @@ export default function UserOrganisationList() {
       })
       .catch(error => {
         console.log("Error while getting the User Organisations", error)
+        if(error.response.status === 500) router.push('/service-unavailabled')
       })
   }
 

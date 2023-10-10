@@ -48,6 +48,7 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
       })
       .catch(error => {
         if(error.response.status === 404) router.push('/restricted')
+        if(error.response.status === 500) router.push('/service-unavailabled')
       })
   };
 

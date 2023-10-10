@@ -6,6 +6,7 @@ import axios from "axios";
 import FullWidthList from "../ui/lists/FullWidthList";
 import { DocumentIcon } from "@heroicons/react/24/outline";
 import StatusCardPic from "../ui/cards/StatusCardPic";
+import { useRouter } from "next/navigation";
 
 interface ListProps {
     organisationId: string;
@@ -14,6 +15,8 @@ interface ListProps {
 export default function OrganisationResultsList({ organisationId }: ListProps) {
   const [resultData, setResultData] = useState<any[]>([]);
   const session = useSession();
+
+  const router = useRouter();
 
   useEffect(() => {
     //@ts-ignore
@@ -28,6 +31,7 @@ export default function OrganisationResultsList({ organisationId }: ListProps) {
       })
       .catch(error => {
         if(error.response.status === 404) setResultData([]);
+        if(error.response.status === 500) router.push('/service-unavailabled')
       })
   };
 
@@ -38,7 +42,10 @@ export default function OrganisationResultsList({ organisationId }: ListProps) {
           window.open(response.data, '_blank');
         }
       })
-      .catch(error => console.log("Error while updatng user data", error))
+      .catch(error => {
+        console.log("Error while updatng user data", error)
+        if(error.response.status === 500) router.push('/service-unavailabled')
+      })
   }
 
   const columns = [

@@ -36,6 +36,9 @@ export default function Home() {
                 } else if (response.data.length > 1) {
                     router.push(`/select-organisation`);
                 }
+            })
+            .catch(error => {
+                if(error.response.status === 500) router.push('/service-unavailabled')
             });
     }
 
