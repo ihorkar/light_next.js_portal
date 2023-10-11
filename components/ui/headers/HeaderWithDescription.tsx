@@ -14,17 +14,17 @@ const HeaderWithDescription: React.FC<HeaderProps> = ({
     Headline, Description,  type = 'section', PrimaryButtonLabel,PrimaryButtononClick,SecondaryButtonLabel,SecondaryButtononClick}
         ) => {
 
-    let headerClass = "text-textdefault briggs-weight-heading briggs-typeface";
-    let descriptionClass = "mt-2 max-w-4xl text-textsubdued briggs-typeface";
+    let headerClass = "";
+    let descriptionClass = "mt-2 max-w-4xl text-textsubdued";
 
           switch (type) {
               case 'page':
-                  headerClass += " text-briggs-fontsize-heading4xl-xs-sm";
-                  descriptionClass += " text-briggs-fontsize-bodylg";
+                  headerClass += " briggs-headingXl";
+                  descriptionClass += " briggs-bodyMd";
                   break;
               case 'section':
-                  headerClass += " text-briggs-fontsize-heading2xl-xs-sm briggs-lineheight-heading2xl-xs-sm ";
-                  descriptionClass += " text-ibriggs-fontsize-bodylg";
+                  headerClass += " briggs-headingMd";
+                  descriptionClass += " briggs-bodySm";
                   break;
           }      
     return (

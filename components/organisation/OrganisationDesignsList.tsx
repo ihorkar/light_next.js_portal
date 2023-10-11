@@ -144,18 +144,18 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
       )}
       <Modal
         visible={showActivateModal}
-        title="Activate the form"
+        title="Finish your design?"
         onOkClick={handleActivateForm}
         onCancelClick={() => setShowActivateModal(false)}
-        ok_text="Activate"
+        ok_text="Finish"
         cancel_text="Cancel"
         type="primary"
       >
-        <p>Are you sure you want to deactivate your account?</p>
+        <p>Once the design is completed, the form will be ready for use. It will appear under the projects section, where you can activate it, making it accessible to your crew.</p>
       </Modal>
       <Modal
         visible={showActivateConfirmedModal}
-        title="Activated the form successfully!"
+        title="Finished the design successfully!"
         onOkClick={() => setShowActivateConfirmedModal(false)}
         onCancelClick={() => setShowActivateConfirmedModal(false)}
         ok_text="Confirm"

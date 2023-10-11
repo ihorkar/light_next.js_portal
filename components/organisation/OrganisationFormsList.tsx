@@ -163,7 +163,7 @@ export default function OrganisationFormsList({ organisationId, refreshHandler }
         cancel_text="Cancel"
         type={individualForm?.active ? "critical" : "primary"}
       >
-        {individualForm?.active ? <p>Are you sure you want to deactivate the form?</p> : <p>Are you sure you want to activate the form?</p>}
+        {individualForm?.active ? <p>Upon deactivation of the form, access will be unavailable to your crew. Crew members actively using the form will lose access upon their devices synchronizing with the internet.</p> : <p>Once activated, the form will be accessible for use by your crew members.</p>}
       </Modal>
       <Modal
         visible={showActiveConfirmedModal}
@@ -178,12 +178,12 @@ export default function OrganisationFormsList({ organisationId, refreshHandler }
         visible={showArchiveModal}
         onOkClick={handleArchiveForm}
         onCancelClick={() => setShowArchiveModal(false)}
-        title="Archive the form"
+        title="Archive the form?"
         ok_text="Archive"
         cancel_text="Cancel"
         type="critical"
       >
-        <p>Do you really want to archive the form?</p>
+        <p>Once the form is archived, reactivation will not be possible. However, your results will still be accessible.</p>
       </Modal>
       <Modal
         visible={showArchiveConfirmedModal}
