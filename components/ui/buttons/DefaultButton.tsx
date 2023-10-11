@@ -11,7 +11,7 @@ const DefaultButton: React.FC<ButtonProps> = ({
     type = 'primary',
     size
 }) => {
-    let classNames = size ? "py-[14px] px-8 briggs-bodyMd rounded gap-3" : "py-2 px-4 briggs-bodySm rounded gap-3";
+    let classNames = size ? "py-[14px] px-8 briggs-bodyLg rounded gap-8" : "py-2 px-4 briggs-bodyMd rounded";
 
     switch (type) {
         case 'primary':
