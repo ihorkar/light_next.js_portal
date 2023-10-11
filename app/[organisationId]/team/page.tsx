@@ -25,19 +25,21 @@ export default function Page({ params }: {
   const formEl = useRef<HTMLFormElement>(null);
 
   const handleOnSendInvitation = useCallback(() => {
-    formEl?.current?.reportValidity();
-    const userData: InvitationData = {email: userEmail, role: userRole};
-    API.sendInvitation(params.organisationId, userData)
-      .then(response => {
-        if(response.status === 200) {
-          setIsSentInvitation(true);
-          console.log("The invitation has been sent successfully.");
-        }
-      })
-      .catch(error => {
-        if(error.response.status === 409) setIsInvalidEmail(true);
-        console.log("Error while sending the invitation", error)
-      })
+    const validated = formEl?.current?.reportValidity();
+    if(validated) {
+      const userData: InvitationData = {email: userEmail, role: userRole};
+      API.sendInvitation(params.organisationId, userData)
+        .then(response => {
+          if(response.status === 200) {
+            setIsSentInvitation(true);
+            console.log("The invitation has been sent successfully.");
+          }
+        })
+        .catch(error => {
+          if(error.response.status === 409) setIsInvalidEmail(true);
+          console.log("Error while sending the invitation", error)
+        })
+    }
   }, [userEmail, userRole]) 
 
   const handelCloseModal = useCallback(() => {
@@ -74,9 +76,9 @@ export default function Page({ params }: {
       visible={showInvitationModal} 
       title="Member Invitation"
       ok_text={isSentInvitation ? "OK" : "Invite"}
-      cancel_text={isSentInvitation ? "" : "Cancel"} 
+      cancel_text={isSentInvitation ? undefined : "Cancel"} 
       onCancelClick={handelCloseModal} 
-      onOkClick={!isSentInvitation ? handleOnSendInvitation : handelCloseModal}
+      onOkClick={isSentInvitation ? handelCloseModal : handleOnSendInvitation}
       type="primary"
     >      
       {!isSentInvitation ? 
@@ -109,7 +111,7 @@ export default function Page({ params }: {
         </div>
       </form>
        : 
-      <p>
+      <p className="w-[540px]">
         Your invitation has been sent successfully. Please keep in mind that invitations can only be sent to existing platform members. If the intended recipient is not yet a member, kindly suggest they sign up before sending the invitation. This will ensure they receive your invitation promptly.
       </p>}
     </Modal>

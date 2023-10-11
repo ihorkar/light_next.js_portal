@@ -27,12 +27,13 @@ const Modal = ({ visible, onOkClick, onCancelClick, children, title, ok_text, ca
                     <div className="mb-[13px]"><p className="briggs-headingLg">{title}</p></div>
                     <div className="briggs-bodyMd">{children}</div>
                     <div className="flex justify-end gap-x-3 mt-8">
-                      <DefaultButton
-                        //@ts-ignore
-                        label={cancel_text}
-                        onClick={onCancelClick}
-                        type="primary"
-                      />
+                      {cancel_text && 
+                        <DefaultButton
+                          label={cancel_text}
+                          onClick={onCancelClick}
+                          type="primary"
+                        />
+                      }
                       <DefaultButton
                         label={ok_text}
                         onClick={onOkClick}

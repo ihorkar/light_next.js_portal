@@ -89,7 +89,7 @@ export default function Page({ params }: {
       visible={showShowCreateProjectModal} 
       title="Create a new project."
       ok_text={isSentProject ? "OK" : "Create"}
-      cancel_text={isSentProject ? "" : "Cancel"} 
+      cancel_text={isSentProject ? undefined : "Cancel"} 
       onCancelClick={handelCloseModal} 
       onOkClick={!isSentProject ? handleOnSendProject : handelCloseModal}
       type="primary"
