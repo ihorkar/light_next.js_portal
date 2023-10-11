@@ -320,7 +320,7 @@ export const FormPagesDropzone = (
         onOkClick={addNewPage}
         onCancelClick={() => setVisibleModal(false)}
         title="Add New Page"
-        type="secondary"
+        type="primary"
         ok_text="Add"
         cancel_text="Cancel"
       >

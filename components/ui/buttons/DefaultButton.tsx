@@ -1,7 +1,7 @@
 interface ButtonProps {
     label: string;
     onClick: () => void;
-    type?: 'primary' | 'secondary' | 'critical';
+    type?: 'primary' | 'critical' | 'confirmation';
     size?: 'big';
 }
 
@@ -15,10 +15,10 @@ const DefaultButton: React.FC<ButtonProps> = ({
 
     switch (type) {
         case 'primary':
-            classNames += " text-textprimary bg-actionprimarydefault hover:bg-actionprimaryhovered border border-actionprimarydefault";
-            break;
-        case 'secondary':
             classNames += " text-textdefault bg-actionsecondarydefault hover:bg-actionsecondaryhovered border border-borderdefault";
+            break;
+        case 'confirmation':
+            classNames += " text-textprimary bg-actionprimarydefault hover:bg-actionprimaryhovered border border-actionprimarydefault";
             break;
         case 'critical':
             classNames += " text-textprimary bg-actioncriticaldefault hover:bg-actioncriticalhovered border border-actioncriticaldefault";

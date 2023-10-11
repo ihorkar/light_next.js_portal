@@ -11,7 +11,7 @@ interface ModalProps {
     title: string;
     ok_text: string;
     cancel_text?: string;
-    type: 'primary' | 'secondary' | 'critical';
+    type: 'primary' | 'critical' | 'confirmation';
 }
 
 const Modal = ({ visible, onOkClick, onCancelClick, children, title, ok_text, cancel_text, type }: ModalProps) => {
@@ -19,10 +19,10 @@ const Modal = ({ visible, onOkClick, onCancelClick, children, title, ok_text, ca
     <>
       {visible ? (
         <>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed z-50 inset-0 outline-none focus:outline-none">
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed z-40 inset-0 outline-none focus:outline-none">
             <div className="relative w-auto">
-              <div className="flex-col items-end px-6 py-8 bg-white mx-auto z-50">
-                {type === "secondary" ? 
+              <div className="flex-col items-end px-6 py-8 bg-white mx-auto z-40">
+                {type === "primary" ? 
                   <>
                     <div className="mb-[13px]"><p className="briggs-headingLg">{title}</p></div>
                     <div className="briggs-bodyMd">{children}</div>
@@ -31,26 +31,26 @@ const Modal = ({ visible, onOkClick, onCancelClick, children, title, ok_text, ca
                         //@ts-ignore
                         label={cancel_text}
                         onClick={onCancelClick}
-                        type="secondary"
+                        type="primary"
                       />
                       <DefaultButton
                         label={ok_text}
                         onClick={onOkClick}
-                        type="primary"
+                        type="confirmation"
                       />
                     </div>
                   </> : <div className="w-[332px] mx-4">
                     <div className="flex justify-center">
                       {type === "critical" ? 
-                        <span className="text-actioncriticaldefault opacity-100 h-[60px] w-[60px] p-2 block"><InformationCircleIcon /></span> :
-                        <span className="text-actionprimarydefault opacity-100 h-[60px] w-[60px] p-2 block"><CheckCircleIcon /></span>
+                        <div className="h-[60px] w-[60px] rounded-full bg-[#FF9D9D] bg-opacity-10 p-2 block"><span className="text-actioncriticaldefault opacity-100"><InformationCircleIcon /></span></div> :
+                        <div className="h-[60px] w-[60px] rounded-full bg-[#AEE9D1] bg-opacity-10 p-2 block"><span className="text-actionprimarydefault opacity-100"><CheckCircleIcon /></span></div>
                       }
                     </div>
                     <div className="flex justify-center pb-[13px]"><p className="briggs-headingLg">{title}</p></div>
                     <div className="mb-8 briggs-bodyMd">{children}</div>
                     <div className="flex justify-around">
                       {cancel_text && <DefaultButton
-                        type="secondary"
+                        type="primary"
                         size="big"
                         onClick={onCancelClick}
                         label={cancel_text}

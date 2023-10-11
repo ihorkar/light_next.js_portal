@@ -172,7 +172,7 @@ const TwoColumnLayout = ({organisationId, formId}: TwoColumnLayoutProps) => {
                             title="Create new optin"
                             ok_text="Create"
                             cancel_text="Cancel"
-                            type="secondary"
+                            type="primary"
                             onOkClick={() => handleAddOptin()}
                             onCancelClick={() => setShowOptinModal(false)}
                         >

@@ -77,7 +77,7 @@ export default function Page({ params }: {
       cancel_text={isSentInvitation ? "" : "Cancel"} 
       onCancelClick={handelCloseModal} 
       onOkClick={!isSentInvitation ? handleOnSendInvitation : handelCloseModal}
-      type="secondary"
+      type="primary"
     >      
       {!isSentInvitation ? 
       <form ref={formEl}>

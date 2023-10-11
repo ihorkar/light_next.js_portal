@@ -138,7 +138,7 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
       cancel_text="Cancel"
       onCancelClick={() => setShowRoleEditModal(false)} 
       onOkClick={handleEditUser}
-      type="secondary"
+      type="primary"
     >      
         {modalData && <div className="mt-2 space-y-8 pb-12 sm:space-y-0 sm:pb-0">
           <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">

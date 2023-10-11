@@ -156,7 +156,7 @@ export default function OrganisationFormsList({ organisationId, refreshHandler }
         title={individualForm?.active ? "Active the form?": "Deactive the form?"}
         ok_text={individualForm?.active ? "Active": "Deactive"}
         cancel_text={individualForm?.active? undefined :"Cancel"}
-        type={individualForm?.active ? "primary" : "critical"}
+        type={individualForm?.active ? "confirmation" : "critical"}
       >
         {individualForm?.active ? <p>Are you sure you want to active the form?</p> : <p>Are you sure you want to deactive the form?</p>}
       </Modal>

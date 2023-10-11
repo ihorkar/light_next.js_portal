@@ -128,7 +128,7 @@ const UserProfile = () => {
                 <SimpleHeader Headline= "User Profile" />
                 {isEdited ? <div className="flex items-center justify-end p-6">
                     <DefaultButton
-                        type="secondary"
+                        type="primary"
                         onClick={handleClickEditCancelButton}
                         label={"cancel"}
                     />
@@ -224,7 +224,7 @@ const UserProfile = () => {
             <div className="inline-flex justify-end w-full mt-10">
                 <DefaultButton
                     onClick={signOut}
-                    type="secondary"
+                    type="primary"
                     label={"log out"}
                 />
                 <Modal 

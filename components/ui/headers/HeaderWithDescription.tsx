@@ -45,7 +45,7 @@ const HeaderWithDescription: React.FC<HeaderProps> = ({
             <DefaultButton
               label={SecondaryButtonLabel}
               onClick={SecondaryButtononClick}
-              type="secondary"
+              type="primary"
             />
           )}
         </div>

@@ -164,7 +164,7 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                 title="Edit name"
                 ok_text="Update"
                 cancel_text="Cancel"
-                type="secondary"
+                type="primary"
                 onCancelClick={closeModals('name')} 
                 onOkClick={handleEditOrganisationData('name', name)}
                 >      
@@ -192,7 +192,7 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                 title="Edit company address"
                 ok_text="Update"
                 cancel_text="Cancel"
-                type="secondary"
+                type="primary"
                 onCancelClick={closeModals('address')} 
                 onOkClick={handleEditOrganisationData('address', address)}
                 >      
@@ -265,7 +265,7 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                 title="Edit payment info"
                 ok_text="Update"
                 cancel_text="Cancel"
-                type="secondary"
+                type="primary"
                 onCancelClick={closeModals('payment')} 
                 onOkClick={handleEditOrganisationData('payment', payment)}
                 >      
@@ -308,7 +308,7 @@ const OrganisationDataCard = ({organisationId}: OrganisationDataCardProps) => {
                 title="Edit contact details"
                 ok_text="Update"
                 cancel_text="Cancel"
-                type="secondary"
+                type="primary"
                 onCancelClick={closeModals('contactDetails')} 
                 onOkClick={handleEditOrganisationData('contactDetails', contactDetails)}
                 >      
