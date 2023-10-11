@@ -39,7 +39,7 @@ const HeaderWithDescription: React.FC<HeaderProps> = ({
           {PrimaryButtonLabel && PrimaryButtononClick && <DefaultButton
             label={PrimaryButtonLabel}
             onClick={PrimaryButtononClick}
-            type="primary"
+            type="confirmation"
           />}
           {SecondaryButtonLabel && SecondaryButtononClick && (
             <DefaultButton

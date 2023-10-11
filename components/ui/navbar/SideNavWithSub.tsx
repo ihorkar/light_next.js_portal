@@ -192,6 +192,7 @@ const SideNavWithSub: React.FC<NavProps> = ({menuitems, organisations, isUserPro
           <DefaultButton
             label="Let's signup!"
             onClick={navigateAnotherSite}
+            type='confirmation'
           />
 
           {!isUserProfilePage && <li className="-mx-6 mt-auto">
