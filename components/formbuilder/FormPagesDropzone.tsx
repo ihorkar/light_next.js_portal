@@ -365,6 +365,7 @@ export const FormPagesDropzone = (
       <div className="flex justify-end mt-4">
         <DefaultButton
           label="Next"
+          type="confirmation"
           onClick={handleOnClickNextBtn}
         />
       </div>

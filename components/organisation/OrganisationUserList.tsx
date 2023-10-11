@@ -21,6 +21,7 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
   const [organisationUsersData, setOrganisationUsersData] = useState<any[]>([]);
   const [showRoleEditModal, setShowRoleEditModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showDeleteConfirmedModal, setShowDeleteConfirmedModal] = useState(false)
   const [modalData, setModalData] = useState<any>()
   const [updatedUserRole, setUpdatedUserRole] = useState<string>("");
   const [loggedUserIndex, setLoggedUserIndex] = useState<number | undefined>()
@@ -80,6 +81,7 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
         if(response.status === 200) {
           setShowDeleteModal(false);
           handleGetUserData();
+          setShowDeleteConfirmedModal(true);
         }
       })
       .catch(error => console.log("Error while deleting user data", error))
@@ -177,6 +179,15 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
       onOkClick={handleDeleteUser}
     >
       <p className="w-[450px]">Are you sure you want to revoke this user&rsquo;s access to your organization? They will need to be invited again.</p>
+    </Modal>
+    <Modal
+      visible={showDeleteConfirmedModal} 
+      title="Revoked membership successfully!"
+      ok_text="Revoke"
+      type="confirmation"
+      onCancelClick={() => setShowDeleteConfirmedModal(false)}
+      onOkClick={() => setShowDeleteConfirmedModal(false)}
+    >
     </Modal>
     </>
   );

@@ -19,8 +19,10 @@ interface ListProps {
 export default function OrganisationDesignsList({ organisationId, handleRefresh }: ListProps) {
   const [formData, setFormData] = useState<any[]>([]);
   const [showActivateModal, setShowActivateModal] = useState<boolean>(false);
-  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false)
-  const [selectForm, setSelectForm] = useState<any>()
+  const [showActivateConfirmedModal, setShowActivateConfirmedModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  const [showDeleteConfirmedModal, setShowDeleteConfirmedModal] = useState(false)
+  const [selectForm, setSelectForm] = useState<any>();
   const session = useSession();
 
   const router = useRouter();
@@ -61,6 +63,7 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
         if(response.status === 201) {
           Notiflix.Notify.success("Deleted the design successfully!")
           handleGetFormData()
+          setShowDeleteConfirmedModal(true)
         }
       })
     setShowDeleteModal(false)
@@ -75,6 +78,7 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
           if(response.status === 201) {
             handleGetFormData()
             handleRefresh()
+            setShowActivateConfirmedModal(true)
           }
         })
         .catch(error => {
@@ -150,6 +154,15 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
         <p>Are you sure you want to deactivate your account?</p>
       </Modal>
       <Modal
+        visible={showActivateConfirmedModal}
+        title="Activated the form successfully!"
+        onOkClick={() => setShowActivateConfirmedModal(false)}
+        onCancelClick={() => setShowActivateConfirmedModal(false)}
+        ok_text="Confirm"
+        type="confirmation"
+      >
+      </Modal>
+      <Modal
         visible={showDeleteModal}
         title="Delete the form?"
         onOkClick={handleDeleteForm}
@@ -159,6 +172,15 @@ export default function OrganisationDesignsList({ organisationId, handleRefresh 
         type="critical"
       >
         <p>Are you sure you want to delete the form? All of you data will be permanently removed. This action cannot be undone.</p>
+      </Modal>
+      <Modal
+        visible={showDeleteConfirmedModal}
+        title="Deleted the form successfully!"
+        onOkClick={() => setShowDeleteConfirmedModal(false)}
+        onCancelClick={() => setShowDeleteConfirmedModal(false)}
+        ok_text="Confirm"
+        type="confirmation"
+      >
       </Modal>
     </div>
   )

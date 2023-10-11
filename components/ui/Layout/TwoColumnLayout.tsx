@@ -221,6 +221,7 @@ const TwoColumnLayout = ({organisationId, formId}: TwoColumnLayoutProps) => {
             <div className="flex justify-end mt-8 pr-10">
                 <DefaultButton 
                     label="Next"
+                    type="confirmation"
                     onClick={handleOnClickBtn}
                 />
             </div>

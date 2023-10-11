@@ -75,10 +75,12 @@ export default function Page({ params }: {
         <div className="flex justify-between mt-4">
           <DefaultButton
               label="Prev"
+              type="confirmation"
               onClick={() => router.push(`/${params.organisationId}/campaign/${params.formId}/pages`)}
           />
           <DefaultButton
               label="Next"
+              type="confirmation"
               onClick={() => router.push(`/${params.organisationId}/campaign`)}
           />
         </div>

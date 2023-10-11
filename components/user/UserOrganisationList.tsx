@@ -12,6 +12,7 @@ import { IconButtonProps } from "../ui/buttons/IconButton";
 
 export default function UserOrganisationList() {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showDeleteConfirmedModal, setShowDeleteConfirmedModal] = useState(false)
   const [modalData, setModalData] = useState<any>()
   const session = useSession();
   const [userOrganisations, setUserOrganisations] = useState<any[]>([])
@@ -97,7 +98,16 @@ export default function UserOrganisationList() {
       onCancelClick={() => setShowDeleteModal(false)} 
       onOkClick={handleDeleteUser}
     >
-      <p className="w-[450px]">Are you sure you want to leave this organisation? You will need a new invitation if you want to join again.</p>
+      <p>Are you sure you want to leave this organisation? You will need a new invitation if you want to join again.</p>
+    </Modal>
+    <Modal
+      visible={showDeleteConfirmedModal} 
+      title="Left organisation successfully!"
+      ok_text="Confirm"
+      type="confirmation"
+      onCancelClick={() => setShowDeleteConfirmedModal(false)} 
+      onOkClick={() => setShowDeleteConfirmedModal(false)}
+    >
     </Modal>
     </>
   );

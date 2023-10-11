@@ -26,6 +26,7 @@ const UserProfile = () => {
     const [ isEdited, setIsEdited ] = useState(false)
     const [ isUserOrganisation, setIsUserOrganisation ] = useState<boolean>(true)
     const [showShowCreateProjectModal, setShowCreateProjectModal] = useState(false);
+    const [showDeleteConfirmedModal, setShowDeleteConfirmedModal] = useState(false);
 
     const router = useRouter()
 
@@ -98,7 +99,7 @@ const UserProfile = () => {
           if(response.data.length > 0) {
             setIsUserOrganisation(true)
             setShowCreateProjectModal(false)
-            alert("You have still the relations with organisations.")
+            setShowDeleteConfirmedModal(true)
           } else {
             setIsUserOrganisation(false)
             deleteAccount()
@@ -221,7 +222,7 @@ const UserProfile = () => {
                 </div>
             </div>
                 
-            <div className="inline-flex justify-end w-full mt-10">
+            <div className="inline-flex justify-end w-full mt-10 gap-x-4">
                 <DefaultButton
                     onClick={signOut}
                     type="primary"
@@ -237,6 +238,16 @@ const UserProfile = () => {
                   onOkClick={handleOnclickDeleteBtn}
                 >
                     <p>Do you really delete account?</p>
+                </Modal>
+                <Modal 
+                  visible={showDeleteConfirmedModal} 
+                  title="Deleted account successfully!"
+                  ok_text="Confirm"
+                  type="confirmation"
+                  onCancelClick={() => setShowDeleteConfirmedModal(false)} 
+                  onOkClick={() => setShowDeleteConfirmedModal(false)}
+                >
+                    <p>You have still the relations with organisations.</p>
                 </Modal>
                 <DefaultButton
                     onClick={handleShowDeleteAccountModal}

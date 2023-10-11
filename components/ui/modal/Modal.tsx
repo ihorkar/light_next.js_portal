@@ -39,7 +39,7 @@ const Modal = ({ visible, onOkClick, onCancelClick, children, title, ok_text, ca
                         type="confirmation"
                       />
                     </div>
-                  </> : <div className="w-[332px] mx-4">
+                  </> : <div className="w-[360px] mx-4">
                     <div className="flex justify-center">
                       {type === "critical" ? 
                         <div className="h-[60px] w-[60px] rounded-full bg-[#FF9D9D] bg-opacity-10 p-2 block"><span className="text-actioncriticaldefault opacity-100"><InformationCircleIcon /></span></div> :

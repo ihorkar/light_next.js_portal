@@ -19,7 +19,9 @@ interface ListProps {
 export default function OrganisationFormsList({ organisationId, refreshHandler }: ListProps) {
   const [formData, setFormData] = useState<any[]>([]);
   const [showActiveModal, setShowActiveModal] = useState<boolean>(false);
+  const [showActiveConfirmedModal, setShowActiveConfirmedModal] = useState(false);
   const [showArchiveModal, setShowArchiveModal] = useState<boolean>(false);
+  const [showArchiveConfirmedModal, setShowArchiveConfirmedModal] = useState(false)
   const [individualForm, setIndividualForm] = useState<any>()
   const session = useSession();
 
@@ -69,6 +71,7 @@ export default function OrganisationFormsList({ organisationId, refreshHandler }
       .then(response => {
         if(response.status === 201){
           handleGetFormData()
+          setShowActiveConfirmedModal(true)
         }
       })
       .catch(error => {
@@ -83,6 +86,7 @@ export default function OrganisationFormsList({ organisationId, refreshHandler }
       .then(response => {
         if(response.status === 201){
           handleGetFormData()
+          setShowActiveConfirmedModal(true)
         }
       })
       .catch(error => console.log("Error while creating organisation", error))
@@ -93,6 +97,7 @@ export default function OrganisationFormsList({ organisationId, refreshHandler }
     .then(response => {
       if(response.status === 201){
         handleGetFormData()
+        setShowArchiveConfirmedModal(true)
       }
     })
     .catch(error => console.log("Errors while updating archived form", error))
@@ -155,10 +160,19 @@ export default function OrganisationFormsList({ organisationId, refreshHandler }
         onCancelClick={() => setShowActiveModal(false)}
         title={individualForm?.active ? "Deactivate the form?": "Activate the form?"}
         ok_text={individualForm?.active ? "Deactivate": "Activate"}
-        cancel_text={individualForm?.active? undefined :"Cancel"}
+        cancel_text="Cancel"
         type={individualForm?.active ? "critical" : "confirmation"}
       >
         {individualForm?.active ? <p>Are you sure you want to deactivate the form?</p> : <p>Are you sure you want to activate the form?</p>}
+      </Modal>
+      <Modal
+        visible={showActiveConfirmedModal}
+        onOkClick={() => setShowActiveConfirmedModal(false)}
+        onCancelClick={() => setShowActiveConfirmedModal(false)}
+        title={individualForm?.active ? "Deactivated the form successfully!": "Activated the form successfully!"}
+        ok_text="Confirm"
+        type="confirmation"
+      >
       </Modal>
       <Modal
         visible={showArchiveModal}
@@ -170,6 +184,15 @@ export default function OrganisationFormsList({ organisationId, refreshHandler }
         type="critical"
       >
         <p>Do you really want to archive the form?</p>
+      </Modal>
+      <Modal
+        visible={showArchiveConfirmedModal}
+        onOkClick={() => setShowArchiveConfirmedModal(false)}
+        onCancelClick={() => setShowArchiveConfirmedModal(false)}
+        title="Archived the form successfully!"
+        ok_text="Archive"
+        type="confirmation"
+      >
       </Modal>
     </div>
   )
