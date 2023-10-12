@@ -18,7 +18,7 @@ import {
   UserPlusIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  ArrowRightOnRectangleIcon
+  PencilIcon
 } from '@heroicons/react/24/outline'
 import { redirect, useRouter } from 'next/navigation';
 import IconButton from '../buttons/IconButton';
@@ -217,7 +217,7 @@ const SideNavWithSub: React.FC<NavProps> = ({menuitems, organisations, isUserPro
             onClick={navigateAnotherSite}
             type='confirmation'
           /> : <IconButton
-            icon={<ArrowRightOnRectangleIcon className="h-5 w-5" />}
+            icon={<PencilIcon className="h-5 w-5" />}
             label="Let's signup!"
             onClick={navigateAnotherSite}
             visible={() => true}
