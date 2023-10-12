@@ -100,7 +100,7 @@ const SideNavWithSub: React.FC<NavProps> = ({menuitems, organisations, isUserPro
       case false:
         return mainClassName += " w-[300px] px-8";
       case true:
-        return mainClassName += " w-[80px] px-4 relative";
+        return mainClassName += " w-[84px] px-4 relative";
     }
   }, [hiddenSide])
 
@@ -118,7 +118,7 @@ const SideNavWithSub: React.FC<NavProps> = ({menuitems, organisations, isUserPro
           />
         </div>
         {!hiddenSide && <div className='h-full flex items-center cursor-pointer' onClick={() => setHiddenSide(true)}><ChevronLeftIcon className='h-[24px]' /></div>}
-        {hiddenSide && <div className='fixed flex items-center bg-white top-10 left-14 z-10 h-8 p-2 cursor-pointer' onClick={() => setHiddenSide(false)}><ChevronRightIcon  className='h-[24px]'/></div>}
+        {hiddenSide && <div className='fixed flex items-center bg-white top-10 left-16 z-10 h-8 p-2 cursor-pointer' onClick={() => setHiddenSide(false)}><ChevronRightIcon  className='h-[24px]'/></div>}
       </div>
       <nav className="flex flex-1 flex-col">
         <ul role="list" className="flex flex-1 flex-col gap-y-7">
