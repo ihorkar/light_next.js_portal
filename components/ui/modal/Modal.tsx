@@ -21,7 +21,7 @@ const Modal = ({ visible, onOkClick, onCancelClick, children, title, ok_text, ca
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed z-40 inset-0 outline-none focus:outline-none">
             <div className="relative w-auto">
-              <div className="flex-col items-end px-6 py-8 bg-white mx-auto z-40">
+              <div className="flex-col items-end px-6 py-8 bg-white mx-auto z-40 briggs-modal">
                 {type === "primary" ? 
                   <>
                     <div className="mb-[13px]"><p className="briggs-headingLg">{title}</p></div>
