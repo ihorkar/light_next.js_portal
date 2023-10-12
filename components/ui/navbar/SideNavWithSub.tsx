@@ -70,7 +70,7 @@ const icons: { [iconName: string]: React.ElementType } = {
 const SideNavWithSub: React.FC<NavProps> = ({menuitems, organisations, isUserProfilePage}) => {
   const router = useRouter()
   const [ userData, setUserData ] = useState<any>();
-  const [ hiddenSide, setHiddenSide ] = useState(false)
+  const [ hiddenSide, setHiddenSide ] = useState(true)
 
   let mainClassName = "flex flex-col pt-8 pb-2 h-screen gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6";
   
