@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import API from "@/utils/api/api"
 import { Disclosure } from '@headlessui/react'
+import { useNavState } from '@/utils/jotai';
 import DefaultButton from '../buttons/DefaultButton';
 import {
   CalendarIcon,
@@ -70,7 +71,7 @@ const icons: { [iconName: string]: React.ElementType } = {
 const SideNavWithSub: React.FC<NavProps> = ({menuitems, organisations, isUserProfilePage}) => {
   const router = useRouter()
   const [ userData, setUserData ] = useState<any>();
-  const [ hiddenSide, setHiddenSide ] = useState(true)
+  const [ hiddenSide, setHiddenSide ] = useNavState()
 
   let mainClassName = "flex flex-col pt-8 pb-2 h-screen gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6";
   
@@ -130,7 +131,7 @@ const SideNavWithSub: React.FC<NavProps> = ({menuitems, organisations, isUserPro
                       href={item.href}
                       className={classNames(
                         item.current ? 'bg-gray-50' : 'hover:bg-gray-100',
-                        !hiddenSide ? 'justify-between' : 'justify-center',
+                        !hiddenSide ? '' : 'justify-center',
                         'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700'
                       )}
                     >
@@ -196,7 +197,7 @@ const SideNavWithSub: React.FC<NavProps> = ({menuitems, organisations, isUserPro
                                   href={organisation.href}
                                   className={classNames(
                                       organisation.current ? 'bg-gray-50' : 'hover:bg-gray-50',
-                                      !hiddenSide ? 'justify-between' : 'justify-center',
+                                      !hiddenSide ? '' : 'justify-center',
                                       'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700'
                                   )}
                               >
@@ -226,7 +227,7 @@ const SideNavWithSub: React.FC<NavProps> = ({menuitems, organisations, isUserPro
             <div
               onClick={() => router.push('/user-profile')}
               className={classNames(
-                !hiddenSide ? 'justify-between' : 'justify-center',
+                !hiddenSide ? '' : 'justify-center',
                 'flex items-center gap-x-4 px-6 py-3 font-semibold leading-6 text-gray-900 hover:bg-gray-50 cursor-pointer'
               )}
             >

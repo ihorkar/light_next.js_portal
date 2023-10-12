@@ -68,7 +68,7 @@
   font-size: 16px;
   line-height: 20px;
   font-weight: 400; /* Adjust accordingly */
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
 
   @screen md {
      font-size: 20px;
@@ -80,7 +80,7 @@
   font-size: 14px;
   line-height: 18px;
   font-weight: 400; /* Adjust accordingly */
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
 
   @screen md {
      font-size: 16px;
@@ -92,7 +92,7 @@
   font-size: 12px;
   line-height: 16px;
   font-weight: 400; /* Adjust accordingly */
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
 
   @screen md {
      font-size: 14px;

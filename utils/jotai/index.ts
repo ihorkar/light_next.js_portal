@@ -1,5 +1,5 @@
 import { atom, useAtom } from "jotai";
-import { atomWithReset, useResetAtom } from "jotai/utils";
+import { atomWithReset, atomWithStorage, useResetAtom } from "jotai/utils";
 import { UserData } from "./atomTypes";
 
 const userData = atom<UserData | undefined>(undefined)
@@ -9,3 +9,11 @@ const updateUserData = atom(
 )
 
 export const useUserData = () => useAtom(updateUserData)
+
+const navState = atomWithStorage("navState", true);
+const updateNavState = atom(
+    get => get(navState),
+    (_get, set, param: boolean) => set(navState, param)
+);
+
+export const useNavState = () => useAtom(updateNavState);
