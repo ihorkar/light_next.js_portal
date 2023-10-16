@@ -24,7 +24,7 @@ export interface UserData {
 }
 
 const options: ISelectOption[] = [
-    {label: "English", image: <ReactCountryFlag countryCode='UK' svg style={{width: '24px', height: '24px'}} />},
+    {label: "English", image: <ReactCountryFlag countryCode='GB' svg style={{width: '24px', height: '24px'}} />},
     {label: "Dutch", image: <ReactCountryFlag countryCode='NL' svg style={{width: '24px', height: '24px'}} />}
 ]
 
