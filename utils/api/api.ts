@@ -143,7 +143,7 @@ const API = {
     },
     setLanguageByUserId: (language: string): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
-            axios.post('/user/language', language)
+            axios.post('/user/language', {language: language})
                 .then(response => resolve(response))
                 .catch(error => reject(error))
         })
