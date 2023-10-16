@@ -15,6 +15,7 @@ import { PencilIcon } from "@heroicons/react/24/outline"
 import DefaultSelect, { ISelectOption } from "@/components/ui/elements/DefaultSelect"
 import ReactCountryFlag from "react-country-flag"
 import { SingleValue, ActionMeta } from "react-select"
+import Notiflix from "notiflix"
 
 export interface UserData {
     userName?: string;
@@ -54,6 +55,9 @@ const UserProfile = () => {
             email: userData.email,
             firstName: userData.firstName,
             lastName: userData.lastName
+          })
+          options.map((option: ISelectOption) => {
+            if(option.label === userData.language) setLanguage(option)
           })
         })
         .catch(error => {
@@ -121,8 +125,17 @@ const UserProfile = () => {
         })
     }, [])
 
-    const handleSelectedLanguage = useCallback((newValue: SingleValue<ISelectOption>, actionMeta: ActionMeta<ISelectOption>) => {
-        if(newValue) setLanguage(newValue)
+    const handleSelectedLanguage = useCallback(async (newValue: SingleValue<ISelectOption>, actionMeta: ActionMeta<ISelectOption>) => {
+        if(newValue) {
+            setLanguage(newValue);
+            await API.setLanguageByUserId(newValue?.label)
+                .then(response => {
+                    if(response.status === 201) Notiflix.Notify.success("Language selected successfully!")
+                })
+                .catch(error => {
+                    console.log("Error while getting user", error)
+                })
+        }
     }, [])
     
     const deleteAccount = () => {

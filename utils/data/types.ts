@@ -3,6 +3,7 @@ export interface UserData {
     email: string;
     firstName?: string;
     lastName?: string;
+    language?: string;
 }
 
 export interface InvitationData {

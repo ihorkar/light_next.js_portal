@@ -6,7 +6,7 @@ import API from '@/utils/api/api'
 import { UserData } from '@/utils/data/types'
 import { useRouter } from 'next/navigation'
 
-export default function UserSignUp() {
+const UserSignUp = ({lang}: any) => {
   const router = useRouter();
   const [userName, setUserName] = useState("")
   const [userEmail, setUserEmail] = useState("")
@@ -29,7 +29,8 @@ export default function UserSignUp() {
       userName: userName,
       email: userEmail,
       firstName: firstName,
-      lastName: lastName
+      lastName: lastName,
+      language: lang
     }
 
     API.createNewUser(userData)
@@ -128,3 +129,5 @@ export default function UserSignUp() {
     </form>
   )
 }
+
+export default UserSignUp;

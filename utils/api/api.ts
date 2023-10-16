@@ -141,6 +141,13 @@ const API = {
                 .catch(error => reject(error))
         })
     },
+    setLanguageByUserId: (language: string): Promise<AxiosResponse> => {
+        return new Promise((resolve, reject) => {
+            axios.post('/user/language', language)
+                .then(response => resolve(response))
+                .catch(error => reject(error))
+        })
+    },
     deleteUserAccount: (): Promise<AxiosResponse> => {
         return new Promise((resolve, reject) => {
             axios.put('/user/deleteUser')
