@@ -24,7 +24,7 @@ export interface UserData {
 }
 
 const options: ISelectOption[] = [
-    {label: "English", image: <ReactCountryFlag countryCode='US' svg style={{width: '24px', height: '24px'}} />},
+    {label: "English", image: <ReactCountryFlag countryCode='UK' svg style={{width: '24px', height: '24px'}} />},
     {label: "Dutch", image: <ReactCountryFlag countryCode='NL' svg style={{width: '24px', height: '24px'}} />}
 ]
 
@@ -140,29 +140,31 @@ const UserProfile = () => {
         <>
             <div className="inline-flex justify-between w-full">
                 <SimpleHeader Headline= "User Profile" />
-                {isEdited ? <div className="flex items-center justify-end p-6">
-                    <DefaultButton
-                        type="primary"
-                        onClick={handleClickEditCancelButton}
-                        label={"cancel"}
-                    />
-                    <DefaultButton
-                        type="primary"
-                        onClick={handleClickEditSaveButton}
-                        label={"save"}
-                    />
-                </div> : 
-                <div className="flex items-center justify-end p-6">
-                    <IconButton
-                        icon={<PencilIcon className="h-5 w-5" />}
-                        onClick={handleClickEditButton}
-                        label={"Edit"}
-                        type={"default"}
-                        visible={() => true}
-                    />
-                </div> }
-                <div className="justify-end py-6">
-                    <DefaultSelect options={options} onChange={handleSelectedLanguage} selectedOption={language} required />
+                <div className="flex">
+                    {isEdited ? <div className="flex items-center p-6 gap-x-2">
+                        <DefaultButton
+                            type="primary"
+                            onClick={handleClickEditCancelButton}
+                            label={"cancel"}
+                        />
+                        <DefaultButton
+                            type="confirmation"
+                            onClick={handleClickEditSaveButton}
+                            label={"save"}
+                        />
+                    </div> : 
+                    <div className="flex items-center p-6">
+                        <IconButton
+                            icon={<PencilIcon className="h-5 w-5" />}
+                            onClick={handleClickEditButton}
+                            label={"Edit"}
+                            type={"default"}
+                            visible={() => true}
+                        />
+                    </div> }
+                    <div className="py-6">
+                        <DefaultSelect options={options} onChange={handleSelectedLanguage} selectedOption={language} required />
+                    </div>
                 </div>
             </div>
             <div className="inline-flex mt-10 gap-10 w-full">
