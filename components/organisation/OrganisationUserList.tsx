@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import API from "@/utils/api/api";
 import { useSession } from "next-auth/react";
 import axios from "axios";
@@ -11,10 +11,19 @@ import DefaultInput from "../ui/elements/DefaultInput";
 import DefaultSelect from "../ui/elements/DefaultSelect";
 import { useUserData } from "@/utils/jotai";
 import { IconButtonProps } from "../ui/buttons/IconButton";
+import { ISelectOption } from "../ui/elements/DefaultSelect";
+import { SingleValue, ActionMeta } from "react-select";
 
 interface ListProps {
   organisationId: string;
 }
+  
+const roleOptions: ISelectOption[] = [
+  {label: "admin"},
+  {label: "manager"},
+  {label: "agent"}
+]
+
 
 export default function OrganisationUserList({ organisationId }: ListProps) {
   const [userData] = useUserData()
@@ -23,13 +32,11 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [showDeleteConfirmedModal, setShowDeleteConfirmedModal] = useState(false)
   const [modalData, setModalData] = useState<any>()
-  const [updatedUserRole, setUpdatedUserRole] = useState<string>("");
+  const [updatedUserRole, setUpdatedUserRole] = useState<ISelectOption>(roleOptions[0]);
   const [loggedUserIndex, setLoggedUserIndex] = useState<number | undefined>()
 
   const router = useRouter()
   const session = useSession();
-
-  const roleOptions = ["admin", "agent", "manager"];
 
   useEffect(() => {
     //@ts-ignore
@@ -59,13 +66,17 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
     setShowRoleEditModal(true)
   };
 
+  const handleUpdatedUserRole = useCallback((newValue: SingleValue<ISelectOption>, actionMeta: ActionMeta<ISelectOption>) => {
+    if(newValue) setUpdatedUserRole(newValue)
+  }, [])
+
   const handleDeleteModalOpen = (user: any) => {
     setModalData(user);
     setShowDeleteModal(true);
   }
 
   const handleEditUser = () => {
-    API.updateOrganisationUsers(organisationId, {userId: modalData.user.userId._id, role: modalData.user.role, updatedRole: updatedUserRole})
+    API.updateOrganisationUsers(organisationId, {userId: modalData.user.userId._id, role: modalData.user.role, updatedRole: updatedUserRole.label})
       .then(response => {
         if(response.status === 200) {
           setShowRoleEditModal(false)
@@ -164,7 +175,7 @@ export default function OrganisationUserList({ organisationId }: ListProps) {
               Role
             </label>
             <div className="mt-2 sm:col-span-2 sm:mt-0">
-              <DefaultSelect options={roleOptions} onChange={(e) => setUpdatedUserRole(e.target.value)} selectedOption={modalData?.user.role} />
+              <DefaultSelect options={roleOptions} onChange={handleUpdatedUserRole} selectedOption={modalData?.user.role} />
             </div>
           </div>
         </div>}

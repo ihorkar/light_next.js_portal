@@ -10,16 +10,22 @@ import API from "@/utils/api/api"
 import { InvitationData } from "@/utils/data/types"
 import DefaultSelect from "@/components/ui/elements/DefaultSelect"
 import HeaderWithDescription from "@/components/ui/headers/HeaderWithDescription"
+import { ISelectOption } from "@/components/ui/elements/DefaultSelect"
+import { SingleValue, ActionMeta } from "react-select";
 
 export default function Page({ params }: {
     params: { organisationId: string}
   }) {
   
-  const roleOptions = ["admin", "agent", "manager"];
+  const roleOptions: ISelectOption[] = [
+    {label: "admin"},
+    {label: "manager"},
+    {label: "agent"}
+  ]
 
   const [showInvitationModal, setShowInvitationModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
-  const [userRole, setUserRole] = useState("admin");
+  const [userRole, setUserRole] = useState<ISelectOption>(roleOptions[0]);
   const [isSentInvitation, setIsSentInvitation] = useState(false);
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const formEl = useRef<HTMLFormElement>(null);
@@ -27,7 +33,7 @@ export default function Page({ params }: {
   const handleOnSendInvitation = useCallback(() => {
     const validated = formEl?.current?.reportValidity();
     if(validated) {
-      const userData: InvitationData = {email: userEmail, role: userRole};
+      const userData: InvitationData = {email: userEmail, role: userRole.label};
       API.sendInvitation(params.organisationId, userData)
         .then(response => {
           if(response.status === 200) {
@@ -53,8 +59,10 @@ export default function Page({ params }: {
     setUserEmail(e.target.value)
   }, [])
 
-  const handleChangeUserRoleInput = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
-    setUserRole(e.target.value)
+  const handleChangeUserRoleInput = useCallback((newValue: SingleValue<ISelectOption>, actionMeta: ActionMeta<ISelectOption>) => {
+    if(newValue) {
+      setUserRole(newValue)
+    }
   }, [])
 
   const handleInviteButtonClick = useCallback(() => {
@@ -105,7 +113,7 @@ export default function Page({ params }: {
               Role
             </label>
             <div className="sm:col-span-2">
-              <DefaultSelect options={roleOptions} onChange={handleChangeUserRoleInput} selectedOption="admin" />
+              <DefaultSelect options={roleOptions} onChange={handleChangeUserRoleInput} selectedOption={userRole} />
             </div>
           </div>
         </div>

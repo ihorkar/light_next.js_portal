@@ -9,6 +9,8 @@ import API from "@/utils/api/api";
 import Notiflix from "notiflix";
 import Modal from "../modal/Modal";
 import { TrashIcon, PlusIcon } from "@heroicons/react/20/solid";
+import { ISelectOption } from "../elements/DefaultSelect";
+import { SingleValue, ActionMeta } from "react-select";
 
 export interface TwoColumnLayoutProps {
     organisationId: string;
@@ -21,17 +23,24 @@ export interface IOptInfo {
     active: boolean;
 } 
 
+const options: ISelectOption[] = [
+    {label: "Lead Generation", value: undefined},
+    {label: "Contract", value: undefined},
+    {label: "Contract with SEPA Mandate", value: undefined},
+    {label: "Survey", value: undefined}
+];
+
 const TwoColumnLayout = ({organisationId, formId}: TwoColumnLayoutProps) => {
 
     const [projectName, setProjectName] = useState("");
     const [projectDescription, setProjectDescription] = useState("");
     const [optInfo, setOptInfo] = useState<IOptInfo[]>([])
-    const [goalForm, setGoalForm] = useState("Lead Generation")
+    const [goalForm, setGoalForm] = useState<ISelectOption>(options[0])
     const [payCondition, setPayCondition] = useState("")
     const [showOptinModal, setShowOptinModal] = useState(false)
     const [optNameItem, setOptNameItem] = useState("")
     const [optDescriptionItem, setOptDescriptionItem] = useState("")
-  
+
     const router = useRouter();
   
     useEffect(() => {
@@ -87,6 +96,10 @@ const TwoColumnLayout = ({organisationId, formId}: TwoColumnLayoutProps) => {
         }
       }
     }
+
+    const handleSetSelectedOption = useCallback((newValue: SingleValue<ISelectOption>, actionMeta: ActionMeta<ISelectOption>) => {
+        if(newValue) setGoalForm(newValue)
+      }, [])
     
     const handleAddOptin = () => {
         setOptInfo((prevState: IOptInfo[]) => {
@@ -137,8 +150,8 @@ const TwoColumnLayout = ({organisationId, formId}: TwoColumnLayoutProps) => {
                     <div className="mt-4">
                         <p>The Goal of Form</p>
                         <DefaultSelect 
-                            options={["Lead Generation", "Contract", "Contract with SEPA Mandate", "Survey"]}
-                            onChange={(e) => setGoalForm(e.target.value)}
+                            options={options}
+                            onChange={handleSetSelectedOption}
                             selectedOption={goalForm}
                         />
                     </div>

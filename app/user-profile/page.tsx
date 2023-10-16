@@ -12,6 +12,9 @@ import Modal from "@/components/ui/modal/Modal"
 import { signOut } from "next-auth/react"
 import IconButton from "@/components/ui/buttons/IconButton"
 import { PencilIcon } from "@heroicons/react/24/outline"
+import DefaultSelect, { ISelectOption } from "@/components/ui/elements/DefaultSelect"
+import ReactCountryFlag from "react-country-flag"
+import { SingleValue, ActionMeta } from "react-select"
 
 export interface UserData {
     userName?: string;
@@ -20,6 +23,11 @@ export interface UserData {
     lastName?: string;
 }
 
+const options: ISelectOption[] = [
+    {label: "English", image: <ReactCountryFlag countryCode='US' svg style={{width: '24px', height: '24px'}} />},
+    {label: "Dutch", image: <ReactCountryFlag countryCode='NL' svg style={{width: '24px', height: '24px'}} />}
+]
+
 const UserProfile = () => {
     const session = useSession()
     const [ userData, setUserData ] = useState<UserData | undefined>()
@@ -27,6 +35,7 @@ const UserProfile = () => {
     const [ isUserOrganisation, setIsUserOrganisation ] = useState<boolean>(true)
     const [showShowCreateProjectModal, setShowCreateProjectModal] = useState(false);
     const [showDeleteConfirmedModal, setShowDeleteConfirmedModal] = useState(false);
+    const [language, setLanguage] = useState<ISelectOption>(options[0])
 
     const router = useRouter()
 
@@ -111,6 +120,10 @@ const UserProfile = () => {
             if(error.response.status === 500) router.push('/service-anavailabled')
         })
     }, [])
+
+    const handleSelectedLanguage = useCallback((newValue: SingleValue<ISelectOption>, actionMeta: ActionMeta<ISelectOption>) => {
+        if(newValue) setLanguage(newValue)
+    }, [])
     
     const deleteAccount = () => {
         API.deleteUserAccount()
@@ -148,6 +161,9 @@ const UserProfile = () => {
                         visible={() => true}
                     />
                 </div> }
+                <div className="justify-end py-6">
+                    <DefaultSelect options={options} onChange={handleSelectedLanguage} selectedOption={language} required />
+                </div>
             </div>
             <div className="inline-flex mt-10 gap-10 w-full">
                 <div className="inline-flex sm:items-start sm:gap-4 sm:py-6">
