@@ -128,7 +128,6 @@ const UserProfile = () => {
     const handleSelectedLanguage = useCallback(async (newValue: SingleValue<ISelectOption>, actionMeta: ActionMeta<ISelectOption>) => {
         if(newValue) {
             setLanguage(newValue);
-            alert(newValue.label)
             await API.setLanguageByUserId(newValue.label)
                 .then(response => {
                     if(response.status === 201) Notiflix.Notify.success("Language selected successfully!")
